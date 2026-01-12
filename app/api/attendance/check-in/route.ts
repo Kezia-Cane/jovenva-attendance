@@ -15,7 +15,7 @@ export async function POST() {
 
   // 2. Check if already checked in today
   const today = format(new Date(), 'yyyy-MM-dd')
-  
+
   const { data: existingAttendance } = await supabase
     .from('attendance')
     .select('*')
