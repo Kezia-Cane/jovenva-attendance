@@ -12,12 +12,15 @@ export function CheckOutButton({ disabled }: { disabled: boolean }) {
         setLoading(true)
         try {
             const res = await fetch("/api/attendance/check-out", { method: "POST" })
-            if (!res.ok) throw new Error("Failed to check out")
+            if (!res.ok) {
+                const data = await res.json()
+                throw new Error(data.error || "Failed to check out")
+            }
 
             router.refresh()
         } catch (error) {
             console.error(error)
-            alert("Error checking out")
+            alert(error instanceof Error ? error.message : "Error checking out")
         } finally {
             setLoading(false)
         }

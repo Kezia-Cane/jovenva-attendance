@@ -12,12 +12,15 @@ export function CheckInButton({ disabled }: { disabled: boolean }) {
         setLoading(true)
         try {
             const res = await fetch("/api/attendance/check-in", { method: "POST" })
-            if (!res.ok) throw new Error("Failed to check in")
+            if (!res.ok) {
+                const data = await res.json()
+                throw new Error(data.error || "Failed to check in")
+            }
 
             router.refresh()
         } catch (error) {
             console.error(error)
-            alert("Error checking in")
+            alert(error instanceof Error ? error.message : "Error checking in")
         } finally {
             setLoading(false)
         }
