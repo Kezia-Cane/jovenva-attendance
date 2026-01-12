@@ -6,7 +6,7 @@ import { WeeklyAttendanceTable } from "@/components/attendance/WeeklyAttendanceT
 import { AttendanceActions } from "@/components/attendance/AttendanceActions"
 
 export default async function DashboardPage() {
-    const cookieStore = cookies()
+    const cookieStore = await cookies()
     const supabase = createClient(cookieStore)
     const { data: { user } } = await supabase.auth.getUser()
 
@@ -24,7 +24,7 @@ export default async function DashboardPage() {
                         <form
                             action={async () => {
                                 "use server"
-                                const cookieStore = cookies()
+                                const cookieStore = await cookies()
                                 const supabase = createClient(cookieStore)
                                 await supabase.auth.signOut()
                                 redirect("/login")

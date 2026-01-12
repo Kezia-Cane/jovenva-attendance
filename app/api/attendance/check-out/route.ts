@@ -4,7 +4,7 @@ import { NextResponse } from 'next/server'
 import { format } from 'date-fns'
 
 export async function POST() {
-    const cookieStore = cookies()
+    const cookieStore = await cookies()
     const supabase = createClient(cookieStore)
 
     const { data: { user }, error: authError } = await supabase.auth.getUser()

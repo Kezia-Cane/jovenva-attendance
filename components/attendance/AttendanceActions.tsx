@@ -6,7 +6,7 @@ import { CheckOutButton } from "./CheckOutButton"
 import { Card, CardContent, CardHeader, CardTitle } from "../common/UIComponents"
 
 export async function AttendanceActions({ user_id }: { user_id: string }) {
-    const cookieStore = cookies()
+    const cookieStore = await cookies()
     const supabase = createClient(cookieStore)
     const today = format(new Date(), 'yyyy-MM-dd')
 

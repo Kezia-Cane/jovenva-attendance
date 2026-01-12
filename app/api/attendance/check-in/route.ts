@@ -4,7 +4,7 @@ import { NextResponse } from 'next/server'
 import { startOfDay, format } from 'date-fns'
 
 export async function POST() {
-  const cookieStore = cookies()
+  const cookieStore = await cookies()
   const supabase = createClient(cookieStore)
 
   // 1. Authenticate User
