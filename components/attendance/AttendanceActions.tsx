@@ -27,14 +27,17 @@ export async function AttendanceActions({ user_id }: { user_id: string }) {
                 <CardTitle>Today's Action</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-                {isCheckedIn && !isCheckedOut && record?.check_in_time && (
-                    <SessionTimer startTime={record.check_in_time} />
-                )}
-                <div className="flex gap-4 justify-center">
-                    <CheckInButton disabled={isCheckedIn} />
-                    <CheckOutButton disabled={!isCheckedIn || isCheckedOut} />
-                </div>
-            </CardContent>
+                <CardContent className="space-y-6">
+                    <SessionTimer
+                        startTime={record?.check_in_time}
+                        endTime={record?.check_out_time}
+                    />
+
+                    <div className="flex gap-4 justify-center">
+                        <CheckInButton disabled={isCheckedIn} />
+                        <CheckOutButton disabled={!isCheckedIn || isCheckedOut} />
+                    </div>
+                </CardContent>
         </Card>
     )
 }
