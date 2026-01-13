@@ -1,26 +1,36 @@
 @import "tailwindcss";
 
+/* 1. Roboto Font */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #F7FAFC; /* gray-50 */
+  --foreground: #2D3748; /* gray-700 original */
+  --purity-teal: #4FD1C5; /* teal-300 */
+  --purity-teal-hover: #38B2AC; /* teal-400 */
+  --purity-gray-dark: #1f2733; /* Custom Purity Dark */
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-teal-300: var(--purity-teal);
+  --color-teal-400: var(--purity-teal-hover);
+  --color-gray-700: #2D3748;
+  --color-purity-700: var(--purity-gray-dark);
+  
+  --font-sans: 'Roboto', sans-serif;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #1A202C; /* gray-800 */
+    --foreground: #ffffff;
   }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Roboto', sans-serif;
 }

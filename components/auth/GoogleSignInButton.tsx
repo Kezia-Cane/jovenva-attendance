@@ -27,7 +27,7 @@ export function GoogleSignInButton() {
     return (
         <Button
             onClick={handleSignIn}
-            className="w-full flex gap-2"
+            className="w-full flex gap-2 rounded-2xl h-[45px] text-xs font-bold bg-gray-50 text-gray-700 hover:bg-gray-100 dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600 border-0"
             disabled={isLoading}
         >
             {isLoading ? (
