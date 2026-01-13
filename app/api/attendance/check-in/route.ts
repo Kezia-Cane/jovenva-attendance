@@ -13,6 +13,24 @@ export async function POST() {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
+  // 1.5. Ensure User exists in public.users (Self-healing)
+  // This fixes the "foreign key violation" if the trigger failed or IDs mismatch
+  const { error: upsertError } = await supabase
+    .from('users')
+    .upsert({
+      id: user.id,
+      email: user.email,
+      name: user.user_metadata?.full_name || user.email?.split('@')[0] || 'User',
+      avatar_url: user.user_metadata?.avatar_url || '',
+      updated_at: new Date().toISOString(),
+    })
+
+  if (upsertError) {
+    console.error("Error syncing user profile:", upsertError)
+    // We continue anyway; if it was a permission error, maybe the user already exists.
+    // If it was a real DB error, the next step (insert attendance) will likely fail too, but that's fine.
+  }
+
   // 2. Check if already checked in today
   const today = format(new Date(), 'yyyy-MM-dd')
 
