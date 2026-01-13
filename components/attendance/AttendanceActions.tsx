@@ -30,7 +30,7 @@ export async function AttendanceActions({ user_id }: { user_id: string }) {
                 {isCheckedIn && !isCheckedOut && record?.check_in_time && (
                     <SessionTimer startTime={record.check_in_time} />
                 )}
-                <div className="flex gap-4">
+                <div className="flex gap-4 justify-center">
                     <CheckInButton disabled={isCheckedIn} />
                     <CheckOutButton disabled={!isCheckedIn || isCheckedOut} />
                 </div>
