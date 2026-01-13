@@ -27,8 +27,7 @@ export async function POST() {
 
   if (upsertError) {
     console.error("Error syncing user profile:", upsertError)
-    // We continue anyway; if it was a permission error, maybe the user already exists.
-    // If it was a real DB error, the next step (insert attendance) will likely fail too, but that's fine.
+    return NextResponse.json({ error: `User sync failed: ${upsertError.message}` }, { status: 500 })
   }
 
   // 2. Check if already checked in today
