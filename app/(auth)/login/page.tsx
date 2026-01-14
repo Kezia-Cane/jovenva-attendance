@@ -7,7 +7,7 @@ export default function LoginPage() {
             {/* Left Side - Content */}
             <div className="flex w-full flex-col justify-between px-8 md:w-1/2 md:px-12 lg:w-[42%] xl:px-24 pt-24 pb-12 z-10">
 
-                <div className="flex flex-col">
+                <div className="flex flex-col flex-1 justify-center">
                     <div className="mb-8 lg:mb-16">
                         <h1 className="mb-2 text-3xl font-bold text-teal-300">
                             Welcome Back
