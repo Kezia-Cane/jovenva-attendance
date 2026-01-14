@@ -1,7 +1,8 @@
 import { Badge, Card, CardContent, CardHeader, CardTitle } from "@/components/common/UIComponents"
-import { format, isSameDay, startOfWeek, addDays, parseISO } from "date-fns"
+import { format, isSameDay, startOfWeek, addDays } from "date-fns"
 import { createClient } from "@/lib/supabase-server"
 import { cookies } from "next/headers"
+import { formatInManila } from "@/lib/date-utils"
 
 interface AttendanceRecord {
     id: string
@@ -87,12 +88,12 @@ export async function WeeklyAttendanceTable() {
                                         </td>
                                         <td className="px-2 py-3 text-gray-600 font-bold text-xs">
                                             {record?.check_in_time
-                                                ? format(parseISO(record.check_in_time), "hh:mm a")
+                                                ? formatInManila(record.check_in_time, "hh:mm a")
                                                 : "—"}
                                         </td>
                                         <td className="px-2 py-3 text-gray-600 font-bold text-xs">
                                             {record?.check_out_time
-                                                ? format(parseISO(record.check_out_time), "hh:mm a")
+                                                ? formatInManila(record.check_out_time, "hh:mm a")
                                                 : "—"}
                                         </td>
                                     </tr>

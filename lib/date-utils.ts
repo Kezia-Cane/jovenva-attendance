@@ -23,14 +23,14 @@ export function isCheckInAvailable(): { available: boolean; currentHour: number 
 
 export function getShiftDate(): string {
     const now = getManilaTime()
-    const hour = now.getHours()
-
-    // If it's early morning (e.g. 1 AM), the "Show Date" is actually Yesterday
-    // But for the database 'date' field, we generally want the strict date OR the shift date.
-    // Let's stick to the ACTUAL date in Manila for the record to avoid confusion,
-    // OR if the user wants "Shift Date", we subtract a day if hour < 12.
-    // User didn't specify, but "One Session Per Day" usually implies "Per Shift".
-
-    // For now, return strict Manila Calendar Date.
     return format(now, 'yyyy-MM-dd')
+}
+
+export function formatInManila(date: string | Date, fmt: string): string {
+    if (!date) return "—"
+    const d = typeof date === 'string' ? new Date(date) : date
+    // Convert to Manila time string "MM/DD/YYYY, HH:MM:SS AM/PM" to preserve wall clock time
+    const manilaString = d.toLocaleString("en-US", { timeZone: "Asia/Manila" })
+    const manilaDate = new Date(manilaString)
+    return format(manilaDate, fmt)
 }
