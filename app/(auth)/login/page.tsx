@@ -24,9 +24,6 @@ export default function LoginPage() {
                         */}
                         <div className="flex flex-col gap-4">
                             <div className="flex flex-col gap-2">
-                                <label className="text-sm font-medium text-gray-700 dark:text-gray-200">
-                                    Sign in with
-                                </label>
                                 <GoogleSignInButton />
                             </div>
                         </div>
