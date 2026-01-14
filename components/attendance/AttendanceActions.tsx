@@ -28,13 +28,14 @@ export async function AttendanceActions({ user_id }: { user_id: string }) {
 
     return (
         <Card className="h-full border-none shadow-md rounded-2xl overflow-hidden bg-white relative">
-            <div className="absolute top-0 left-0 w-full h-[120px] bg-gradient-to-r from-blue-500 to-blue-600 z-0" />
+            <div className="absolute top-0 left-0 w-full h-[120px] bg-gradient-to-r from-teal-300 to-teal-400 z-0" />
 
             <CardContent className="relative z-10 pt-8 flex flex-col items-center text-center">
 
                 {/* Header Action Area */}
-                <div className="mb-6 w-full flex justify-between items-center px-4 text-white">
-                    <h3 className="font-bold text-lg">Attendance</h3>
+                <div className="mb-6 w-full flex justify-between items-center px-4 text-white uppercase text-sm font-bold">
+                    <div className="w-8"></div> {/* Spacer for centering */}
+                    <h3>Attendance</h3>
                     <div className="bg-white/20 p-2 rounded-lg">
                         <Clock size={20} />
                     </div>
@@ -45,14 +46,20 @@ export async function AttendanceActions({ user_id }: { user_id: string }) {
 
                     <div className="w-full">
                         {!isCheckedIn ? (
-                            <CheckInButton disabled={!canCheckIn} className="w-full h-14 text-lg font-bold bg-blue-500 hover:bg-blue-600 text-white rounded-xl shadow-blue-md transition-all" />
+                            <CheckInButton
+                                disabled={!canCheckIn}
+                                className="w-full h-12 text-sm font-bold bg-teal-300 hover:bg-teal-400 text-white rounded-xl shadow-teal-md transition-all uppercase"
+                            />
                         ) : (
-                            <CheckOutButton disabled={isCheckedOut} className="w-full h-14 text-lg font-bold bg-amber-500 hover:bg-amber-600 text-white rounded-xl shadow-amber-md transition-all" />
+                            <CheckOutButton
+                                disabled={isCheckedOut}
+                                className="w-full h-14 text-sm font-bold bg-amber-500 hover:bg-amber-600 text-white rounded-xl shadow-amber-md transition-all uppercase"
+                            />
                         )}
                     </div>
 
-                    <div className="flex flex-col items-center">
-                        <p className="text-gray-400 text-xs font-bold uppercase mb-1">Session Duration</p>
+                    <div className="flex flex-col items-center w-full">
+                        <p className="text-gray-400 text-[10px] font-bold uppercase mb-2">Session Duration</p>
                         <SessionTimer
                             startTime={record?.check_in_time}
                             endTime={record?.check_out_time}

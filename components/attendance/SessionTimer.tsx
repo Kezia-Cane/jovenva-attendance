@@ -61,13 +61,12 @@ export function SessionTimer({ startTime, endTime, className }: SessionTimerProp
     }
 
     return (
-        <div className={`flex flex-col items-center justify-center p-6 rounded-xl border-2 transition-colors ${getStatusColor()}`}>
-            <span className="text-xs font-bold uppercase tracking-widest opacity-80 mb-2">
-                {status === "READY" ? "Ready to Start" : (status === "RUNNING" ? "Current Session" : "Session Completed")}
+        <div className="flex flex-col items-center justify-center p-4 w-full rounded-xl bg-gray-50 border border-gray-100">
+            <span className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-1">
+                {status === "READY" ? "Ready to Start" : (status === "RUNNING" ? "Running" : "Completed")}
             </span>
             {/* Timer Display */}
-            <div className={`font-mono text-3xl font-bold tracking-wider ${status === "RUNNING" ? "text-blue-600" :
-                    status === "COMPLETED" ? "text-green-600" : "text-gray-400"
+            <div className={`font-mono text-3xl font-bold tracking-wider ${status === "RUNNING" ? "text-teal-400" : "text-gray-700"
                 } ${className}`}>
                 {elapsed}
             </div>
