@@ -37,16 +37,6 @@ export default function LoginPage() {
                 <div className="absolute inset-0 bg-[url('/signInImage.png')] bg-cover bg-center bg-no-repeat z-0" />
                 <div className="absolute inset-0 bg-teal-300/80 z-10 mix-blend-multiply" />
 
-                {/* Chakra Logo Placeholder - Assuming user wants the aesthetic */}
-                <div className="relative z-20 flex flex-col items-center">
-                    {/* You can replace this with an actual SVG logo if available */}
-                    <h2 className="text-4xl font-bold text-white tracking-widest flex items-center gap-2">
-                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M13 10V3L4 14H11V21L20 10H13Z" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                        </svg>
-                        chakra
-                    </h2>
-                </div>
             </div>
         </div>
     )
