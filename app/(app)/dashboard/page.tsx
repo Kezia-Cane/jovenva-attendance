@@ -1,9 +1,11 @@
 import { createClient } from "@/lib/supabase-server"
-import { Button } from "@/components/common/Button"
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
 import { WeeklyAttendanceTable } from "@/components/attendance/WeeklyAttendanceTable"
 import { AttendanceActions } from "@/components/attendance/AttendanceActions"
+import { StatCard } from "@/components/dashboard/StatCard"
+import { SystemStatus } from "@/components/dashboard/SystemStatus"
+import { Calendar, CheckCircle, Clock } from "lucide-react"
 
 export default async function DashboardPage() {
     const cookieStore = await cookies()
@@ -15,42 +17,44 @@ export default async function DashboardPage() {
     }
 
     return (
-        <div className="min-h-screen bg-gray-50">
-            <header className="bg-white shadow">
-                <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-                    <h1 className="text-xl font-bold text-gray-900">JovenVA</h1>
-                    <div className="flex items-center gap-4">
-                        <span className="text-sm text-gray-700">Welcome, {user.email}</span>
-                        <form
-                            action={async () => {
-                                "use server"
-                                const cookieStore = await cookies()
-                                const supabase = createClient(cookieStore)
-                                await supabase.auth.signOut()
-                                redirect("/login")
-                            }}
-                        >
-                            <Button variant="outline" size="sm" type="submit">
-                                Sign Out
-                            </Button>
-                        </form>
-                    </div>
-                </div>
-            </header>
+        <div className="flex flex-col gap-6">
+            {/* Top Row - Stat Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <StatCard
+                    title="Today's Check-ins"
+                    value="18 / 20"
+                    icon={CheckCircle}
+                    subtext="Present: 90%"
+                    status="success"
+                />
+                <StatCard
+                    title="My Weekly Attendance"
+                    value="4 / 5"
+                    icon={Calendar}
+                    subtext="Mon, Tue, Wed, Thu Present"
+                    status="neutral"
+                />
+                <StatCard
+                    title="Pending Actions"
+                    value="None"
+                    icon={Clock}
+                />
+                {/* Placeholder for 4th card if needed, or stretch others. Prototype shows 3 main ones or 3+1 grid. */}
+            </div>
 
-            <main className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-                <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-                    {/* Status Cards could go here */}
-                </div>
-
-                <div className="mt-6 flex flex-col gap-4 sm:flex-row">
-                    <div className="flex-1">
-                        <AttendanceActions user_id={user.id} />
-                    </div>
+            {/* Middle Row - Main Content */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                {/* Left Column: Weekly Table */}
+                <div className="lg:col-span-2 h-full">
+                    <WeeklyAttendanceTable />
                 </div>
 
-                <WeeklyAttendanceTable />
-            </main>
+                {/* Right Column: Actions & Status */}
+                <div className="flex flex-col gap-6">
+                    <AttendanceActions user_id={user.id} />
+                    <SystemStatus />
+                </div>
+            </div>
         </div>
     )
 }

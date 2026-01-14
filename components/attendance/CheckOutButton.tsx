@@ -4,23 +4,24 @@ import { useState } from "react"
 import { Button } from "@/components/common/Button"
 import { useRouter } from "next/navigation"
 
-export function CheckOutButton({ disabled }: { disabled: boolean }) {
-    const [loading, setLoading] = useState(false)
+interface CheckOutButtonProps {
+    disabled?: boolean
+    className?: string
+}
+
+export function CheckOutButton({ disabled, className }: CheckOutButtonProps) {
     const router = useRouter()
+    const [loading, setLoading] = useState(false)
 
     const handleCheckOut = async () => {
         setLoading(true)
         try {
             const res = await fetch("/api/attendance/check-out", { method: "POST" })
-            if (!res.ok) {
-                const data = await res.json()
-                throw new Error(data.error || "Failed to check out")
-            }
-
+            if (!res.ok) throw new Error("Check-out failed")
             router.refresh()
         } catch (error) {
             console.error(error)
-            alert(error instanceof Error ? error.message : "Error checking out")
+            alert("Failed to check out")
         } finally {
             setLoading(false)
         }
@@ -31,9 +32,9 @@ export function CheckOutButton({ disabled }: { disabled: boolean }) {
             onClick={handleCheckOut}
             disabled={disabled || loading}
             variant="secondary"
-            size="lg"
+            className={className}
         >
-            {loading ? "Checking Out..." : (disabled ? "Checked Out" : "Check Out")}
+            {loading ? "Checking Out..." : "Check Out"}
         </Button>
     )
 }

@@ -3,7 +3,13 @@
 import { useEffect, useState } from "react"
 import { differenceInSeconds } from "date-fns"
 
-export function SessionTimer({ startTime, endTime }: { startTime?: string | null, endTime?: string | null }) {
+export interface SessionTimerProps {
+    startTime?: string | null
+    endTime?: string | null
+    className?: string
+}
+
+export function SessionTimer({ startTime, endTime, className }: SessionTimerProps) {
     const [elapsed, setElapsed] = useState("00:00:00")
     const [status, setStatus] = useState<"READY" | "RUNNING" | "COMPLETED">("READY")
 
@@ -59,9 +65,12 @@ export function SessionTimer({ startTime, endTime }: { startTime?: string | null
             <span className="text-xs font-bold uppercase tracking-widest opacity-80 mb-2">
                 {status === "READY" ? "Ready to Start" : (status === "RUNNING" ? "Current Session" : "Session Completed")}
             </span>
-            <span className="text-4xl font-mono font-bold tracking-tight">
+            {/* Timer Display */}
+            <div className={`font-mono text-3xl font-bold tracking-wider ${status === "RUNNING" ? "text-blue-600" :
+                    status === "COMPLETED" ? "text-green-600" : "text-gray-400"
+                } ${className}`}>
                 {elapsed}
-            </span>
+            </div>
         </div>
     )
 }

@@ -4,7 +4,12 @@ import { useState } from "react"
 import { Button } from "@/components/common/Button"
 import { useRouter } from "next/navigation"
 
-export function CheckInButton({ disabled }: { disabled: boolean }) {
+interface CheckInButtonProps {
+    disabled?: boolean
+    className?: string
+}
+
+export function CheckInButton({ disabled, className }: CheckInButtonProps) {
     const [loading, setLoading] = useState(false)
     const router = useRouter()
 
@@ -30,7 +35,7 @@ export function CheckInButton({ disabled }: { disabled: boolean }) {
         <Button
             onClick={handleCheckIn}
             disabled={disabled || loading}
-            className={disabled ? "opacity-50 cursor-not-allowed" : ""}
+            className={className}
             variant="primary"
             size="lg"
         >
