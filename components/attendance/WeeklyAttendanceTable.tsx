@@ -81,7 +81,7 @@ export async function WeeklyAttendanceTable() {
                                                     Weekend
                                                 </span>
                                             ) : (
-                                                <span className={`px-3 py-1 rounded-md text-xs font-bold ${isToday ? "bg-yellow-100 text-yellow-700" : "bg-orange-100 text-orange-700"}`}>
+                                                <span className={`px-3 py-1 rounded-md text-xs font-bold ${isToday ? "bg-yellow-100 text-yellow-700" : "bg-red-100 text-red-700"}`}>
                                                     {isToday ? "Pending" : "Absent"}
                                                 </span>
                                             )}
