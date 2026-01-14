@@ -16,12 +16,12 @@ export function Sidebar() {
     const isActive = (path: string) => pathname === path
 
     return (
-        <aside className="fixed inset-y-0 left-0 z-50 w-64 block bg-gray-50/50 dark:bg-gray-900 overflow-y-auto border-r border-gray-200/50 pb-4 pt-8 px-4">
+        <aside className="fixed inset-y-0 left-0 z-50 w-64 block bg-transparent overflow-y-auto pb-4 pt-8 px-4">
             <div className="flex items-center px-4 mb-8">
                 <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-teal-300 text-white">
                     <span className="font-bold">J</span>
                 </div>
-                <span className="ml-3 text-sm font-bold uppercase text-gray-900 dark:text-white">
+                <span className="ml-3 text-sm font-bold uppercase text-gray-900">
                     JovenVA
                 </span>
             </div>
@@ -34,13 +34,13 @@ export function Sidebar() {
                             key={link.name}
                             href={link.href}
                             className={`flex items-center gap-4 rounded-xl px-4 py-3 text-sm font-bold transition-all ease-in-out duration-300 ${active
-                                    ? "bg-white text-gray-900 shadow-lg"
-                                    : "text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+                                ? "bg-white text-gray-900 shadow-lg"
+                                : "text-gray-500 hover:text-gray-900"
                                 }`}
                         >
                             <div className={`flex h-[30px] w-[30px] items-center justify-center rounded-lg ${active
-                                    ? "bg-teal-300 text-white shadow-teal-md"
-                                    : "bg-white text-teal-300 shadow-sm"
+                                ? "bg-teal-300 text-white shadow-teal-md"
+                                : "bg-white text-teal-300 shadow-sm"
                                 }`}>
                                 <link.icon size={16} />
                             </div>

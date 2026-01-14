@@ -16,9 +16,9 @@ export function Navbar() {
                 <nav className="flex text-sm font-normal text-gray-500">
                     <span className="opacity-50">Pages</span>
                     <span className="mx-2">/</span>
-                    <span className="font-bold text-gray-900 dark:text-white capitalize">{formattedName}</span>
+                    <span className="font-bold text-gray-900 capitalize">{formattedName}</span>
                 </nav>
-                <h6 className="text-base font-bold text-gray-800 dark:text-white capitalize">
+                <h6 className="text-base font-bold text-gray-800 capitalize">
                     {formattedName}
                 </h6>
             </div>

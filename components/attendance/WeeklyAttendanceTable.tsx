@@ -39,7 +39,7 @@ export async function WeeklyAttendanceTable() {
     const weekDays = Array.from({ length: 7 }).map((_, i) => addDays(startOfCurrentWeek, i))
 
     return (
-        <Card className="border-none shadow-md rounded-2xl h-full">
+        <Card className="border-none shadow-md rounded-2xl h-full bg-white">
             <CardHeader className="pt-6 px-6 pb-4">
                 <CardTitle className="text-lg font-bold text-gray-800">Weekly Attendance</CardTitle>
             </CardHeader>

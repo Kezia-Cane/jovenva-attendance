@@ -3,9 +3,9 @@ import { GoogleSignInButton } from "@/components/auth/GoogleSignInButton"
 
 export default function LoginPage() {
     return (
-        <div className="relative flex min-h-screen w-full bg-white dark:bg-gray-800 font-sans overflow-hidden">
+        <div className="relative flex min-h-screen w-full bg-white font-sans overflow-hidden">
             {/* Left Side - Content */}
-            <div className="flex w-full flex-col justify-center px-8 md:w-1/2 md:px-12 lg:w-[42%] xl:px-24 z-10">
+            <div className="flex w-full flex-col justify-center px-8 md:w-1/2 md:px-12 lg:w-[42%] xl:px-24 z-10 bg-white">
 
                 <div className="flex flex-col flex-1 justify-center">
                     <div className="mb-8 lg:mb-16">
@@ -32,17 +32,20 @@ export default function LoginPage() {
 
             </div>
 
-            {/* Right Side - Image Overlay */}
-            <div className="absolute top-0 right-0 hidden h-full w-[50vw] md:block pl-20 pb-4">
-                <div
-                    className="h-full w-full bg-cover bg-center bg-no-repeat relative"
-                    style={{
-                        backgroundImage: "url('/signInImage.png')",
-                        backgroundSize: 'cover',
-                        borderBottomLeftRadius: "25px"
-                    }}
-                >
-                    {/* Gradient overlay for text readability if needed, but Purity usually has clean image */}
+            {/* Right Side - Teal Gradient & Curve */}
+            <div className="absolute top-0 right-0 hidden h-full w-[50vw] md:flex flex-col justify-center items-center pl-0 pb-0 overflow-hidden rounded-bl-[50px]">
+                <div className="absolute inset-0 bg-[url('/signInImage.png')] bg-cover bg-center bg-no-repeat z-0" />
+                <div className="absolute inset-0 bg-teal-300/80 z-10 mix-blend-multiply" />
+
+                {/* Chakra Logo Placeholder - Assuming user wants the aesthetic */}
+                <div className="relative z-20 flex flex-col items-center">
+                    {/* You can replace this with an actual SVG logo if available */}
+                    <h2 className="text-4xl font-bold text-white tracking-widest flex items-center gap-2">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M13 10V3L4 14H11V21L20 10H13Z" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                        chakra
+                    </h2>
                 </div>
             </div>
         </div>

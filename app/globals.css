@@ -4,25 +4,18 @@
 @import "tailwindcss";
 
 :root {
-  --background: #F7FAFC;
-  /* gray-50 */
+  --background: #F8F9FA;
+  /* Purity UI Light Background */
   --foreground: #2D3748;
-  /* gray-700 original */
+  /* gray-700 */
   --purity-teal: #4FD1C5;
   /* teal-300 */
   --purity-teal-hover: #38B2AC;
   /* teal-400 */
   --purity-gray-dark: #1f2733;
-  /* Custom Purity Dark */
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #1A202C;
-    /* gray-800 */
-    --foreground: #ffffff;
-  }
-}
+/* Removed Dark Mode Preferences for Forced Light Mode */
 
 body {
   background: var(--background);
