@@ -69,7 +69,7 @@ export async function WeeklyAttendanceTable() {
                                             {format(day, "EEE")}
                                         </td>
                                         <td className="px-2 py-3 font-bold text-gray-700 text-sm">
-                                            {format(day, "MMMM, d yyyy")}
+                                            {format(day, "MMM, d yyyy")}
                                         </td>
                                         <td className="px-2 py-3">
                                             {record ? (
