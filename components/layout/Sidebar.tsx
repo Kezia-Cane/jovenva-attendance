@@ -17,7 +17,7 @@ export function Sidebar() {
 
     return (
         <aside className="fixed inset-y-0 left-0 z-50 w-64 block bg-transparent overflow-y-auto pb-4 pt-8 px-4">
-            <div className="flex items-center px-4 mb-20">
+            <div className="flex items-center px-4 mb-14">
                 <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-teal-300 text-white">
                     <span className="font-bold">J</span>
                 </div>
