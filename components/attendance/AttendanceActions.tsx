@@ -53,7 +53,7 @@ export async function AttendanceActions({ user_id }: { user_id: string }) {
                         ) : (
                             <CheckOutButton
                                 disabled={isCheckedOut}
-                                className="w-full h-14 text-sm font-bold bg-red-500 hover:bg-red-600 text-white rounded-xl shadow-red-md transition-all uppercase"
+                                className="w-full h-14 text-sm font-bold bg-white border border-red-500 text-red-500 hover:bg-red-50 rounded-xl shadow-sm transition-all uppercase"
                             />
                         )}
                     </div>

@@ -31,7 +31,7 @@ export function Navbar() {
 
                 <div className="flex items-center gap-3 text-gray-500">
                     <form action={signOutAction}>
-                        <button type="submit" className="px-4 py-2 text-xs font-bold text-white bg-red-500 rounded-xl hover:bg-red-600 transition-colors shadow-md">
+                        <button type="submit" className="px-4 py-2 text-xs font-bold text-red-500 bg-white border border-red-500 rounded-xl hover:bg-red-50 transition-colors shadow-sm">
                             Logout
                         </button>
                     </form>
