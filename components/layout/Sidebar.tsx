@@ -50,24 +50,7 @@ export function Sidebar() {
                 })}
             </div>
 
-            {/* Help Card */}
-            <div className="mt-auto">
-                <div className="relative overflow-hidden rounded-2xl bg-teal-300 p-4 pb-4">
-                    <div className="mb-4 flex h-8 w-8 items-center justify-center rounded-lg bg-white bg-opacity-30 text-white">
-                        <HelpCircle size={18} />
-                    </div>
-                    <h4 className="mb-1 text-sm font-bold text-white">Need help?</h4>
-                    <p className="mb-4 text-xs font-medium text-white">
-                        Please check our docs
-                    </p>
-                    <button className="w-full rounded-lg bg-white py-2 text-xs font-bold text-gray-800 transition-colors hover:bg-gray-100 uppercase">
-                        Documentation
-                    </button>
-
-                    {/* Background decorations */}
-                    <div className="absolute -right-4 -top-8 h-24 w-24 rounded-full bg-white opacity-20 blur-xl"></div>
-                </div>
-            </div>
+            {/* Help Card Removed */}
         </aside>
     )
 }
