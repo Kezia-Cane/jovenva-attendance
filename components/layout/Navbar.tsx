@@ -2,6 +2,7 @@
 
 import { Search, Bell, Settings, User } from "lucide-react"
 import { usePathname } from "next/navigation"
+import { signOutAction } from "@/app/actions/auth"
 
 export function Navbar() {
     const pathname = usePathname()
@@ -33,18 +34,7 @@ export function Navbar() {
                 </div>
 
                 <div className="flex items-center gap-3 text-gray-500">
-                    <form
-                        action={async () => {
-                            "use server"
-                            const { createClient } = await import("@/lib/supabase-server")
-                            const { cookies } = await import("next/headers")
-                            const cookieStore = await cookies()
-                            const supabase = createClient(cookieStore)
-                            await supabase.auth.signOut()
-                            const { redirect } = await import("next/navigation")
-                            redirect("/login")
-                        }}
-                    >
+                    <form action={signOutAction}>
                         <button type="submit" className="px-4 py-2 text-xs font-bold text-white bg-gray-900 rounded-xl hover:bg-gray-800 transition-colors shadow-md">
                             Logout
                         </button>
