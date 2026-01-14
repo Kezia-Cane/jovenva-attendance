@@ -13,7 +13,7 @@ export default function LoginPage() {
                             Welcome Back
                         </h1>
                         <p className="text-sm font-bold text-gray-400">
-                            Enter your email and password to sign in
+                            As of now Google Sign In is the only available authentication method.
                         </p>
                     </div>
 
