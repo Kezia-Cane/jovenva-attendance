@@ -30,7 +30,7 @@ export async function AttendanceActions({ user_id }: { user_id: string }) {
         <Card className="border-none shadow-md rounded-2xl overflow-hidden bg-white relative">
             <div className="absolute top-0 left-0 w-full h-[120px] bg-gradient-to-r from-teal-300 to-teal-400 z-0" />
 
-            <CardContent className="relative z-10 pt-8 flex flex-col items-center text-center">
+            <CardContent className="relative z-10 pt-8 pb-10 flex flex-col items-center text-center">
 
                 {/* Header Action Area */}
                 <div className="mb-6 w-full flex justify-between items-center px-4 text-white uppercase text-sm font-bold">
