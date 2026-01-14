@@ -48,18 +48,7 @@ export default function LoginPage() {
                     </div>
                 </div>
 
-                {/* Footer */}
-                <div className="flex flex-col items-center justify-center lg:items-start text-gray-400 text-sm">
-                    <p className="mb-2 lg:mb-0">
-                        &copy; 2021, Made with ❤️ by <span className="text-teal-300 font-bold">Creative Tim</span> & <span className="text-teal-300 font-bold">Simmmple</span> for a better web
-                    </p>
-                    <div className="flex gap-6 mt-2 lg:mt-4">
-                        <span className="hover:text-gray-500 cursor-pointer">Creative Tim</span>
-                        <span className="hover:text-gray-500 cursor-pointer">Simmmple</span>
-                        <span className="hover:text-gray-500 cursor-pointer">Blog</span>
-                        <span className="hover:text-gray-500 cursor-pointer">License</span>
-                    </div>
-                </div>
+
 
             </div>
 
