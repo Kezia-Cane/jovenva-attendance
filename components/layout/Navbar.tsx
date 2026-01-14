@@ -13,11 +13,7 @@ export function Navbar() {
     return (
         <nav className="sticky top-4 z-40 mx-4 mt-4 flex flex-col gap-4 rounded-2xl border-none backdrop-blur-xl bg-white/30 p-2 md:flex-row md:items-center md:justify-between px-4 py-3 shadow-none transition-all">
             <div className="flex flex-col gap-1">
-                <nav className="flex text-sm font-normal text-gray-500">
-                    <span className="opacity-50">Pages</span>
-                    <span className="mx-2">/</span>
-                    <span className="font-bold text-gray-900 capitalize">{formattedName}</span>
-                </nav>
+                {/* Breadcrumbs removed as requested */}
                 <h6 className="text-base font-bold text-gray-800 capitalize">
                     {formattedName}
                 </h6>

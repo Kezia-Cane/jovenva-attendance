@@ -60,6 +60,7 @@ export async function WeeklyAttendanceTable() {
                                 const dateStr = format(day, "yyyy-MM-dd")
                                 const record = records.find(r => r.date === dateStr)
                                 const isToday = isSameDay(day, now)
+                                const isWeekend = day.getDay() === 0 || day.getDay() === 6 // 0 is Sunday, 6 is Saturday
 
                                 return (
                                     <tr key={dateStr} className={`hover:bg-gray-50 transition-colors ${isToday ? "bg-green-50/30" : ""}`}>
@@ -67,12 +68,16 @@ export async function WeeklyAttendanceTable() {
                                             {format(day, "EEE")}
                                         </td>
                                         <td className="px-2 py-3 font-bold text-gray-700 text-sm">
-                                            {format(day, "dd.MM.yyyy")}
+                                            {format(day, "MMMM, d yyyy")}
                                         </td>
                                         <td className="px-2 py-3">
                                             {record ? (
                                                 <span className="bg-green-100 text-green-700 px-3 py-1 rounded-md text-xs font-bold">
                                                     Present
+                                                </span>
+                                            ) : isWeekend ? (
+                                                <span className="bg-gray-200 text-gray-600 px-3 py-1 rounded-md text-xs font-bold">
+                                                    Weekend
                                                 </span>
                                             ) : (
                                                 <span className={`px-3 py-1 rounded-md text-xs font-bold ${isToday ? "bg-yellow-100 text-yellow-700" : "bg-orange-100 text-orange-700"}`}>
