@@ -21,26 +21,30 @@ export function SessionTimer({ startTime, endTime, className }: SessionTimerProp
         }
 
         const start = new Date(startTime)
-        let interval: NodeJS.Timeout
+        // Check for invalid date
+        if (isNaN(start.getTime())) {
+            setElapsed("00:00:00")
+            return
+        }
 
         const updateTimer = () => {
             const now = endTime ? new Date(endTime) : new Date()
             const totalSeconds = differenceInSeconds(now, start)
 
-            if (totalSeconds < 0) {
-                setElapsed("00:00:00")
-                return
-            }
+            // Clamp to 0 to avoid negative numbers if client clock is behind server
+            const safeSeconds = Math.max(0, totalSeconds)
 
-            const hours = Math.floor(totalSeconds / 3600)
-            const minutes = Math.floor((totalSeconds % 3600) / 60)
-            const seconds = totalSeconds % 60
+            const hours = Math.floor(safeSeconds / 3600)
+            const minutes = Math.floor((safeSeconds % 3600) / 60)
+            const seconds = safeSeconds % 60
 
             const pad = (num: number) => num.toString().padStart(2, '0')
             setElapsed(`${pad(hours)}:${pad(minutes)}:${pad(seconds)}`)
         }
 
-        updateTimer()
+        updateTimer() // Initial update
+
+        let interval: NodeJS.Timeout
 
         if (endTime) {
             setStatus("COMPLETED")
@@ -49,7 +53,9 @@ export function SessionTimer({ startTime, endTime, className }: SessionTimerProp
             interval = setInterval(updateTimer, 1000)
         }
 
-        return () => clearInterval(interval)
+        return () => {
+            if (interval) clearInterval(interval)
+        }
     }, [startTime, endTime])
 
     const getStatusColor = () => {
