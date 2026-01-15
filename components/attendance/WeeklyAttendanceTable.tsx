@@ -1,5 +1,5 @@
 import { Badge, Card, CardContent, CardHeader, CardTitle } from "@/components/common/UIComponents"
-import { format, isSameDay, startOfWeek, addDays } from "date-fns"
+import { format, isSameDay, startOfWeek, addDays, differenceInMinutes } from "date-fns"
 import { createClient } from "@/lib/supabase-server"
 import { cookies } from "next/headers"
 import { formatInManila } from "@/lib/date-utils"
@@ -54,6 +54,7 @@ export async function WeeklyAttendanceTable() {
                                 <th className="px-2 py-3">Status</th>
                                 <th className="px-2 py-3">Check-in</th>
                                 <th className="px-2 py-3">Check-out</th>
+                                <th className="px-2 py-3">Total Hours</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-50">
@@ -62,6 +63,16 @@ export async function WeeklyAttendanceTable() {
                                 const record = records.find(r => r.date === dateStr)
                                 const isToday = isSameDay(day, now)
                                 const isWeekend = day.getDay() === 0 || day.getDay() === 6 // 0 is Sunday, 6 is Saturday
+
+                                let duration = "—"
+                                if (record?.check_in_time && record?.check_out_time) {
+                                    const start = new Date(record.check_in_time)
+                                    const end = new Date(record.check_out_time)
+                                    const diff = differenceInMinutes(end, start)
+                                    const hours = Math.floor(diff / 60)
+                                    const minutes = diff % 60
+                                    duration = `${hours}h ${minutes}m`
+                                }
 
                                 return (
                                     <tr key={dateStr} className={`hover:bg-gray-50 transition-colors ${isToday ? "bg-green-50/30" : ""}`}>
@@ -95,6 +106,9 @@ export async function WeeklyAttendanceTable() {
                                             {record?.check_out_time
                                                 ? formatInManila(record.check_out_time, "hh:mm a")
                                                 : "—"}
+                                        </td>
+                                        <td className="px-2 py-3 text-teal-600 font-bold text-xs">
+                                            {duration}
                                         </td>
                                     </tr>
                                 )
