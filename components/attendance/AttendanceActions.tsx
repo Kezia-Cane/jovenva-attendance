@@ -13,12 +13,13 @@ export async function AttendanceActions({ user_id }: { user_id: string }) {
     const supabase = createClient(cookieStore)
     const today = format(new Date(), 'yyyy-MM-dd')
 
-    const { data: record } = await supabase
-        .from('attendance')
-        .select('*')
-        .eq('user_id', user_id)
-        .eq('date', today)
-        .single()
+    const [userReq, recordReq] = await Promise.all([
+        supabase.from('users').select('name, avatar_url').eq('id', user_id).single(),
+        supabase.from('attendance').select('*').eq('user_id', user_id).eq('date', today).single()
+    ])
+
+    const userProfile = userReq.data
+    const record = recordReq.data
 
     const isCheckedIn = !!record
     const isCheckedOut = !!record?.check_out_time
@@ -43,6 +44,28 @@ export async function AttendanceActions({ user_id }: { user_id: string }) {
 
                 {/* Main Action Button Container */}
                 <div className="bg-white rounded-2xl shadow-lg p-6 w-full max-w-[90%] -mt-4 mb-4 flex flex-col items-center gap-4">
+
+                    {/* Profile Section */}
+                    <div className="flex flex-col items-center -mt-12 mb-2">
+                        <div className="h-20 w-20 rounded-2xl bg-gray-100 border-4 border-white shadow-sm overflow-hidden mb-3 flex items-center justify-center">
+                            {userProfile?.avatar_url ? (
+                                <img
+                                    src={userProfile.avatar_url}
+                                    alt={userProfile.name}
+                                    className="h-full w-full object-cover"
+                                />
+                            ) : (
+                                <span className="text-2xl font-bold text-gray-400">
+                                    {(userProfile?.name?.charAt(0) || "U").toUpperCase()}
+                                </span>
+                            )}
+                        </div>
+                        <h3 className="text-gray-800 font-bold text-sm">{userProfile?.name || "Team Member"}</h3>
+                        {/* Optional Status Text mimicking the screenshot "Yet to check-in" if desired, 
+                             but user only explicitly asked for photo and name. 
+                             I'll stick to just photo and name to not clutter unless implied.
+                         */}
+                    </div>
 
                     <div className="w-full">
                         {!isCheckedIn ? (
