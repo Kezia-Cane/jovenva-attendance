@@ -1,6 +1,6 @@
 "use client"
 
-import { Home, Clock, Settings, HelpCircle, FileText } from "lucide-react"
+import { Home, Clock, Settings, HelpCircle, FileText, Calendar } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 
@@ -9,7 +9,7 @@ export function Sidebar() {
 
     const links = [
         { name: "Dashboard", href: "/dashboard", icon: Home },
-        { name: "Attendance History", href: "/history", icon: Clock },
+        { name: "Daily Schedule", href: "/schedule", icon: Calendar },
         { name: "Settings", href: "/settings", icon: Settings },
     ]
 
