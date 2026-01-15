@@ -34,13 +34,16 @@ export async function AttendanceActions({ user_id }: { user_id: string }) {
             <CardContent className="relative z-10 pt-8 pb-10 flex flex-col items-center text-center">
 
                 {/* Header Action Area */}
-                <div className="mb-6 w-full flex justify-between items-center px-4 text-white uppercase text-sm font-bold">
-                    <div className="w-8"></div> {/* Spacer for centering */}
-                    <h3>Attendance</h3>
-                    <div className="bg-white/20 p-2 rounded-lg">
-                        <Clock size={20} />
-                    </div>
-                </div>
+                {/* Header Action Area Removed */}
+                <div className="mb-6 w-full h-8"></div> {/* Spacer to keep layout height if needed, or remove. 
+                   The user reference image has a big teal header area. 
+                   If I remove the text, I should keep the spacer or height?
+                   "remove the "attendance" text the the time icon"
+                   I'll remove the content but maybe keep the padding or structure if it affects position.
+                   The styling `pt-8 pb-10` on CardContent handles padding.
+                   The `absolute top-0` bg handles the background.
+                   I'll just remove the div.
+                */}
 
                 {/* Main Action Button Container */}
                 <div className="bg-white rounded-2xl shadow-lg p-6 w-full max-w-[90%] -mt-4 mb-4 flex flex-col items-center gap-4">
@@ -82,7 +85,7 @@ export async function AttendanceActions({ user_id }: { user_id: string }) {
                     </div>
 
                     <div className="flex flex-col items-center w-full">
-                        <p className="text-gray-400 text-[10px] font-bold uppercase mb-2">Session Duration</p>
+                        <p className="text-gray-400 text-[10px] font-bold uppercase mb-2">Shift Duration</p>
                         <SessionTimer
                             startTime={record?.check_in_time}
                             endTime={record?.check_out_time}
