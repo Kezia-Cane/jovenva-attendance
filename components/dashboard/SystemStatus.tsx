@@ -69,11 +69,11 @@ export async function SystemStatus() {
 
                                 {isPresent ? (
                                     <div className="flex items-center gap-1 bg-green-50 text-green-600 px-3 py-1 rounded-full text-xs font-bold border border-green-100">
-                                        Present
+                                        In
                                     </div>
                                 ) : (
                                     <div className="flex items-center gap-1 bg-red-50 text-red-500 px-3 py-1 rounded-full text-xs font-bold border border-red-100">
-                                        Absent
+                                        Out
                                     </div>
                                 )}
                             </div>
