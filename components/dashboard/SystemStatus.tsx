@@ -73,7 +73,6 @@ export async function SystemStatus() {
                                 ) : (
                                     <div className="flex items-center gap-1 bg-red-50 text-red-500 px-3 py-1 rounded-full text-xs font-bold border border-red-100">
                                         Absent
-                                        <XCircle size={12} className="ml-1" />
                                     </div>
                                 )}
                             </div>
