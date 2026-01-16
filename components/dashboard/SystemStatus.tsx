@@ -38,7 +38,7 @@ export async function SystemStatus() {
         <Card className="border-none shadow-md rounded-2xl h-full bg-white">
             <CardContent className="p-6">
                 <div className="flex items-center justify-between mb-6">
-                    <h3 className="font-bold text-lg text-gray-800">Team Attendance</h3>
+                    <h3 className="font-bold text-lg text-gray-800">Today's Attendance</h3>
 
                 </div>
 
