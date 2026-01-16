@@ -1,4 +1,4 @@
-import { format } from "date-fns"
+import { format, subDays } from "date-fns"
 
 export function getManilaTime(): Date {
     // create a date object that represents the current time in Manila
@@ -23,7 +23,12 @@ export function isCheckInAvailable(): { available: boolean; currentHour: number 
 
 export function getShiftDate(): string {
     const now = getManilaTime()
-    return format(now, 'yyyy-MM-dd')
+    const hour = now.getHours()
+
+    // If it's before noon (00:00 - 11:59), it belongs to yesterday's shift (which started at 8PM)
+    const shiftDate = hour < 12 ? subDays(now, 1) : now
+
+    return format(shiftDate, 'yyyy-MM-dd')
 }
 
 export function formatInManila(date: string | Date, fmt: string): string {

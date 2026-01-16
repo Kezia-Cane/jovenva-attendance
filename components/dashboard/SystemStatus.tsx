@@ -4,15 +4,14 @@ import { MoreHorizontal, CheckCircle, XCircle } from "lucide-react"
 import { createClient } from "@/lib/supabase-server"
 import { cookies } from "next/headers"
 import { format } from "date-fns"
-import { getManilaTime } from "@/lib/date-utils"
+import { getShiftDate } from "@/lib/date-utils"
 
 export async function SystemStatus() {
     const cookieStore = await cookies()
     const supabase = createClient(cookieStore)
 
-    // Get today's date in Manila time for consistency
-    const now = getManilaTime()
-    const todayStr = format(now, 'yyyy-MM-dd')
+    // Get distinct shift date (handles night shifts)
+    const todayStr = getShiftDate()
 
     // Fetch all users
     const { data: users } = await supabase
