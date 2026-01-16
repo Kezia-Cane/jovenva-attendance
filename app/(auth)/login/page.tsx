@@ -34,7 +34,7 @@ export default function LoginPage() {
 
             {/* Right Side - Teal Gradient & Curve */}
             <div className="absolute top-0 right-0 hidden h-full w-[50vw] md:flex flex-col justify-center items-center pl-0 pb-0 overflow-hidden rounded-bl-[50px]">
-                <img src="/jovenVA.webp" alt="Login Visual" className="h-full w-full object-contain" />
+                <div className="absolute inset-0 bg-[url('/jovenVA.webp')] bg-cover bg-center bg-no-repeat z-0" />
 
             </div>
         </div>
