@@ -37,9 +37,7 @@ export async function SystemStatus() {
             <CardContent className="p-6">
                 <div className="flex items-center justify-between mb-6">
                     <h3 className="font-bold text-lg text-gray-800">Team Attendance</h3>
-                    <button className="text-gray-400 hover:text-gray-600">
-                        <MoreHorizontal size={20} />
-                    </button>
+
                 </div>
 
                 <div className="flex flex-col gap-4">

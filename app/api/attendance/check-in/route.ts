@@ -1,7 +1,8 @@
 import { createClient } from '@/lib/supabase-server'
 import { cookies } from 'next/headers'
 import { NextResponse } from 'next/server'
-import { startOfDay, format } from 'date-fns'
+import { format } from 'date-fns'
+import { getManilaTime } from '@/lib/date-utils'
 
 export async function POST() {
   const cookieStore = await cookies()
@@ -30,8 +31,8 @@ export async function POST() {
     return NextResponse.json({ error: `User sync failed: ${upsertError.message}` }, { status: 500 })
   }
 
-  // 2. Check if already checked in today
-  const today = format(new Date(), 'yyyy-MM-dd')
+  // 2. Check if already checked in today (Manila Time)
+  const today = format(getManilaTime(), 'yyyy-MM-dd')
 
   const { data: existingAttendance } = await supabase
     .from('attendance')
