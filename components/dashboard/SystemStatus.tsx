@@ -4,7 +4,7 @@ import { MoreHorizontal, CheckCircle, XCircle } from "lucide-react"
 import { createClient } from "@/lib/supabase-server"
 import { cookies } from "next/headers"
 import { format } from "date-fns"
-import { getShiftDate } from "@/lib/date-utils"
+import { getShiftDate, getManilaTime } from "@/lib/date-utils"
 
 export async function SystemStatus() {
     const cookieStore = await cookies()
@@ -12,6 +12,9 @@ export async function SystemStatus() {
 
     // Get distinct shift date (handles night shifts)
     const todayStr = getShiftDate()
+    // Also get literal date to catch records created before the shift calculation fix
+    const literalDate = format(getManilaTime(), 'yyyy-MM-dd')
+    const queryDates = Array.from(new Set([todayStr, literalDate]))
 
     // Fetch all users
     const { data: users } = await supabase
@@ -19,11 +22,11 @@ export async function SystemStatus() {
         .select('id, name, avatar_url')
         .order('name')
 
-    // Fetch today's attendance
+    // Fetch today's attendance (checking both potential date buckets)
     const { data: attendance } = await supabase
         .from('attendance')
         .select('user_id, status')
-        .eq('date', todayStr)
+        .in('date', queryDates)
 
     // Create a map of user_id -> status
     const attendanceMap = new Map()
@@ -67,7 +70,6 @@ export async function SystemStatus() {
                                 {isPresent ? (
                                     <div className="flex items-center gap-1 bg-green-50 text-green-600 px-3 py-1 rounded-full text-xs font-bold border border-green-100">
                                         Present
-                                        <CheckCircle size={12} className="ml-1" />
                                     </div>
                                 ) : (
                                     <div className="flex items-center gap-1 bg-red-50 text-red-500 px-3 py-1 rounded-full text-xs font-bold border border-red-100">
