@@ -84,15 +84,15 @@ export async function WeeklyAttendanceTable() {
                                         </td>
                                         <td className="px-2 py-3">
                                             {record ? (
-                                                <span className="bg-green-100 text-green-700 px-3 py-1 rounded-md text-xs font-bold">
+                                                <span className="bg-green-50 text-green-600 px-3 py-1 rounded-full text-xs font-bold border border-green-100">
                                                     Present
                                                 </span>
                                             ) : isWeekend ? (
-                                                <span className="bg-gray-200 text-gray-600 px-3 py-1 rounded-md text-xs font-bold">
+                                                <span className="bg-gray-50 text-gray-500 px-3 py-1 rounded-full text-xs font-bold border border-gray-100">
                                                     Weekend
                                                 </span>
                                             ) : (
-                                                <span className={`px-3 py-1 rounded-md text-xs font-bold ${isToday ? "bg-yellow-100 text-yellow-700" : "bg-red-100 text-red-700"}`}>
+                                                <span className={`px-3 py-1 rounded-full text-xs font-bold border ${isToday ? "bg-yellow-50 text-yellow-600 border-yellow-100" : "bg-red-50 text-red-500 border-red-100"}`}>
                                                     {isToday ? "Pending" : "Absent"}
                                                 </span>
                                             )}
