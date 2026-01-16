@@ -17,10 +17,16 @@ export async function middleware(request: NextRequest) {
                     return request.cookies.get(name)?.value
                 },
                 set(name: string, value: string, options: CookieOptions) {
+                    // Force 30 days persistence
+                    const newOptions = {
+                        ...options,
+                        maxAge: 60 * 60 * 24 * 30 // 30 days
+                    }
+
                     request.cookies.set({
                         name,
                         value,
-                        ...options,
+                        ...newOptions,
                     })
                     response = NextResponse.next({
                         request: {
@@ -30,7 +36,7 @@ export async function middleware(request: NextRequest) {
                     response.cookies.set({
                         name,
                         value,
-                        ...options,
+                        ...newOptions,
                     })
                 },
                 remove(name: string, options: CookieOptions) {
