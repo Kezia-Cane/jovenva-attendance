@@ -5,6 +5,7 @@ import { WeeklyAttendanceTable } from "@/components/attendance/WeeklyAttendanceT
 import { AttendanceActions } from "@/components/attendance/AttendanceActions"
 import { StatCard } from "@/components/dashboard/StatCard"
 import { SystemStatus } from "@/components/dashboard/SystemStatus"
+import { TeamHours } from "@/components/dashboard/TeamHours"
 import { Calendar, CheckCircle, Clock } from "lucide-react"
 
 export default async function DashboardPage() {
@@ -45,6 +46,9 @@ export default async function DashboardPage() {
 
                 {/* Main Table */}
                 <WeeklyAttendanceTable />
+
+                {/* Team Hours Component */}
+                <TeamHours />
             </div>
 
             {/* Right Column - Actions & Status (1/3 width) */}
