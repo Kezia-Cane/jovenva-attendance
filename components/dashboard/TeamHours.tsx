@@ -53,7 +53,7 @@ export async function TeamHours() {
         <Card className="border-none shadow-md rounded-2xl h-fit bg-white mt-6">
             <CardContent className="p-6">
                 <div className="flex items-center justify-between mb-6">
-                    <h3 className="font-bold text-lg text-gray-800">Individual Team Hours</h3>
+                    <h3 className="font-bold text-lg text-gray-800">Weekly Total Hours</h3>
                     <button className="text-gray-400 hover:text-gray-600">
                         <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
                             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 13a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm7 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm-14 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z" />
@@ -61,9 +61,9 @@ export async function TeamHours() {
                     </button>
                 </div>
 
-                <div className="flex text-xs font-bold text-gray-400 mb-4 px-2">
-                    <span className="w-1/3">Team Member</span>
-                    <span className="w-2/3 text-right">Total Hours</span>
+                <div className="grid grid-cols-12 gap-4 items-center mb-4 text-gray-400 text-[10px] uppercase font-bold tracking-wider">
+                    <span className="col-span-4">Team Member</span>
+                    <span className="col-span-8 text-right">Total Hours</span>
                 </div>
 
                 <div className="flex flex-col gap-5">
