@@ -170,11 +170,11 @@ export default function SchedulePage() {
                     <DateSelector selectedDate={selectedDate} onDateChange={setSelectedDate} />
                     <button
                         onClick={handleCreateTask}
-                        className="btn-3d btn-3d-teal w-auto min-w-[150px]"
+                        className="btn-3d btn-3d-teal w-fit"
                     >
                         <span className="btn-3d-shadow"></span>
                         <span className="btn-3d-edge"></span>
-                        <span className="btn-3d-front gap-2 px-4 py-3">
+                        <span className="btn-3d-front gap-2 px-5 py-2">
                             <Plus className="h-4 w-4" />
                             <span className="text-sm font-bold">Create Task</span>
                         </span>
