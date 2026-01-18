@@ -50,7 +50,7 @@ export async function TeamHours() {
     }).sort((a, b) => b.totalHours - a.totalHours)
 
     return (
-        <Card className="border-none shadow-md rounded-2xl h-fit bg-white mt-6">
+        <Card className="border-none shadow-md rounded-2xl h-fit bg-white">
             <CardContent className="p-6">
                 <div className="flex items-center justify-between mb-6">
                     <h3 className="font-bold text-lg text-gray-800">Weekly Total Hours</h3>
