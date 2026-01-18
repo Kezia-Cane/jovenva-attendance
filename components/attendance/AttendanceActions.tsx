@@ -4,7 +4,7 @@ import { format } from "date-fns"
 import { CheckInButton } from "./CheckInButton"
 import { CheckOutButton } from "./CheckOutButton"
 import { SessionTimer } from "./SessionTimer"
-import { isCheckInAvailable, getShiftDate } from "@/lib/date-utils"
+import { isCheckInAvailable, getShiftDate, getManilaTime } from "@/lib/date-utils"
 import { Card, CardContent } from "../common/UIComponents"
 import { Clock } from "lucide-react"
 
@@ -27,23 +27,16 @@ export async function AttendanceActions({ user_id }: { user_id: string }) {
     const { available: isTimeWindowOpen } = isCheckInAvailable()
     const canCheckIn = !isCheckedIn && isTimeWindowOpen
 
+    // Check for Weekend
+    const now = getManilaTime()
+    const day = now.getDay()
+    const isWeekend = day === 0 || day === 6
+
     return (
         <Card className="border-none shadow-md rounded-2xl bg-white relative">
             <div className="absolute top-0 left-0 w-full h-[120px] bg-gradient-to-r from-teal-300 to-teal-400 z-0 rounded-t-2xl" />
 
             <CardContent className="relative z-10 pt-8 pb-10 flex flex-col items-center text-center">
-
-                {/* Header Action Area */}
-                {/* Header Action Area Removed */}
-                <div className="mb-6 w-full h-8"></div> {/* Spacer to keep layout height if needed, or remove. 
-                   The user reference image has a big teal header area. 
-                   If I remove the text, I should keep the spacer or height?
-                   "remove the "attendance" text the the time icon"
-                   I'll remove the content but maybe keep the padding or structure if it affects position.
-                   The styling `pt-8 pb-10` on CardContent handles padding.
-                   The `absolute top-0` bg handles the background.
-                   I'll just remove the div.
-                */}
 
                 {/* Main Action Button Container */}
                 <div className="bg-white rounded-2xl shadow-lg p-6 w-full max-w-[90%] -mt-4 mb-4 flex flex-col items-center gap-4">
@@ -64,10 +57,6 @@ export async function AttendanceActions({ user_id }: { user_id: string }) {
                             )}
                         </div>
                         <h3 className="text-gray-800 font-bold text-sm">{userProfile?.name || "Team Member"}</h3>
-                        {/* Optional Status Text mimicking the screenshot "Yet to check-in" if desired, 
-                             but user only explicitly asked for photo and name. 
-                             I'll stick to just photo and name to not clutter unless implied.
-                         */}
                     </div>
 
                     <div className="w-full">
@@ -92,13 +81,13 @@ export async function AttendanceActions({ user_id }: { user_id: string }) {
                             className="text-4xl font-bold text-gray-800 tabular-nums"
                         />
                     </div>
-                </div>
 
-                {!isTimeWindowOpen && !isCheckedIn && (
-                    <div className="bg-orange-50 text-orange-600 px-4 py-2 rounded-xl text-xs font-bold border border-orange-100 flex items-center gap-2">
-                        <span>⚠️</span> Check-in starts at 8:00 PM
-                    </div>
-                )}
+                    {!isTimeWindowOpen && !isCheckedIn && !isWeekend && (
+                        <div className="bg-orange-50 text-orange-600 px-4 py-2 rounded-xl text-xs font-bold border border-orange-100 flex items-center justify-center gap-2 w-full animate-pulse">
+                            <span>⚠️</span> Check-ins are available at 8:00 PM
+                        </div>
+                    )}
+                </div>
 
             </CardContent>
         </Card>

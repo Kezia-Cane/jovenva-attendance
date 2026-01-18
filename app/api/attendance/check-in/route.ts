@@ -1,7 +1,7 @@
 import { createClient } from '@/lib/supabase-server'
 import { cookies } from 'next/headers'
 import { NextResponse } from 'next/server'
-import { getShiftDate } from '@/lib/date-utils'
+import { getShiftDate, getManilaTime } from '@/lib/date-utils'
 
 export async function POST() {
   const cookieStore = await cookies()
@@ -40,6 +40,15 @@ export async function POST() {
   const dayOfWeek = shiftDateObj.getUTCDay() // "YYYY-MM-DD" parses to UTC midnight
   if (dayOfWeek === 0 || dayOfWeek === 6) {
     return NextResponse.json({ error: "you cant check in on weekends, please take a deep rest" }, { status: 400 })
+  }
+
+  // CHECK TIME WINDOW (Mon-Fri)
+  // Check-ins allowed only from 8:00 PM (20:00) to 12:00 PM (Next Day Noon).
+  // Block 12:01 PM - 7:59 PM.
+  const nowManila = getManilaTime()
+  const hour = nowManila.getHours()
+  if (hour >= 12 && hour < 20) {
+    return NextResponse.json({ error: "check ins are available on 8pm" }, { status: 400 })
   }
 
   const { data: existingAttendance } = await supabase
