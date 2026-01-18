@@ -166,7 +166,7 @@ export default function SchedulePage() {
                     <h1 className="text-2xl font-bold tracking-tight text-gray-900">Daily Schedule</h1>
                     <p className="text-sm text-gray-500 mt-1">Manage your daily tasks and time blocks.</p>
                 </div>
-                <div className="flex flex-wrap items-center gap-4">
+                <div className="flex flex-wrap items-center gap-2">
                     <DateSelector selectedDate={selectedDate} onDateChange={setSelectedDate} />
                     <button
                         onClick={handleCreateTask}
