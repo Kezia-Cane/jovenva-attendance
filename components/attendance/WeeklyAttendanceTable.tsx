@@ -36,11 +36,16 @@ export async function WeeklyAttendanceTable() {
         if (data) records = data as AttendanceRecord[]
     }
 
-    // Generate days for the current week (Mon-Sun)
-    const weekDays = Array.from({ length: 7 }).map((_, i) => addDays(startOfCurrentWeek, i))
+    // Generate days for the current week (Mon-Fri)
+    const weekDays = Array.from({ length: 7 })
+        .map((_, i) => addDays(startOfCurrentWeek, i))
+        .filter(day => {
+            const d = day.getDay()
+            return d !== 0 && d !== 6 // Exclude Sunday(0) and Saturday(6)
+        })
 
     return (
-        <Card className="border-none shadow-md rounded-2xl h-full bg-white">
+        <Card className="border-none shadow-md rounded-2xl h-fit bg-white">
             <CardHeader className="pt-6 px-6 pb-4">
                 <CardTitle className="text-lg font-bold text-gray-800">Weekly Attendance</CardTitle>
             </CardHeader>
@@ -62,7 +67,6 @@ export async function WeeklyAttendanceTable() {
                                 const dateStr = format(day, "yyyy-MM-dd")
                                 const record = records.find(r => r.date === dateStr)
                                 const isToday = isSameDay(day, now)
-                                const isWeekend = day.getDay() === 0 || day.getDay() === 6 // 0 is Sunday, 6 is Saturday
 
                                 let duration = "—"
                                 if (record?.check_in_time && record?.check_out_time) {
@@ -86,10 +90,6 @@ export async function WeeklyAttendanceTable() {
                                             {record ? (
                                                 <span className="bg-green-50 text-green-600 px-3 py-1 rounded-full text-xs font-bold border border-green-100">
                                                     Present
-                                                </span>
-                                            ) : isWeekend ? (
-                                                <span className="bg-gray-50 text-gray-500 px-3 py-1 rounded-full text-xs font-bold border border-gray-100">
-                                                    Weekend
                                                 </span>
                                             ) : (
                                                 <span className={`px-3 py-1 rounded-full text-xs font-bold border ${isToday ? "bg-yellow-50 text-yellow-600 border-yellow-100" : "bg-red-50 text-red-500 border-red-100"}`}>

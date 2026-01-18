@@ -33,6 +33,15 @@ export async function POST() {
   // 2. Check if already checked in today (Shift Date)
   const today = getShiftDate()
 
+  // STRICTLY FORBID WEEKENDS
+  // We check the day of the Shift Date.
+  // If Shift Date is Saturday or Sunday, block it.
+  const shiftDateObj = new Date(today)
+  const dayOfWeek = shiftDateObj.getUTCDay() // "YYYY-MM-DD" parses to UTC midnight
+  if (dayOfWeek === 0 || dayOfWeek === 6) {
+    return NextResponse.json({ error: "you cant check in on weekends, please take a deep rest" }, { status: 400 })
+  }
+
   const { data: existingAttendance } = await supabase
     .from('attendance')
     .select('*')
