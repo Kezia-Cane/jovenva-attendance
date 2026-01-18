@@ -39,13 +39,17 @@ export default async function DashboardPage({ searchParams }: { searchParams: { 
                 </Suspense>
 
                 {/* Main Table */}
-                <Suspense key={date || 'week-table'} fallback={<LoadingCard height="min-h-[400px]" />}>
-                    <WeeklyAttendanceTable date={date} />
+                <Suspense key={`table-${date || 'now'}`} fallback={<LoadingCard height="h-[400px]" />}>
+                    <div className="w-full">
+                        <WeeklyAttendanceTable date={date} />
+                    </div>
                 </Suspense>
 
                 {/* Team Hours Component */}
-                <Suspense key={date || 'team-hours'} fallback={<LoadingCard height="min-h-[300px]" />}>
-                    <TeamHours date={date} />
+                <Suspense key={`hours-${date || 'now'}`} fallback={<LoadingCard height="h-[300px]" />}>
+                    <div className="w-full">
+                        <TeamHours date={date} />
+                    </div>
                 </Suspense>
             </div>
 
