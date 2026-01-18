@@ -3,10 +3,9 @@ import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
 import { WeeklyAttendanceTable } from "@/components/attendance/WeeklyAttendanceTable"
 import { AttendanceActions } from "@/components/attendance/AttendanceActions"
-import { StatCard } from "@/components/dashboard/StatCard"
 import { SystemStatus } from "@/components/dashboard/SystemStatus"
 import { TeamHours } from "@/components/dashboard/TeamHours"
-import { Calendar, CheckCircle, Clock } from "lucide-react"
+import { DashboardStats } from "@/components/dashboard/DashboardStats"
 import { Suspense } from "react"
 import { LoadingCard } from "@/components/dashboard/LoadingCard"
 
@@ -24,27 +23,15 @@ export default async function DashboardPage() {
             {/* Left Column - Main Content (2/3 width) */}
             <div className="lg:col-span-2 flex flex-col gap-6">
                 {/* Top Row - Stat Cards */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <StatCard
-                        title="Today's Check-ins"
-                        value="18 / 20"
-                        icon={CheckCircle}
-                        subtext="Present: 90%"
-                        status="success"
-                    />
-                    <StatCard
-                        title="My Weekly Attendance"
-                        value="4 / 5"
-                        icon={Calendar}
-                        subtext="Mon, Tue, Wed, Thu Present"
-                        status="neutral"
-                    />
-                    <StatCard
-                        title="Pending Actions"
-                        value="None"
-                        icon={Clock}
-                    />
-                </div>
+                <Suspense fallback={
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        {[1, 2, 3].map(i => (
+                            <div key={i} className="h-[120px] bg-white rounded-2xl shadow-md animate-pulse" />
+                        ))}
+                    </div>
+                }>
+                    <DashboardStats />
+                </Suspense>
 
                 {/* Main Table */}
                 <Suspense fallback={<LoadingCard height="min-h-[400px]" />}>
