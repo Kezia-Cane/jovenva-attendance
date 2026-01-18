@@ -4,12 +4,12 @@ import { cookies } from "next/headers"
 import { startOfWeek, endOfWeek, differenceInMinutes, format } from "date-fns"
 import { getManilaTime } from "@/lib/date-utils"
 
-export async function TeamHours() {
+export async function TeamHours({ date }: { date?: string }) {
     const cookieStore = await cookies()
     const supabase = createClient(cookieStore)
 
     // Current Week Range
-    const now = getManilaTime()
+    const now = date ? new Date(date) : getManilaTime()
     const start = startOfWeek(now, { weekStartsOn: 1 }) // Monday
     const end = endOfWeek(now, { weekStartsOn: 1 })
 

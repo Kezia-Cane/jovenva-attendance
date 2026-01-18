@@ -9,10 +9,15 @@ import { DashboardStats } from "@/components/dashboard/DashboardStats"
 import { Suspense } from "react"
 import { LoadingCard } from "@/components/dashboard/LoadingCard"
 
-export default async function DashboardPage() {
+export default async function DashboardPage({ searchParams }: { searchParams: { date?: string } }) {
     const cookieStore = await cookies()
     const supabase = createClient(cookieStore)
     const { data: { user } } = await supabase.auth.getUser()
+
+    // Get date from URL or undefined (defaults to current week in components)
+    // Awaiting searchParams to be safe for Next.js 15+
+    const resolvedParams = await searchParams
+    const date = resolvedParams?.date
 
     if (!user) {
         redirect("/login")
@@ -35,12 +40,12 @@ export default async function DashboardPage() {
 
                 {/* Main Table */}
                 <Suspense fallback={<LoadingCard height="min-h-[400px]" />}>
-                    <WeeklyAttendanceTable />
+                    <WeeklyAttendanceTable date={date} />
                 </Suspense>
 
                 {/* Team Hours Component */}
                 <Suspense fallback={<LoadingCard height="min-h-[300px]" />}>
-                    <TeamHours />
+                    <TeamHours date={date} />
                 </Suspense>
             </div>
 

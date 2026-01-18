@@ -3,6 +3,8 @@ import { format, isSameDay, startOfWeek, addDays, differenceInMinutes } from "da
 import { createClient } from "@/lib/supabase-server"
 import { cookies } from "next/headers"
 import { formatInManila, getManilaTime } from "@/lib/date-utils"
+import { ChevronLeft, ChevronRight } from "lucide-react"
+import Link from "next/link"
 
 interface AttendanceRecord {
     id: string
@@ -12,13 +14,16 @@ interface AttendanceRecord {
     status: 'PRESENT' | 'ABSENT'
 }
 
-export async function WeeklyAttendanceTable() {
+export async function WeeklyAttendanceTable({ date }: { date?: string }) {
     const cookieStore = await cookies()
     const supabase = createClient(cookieStore)
 
     // Get start/end of current week (Monday start)
-    const now = getManilaTime()
+    const now = date ? new Date(date) : getManilaTime()
     const startOfCurrentWeek = startOfWeek(now, { weekStartsOn: 1 })
+
+    const prevWeek = format(addDays(startOfCurrentWeek, -7), 'yyyy-MM-dd')
+    const nextWeek = format(addDays(startOfCurrentWeek, 7), 'yyyy-MM-dd')
 
     // Auth check
     const { data: { user } } = await supabase.auth.getUser()
@@ -46,8 +51,16 @@ export async function WeeklyAttendanceTable() {
 
     return (
         <Card className="border-none shadow-md rounded-2xl h-fit bg-white">
-            <CardHeader className="pt-6 px-6 pb-4">
+            <CardHeader className="pt-6 px-6 pb-4 flex flex-row items-center justify-between">
                 <CardTitle className="text-lg font-bold text-gray-800">Weekly Attendance</CardTitle>
+                <div className="flex items-center gap-2">
+                    <Link href={`?date=${prevWeek}`} scroll={false} className="p-1 hover:bg-gray-100 rounded-lg transition-colors text-gray-500">
+                        <ChevronLeft size={20} />
+                    </Link>
+                    <Link href={`?date=${nextWeek}`} scroll={false} className="p-1 hover:bg-gray-100 rounded-lg transition-colors text-gray-500">
+                        <ChevronRight size={20} />
+                    </Link>
+                </div>
             </CardHeader>
             <CardContent className="px-6 pb-6 pt-0">
                 <div className="overflow-x-auto">
