@@ -2,7 +2,7 @@ import { Badge, Card, CardContent, CardHeader, CardTitle } from "@/components/co
 import { format, isSameDay, startOfWeek, addDays, differenceInMinutes } from "date-fns"
 import { createClient } from "@/lib/supabase-server"
 import { cookies } from "next/headers"
-import { formatInManila } from "@/lib/date-utils"
+import { formatInManila, getManilaTime } from "@/lib/date-utils"
 
 interface AttendanceRecord {
     id: string
@@ -17,7 +17,7 @@ export async function WeeklyAttendanceTable() {
     const supabase = createClient(cookieStore)
 
     // Get start/end of current week (Monday start)
-    const now = new Date()
+    const now = getManilaTime()
     const startOfCurrentWeek = startOfWeek(now, { weekStartsOn: 1 })
 
     // Auth check

@@ -2,13 +2,14 @@ import { Card, CardContent } from "@/components/common/UIComponents"
 import { createClient } from "@/lib/supabase-server"
 import { cookies } from "next/headers"
 import { startOfWeek, endOfWeek, differenceInMinutes, format } from "date-fns"
+import { getManilaTime } from "@/lib/date-utils"
 
 export async function TeamHours() {
     const cookieStore = await cookies()
     const supabase = createClient(cookieStore)
 
     // Current Week Range
-    const now = new Date()
+    const now = getManilaTime()
     const start = startOfWeek(now, { weekStartsOn: 1 }) // Monday
     const end = endOfWeek(now, { weekStartsOn: 1 })
 
