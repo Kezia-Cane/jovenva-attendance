@@ -1,8 +1,8 @@
 "use client"
 
 import { useState } from "react"
-import { Button } from "@/components/common/Button"
 import { useRouter } from "next/navigation"
+import { TypingIndicator } from "@/components/common/TypingIndicator"
 
 interface CheckOutButtonProps {
     disabled?: boolean
@@ -28,13 +28,16 @@ export function CheckOutButton({ disabled, className }: CheckOutButtonProps) {
     }
 
     return (
-        <Button
+        <button
             onClick={handleCheckOut}
             disabled={disabled || loading}
-            variant="secondary"
-            className={className}
+            className={`btn-3d btn-3d-red ${className || ""}`}
         >
-            {loading ? "Checking Out..." : "Check Out"}
-        </Button>
+            <span className="btn-3d-shadow"></span>
+            <span className="btn-3d-edge"></span>
+            <span className="btn-3d-front">
+                {loading ? <TypingIndicator /> : "Check Out"}
+            </span>
+        </button>
     )
 }

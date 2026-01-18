@@ -1,8 +1,8 @@
 "use client"
 
 import { useState } from "react"
-import { Button } from "@/components/common/Button"
 import { useRouter } from "next/navigation"
+import { TypingIndicator } from "@/components/common/TypingIndicator"
 
 interface CheckInButtonProps {
     disabled?: boolean
@@ -32,14 +32,16 @@ export function CheckInButton({ disabled, className }: CheckInButtonProps) {
     }
 
     return (
-        <Button
+        <button
             onClick={handleCheckIn}
             disabled={disabled || loading}
-            className={className}
-            variant="primary"
-            size="lg"
+            className={`btn-3d btn-3d-teal ${className || ""}`}
         >
-            {loading ? "Checking In..." : (disabled ? "Checked In" : "Check In")}
-        </Button>
+            <span className="btn-3d-shadow"></span>
+            <span className="btn-3d-edge"></span>
+            <span className="btn-3d-front">
+                {loading ? <TypingIndicator /> : (disabled ? "Checked In" : "Check In")}
+            </span>
+        </button>
     )
 }

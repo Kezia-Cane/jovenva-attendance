@@ -22,3 +22,199 @@ body {
   color: var(--foreground);
   font-family: 'Roboto', sans-serif;
 }
+
+/* --------------------------
+   Custom 3D Button Styles
+   From Uiverse.io by cssbuttons-io
+--------------------------- */
+.btn-3d {
+  position: relative;
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  outline-offset: 4px;
+  transition: filter 250ms;
+  user-select: none;
+  touch-action: manipulation;
+  width: 100%;
+}
+
+.btn-3d-shadow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  background: hsl(0deg 0% 0% / 0.25);
+  will-change: transform;
+  transform: translateY(2px);
+  transition: transform 600ms cubic-bezier(.3, .7, .4, 1);
+}
+
+.btn-3d-edge {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  background: var(--btn-edge-bg);
+}
+
+.btn-3d-front {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 12px 27px;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  color: white;
+  background: var(--btn-front-bg);
+  will-change: transform;
+  transform: translateY(-4px);
+  transition: transform 600ms cubic-bezier(.3, .7, .4, 1);
+  font-weight: bold;
+}
+
+.btn-3d:hover {
+  filter: brightness(110%);
+}
+
+.btn-3d:hover .btn-3d-front {
+  transform: translateY(-6px);
+  transition: transform 250ms cubic-bezier(.3, .7, .4, 1.5);
+}
+
+.btn-3d:active .btn-3d-front {
+  transform: translateY(-2px);
+  transition: transform 34ms;
+}
+
+.btn-3d:hover .btn-3d-shadow {
+  transform: translateY(4px);
+  transition: transform 250ms cubic-bezier(.3, .7, .4, 1.5);
+}
+
+.btn-3d:active .btn-3d-shadow {
+  transform: translateY(1px);
+  transition: transform 34ms;
+}
+
+.btn-3d:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Variants */
+.btn-3d-teal {
+  --btn-front-bg: #4FD1C5;
+  --btn-edge-bg: linear-gradient(to left, #2C7A7B 0%, #319795 8%, #319795 92%, #2C7A7B 100%);
+}
+
+.btn-3d-red {
+  --btn-front-bg: hsl(345deg 100% 47%);
+  --btn-edge-bg: linear-gradient(to left, hsl(340deg 100% 16%) 0%, hsl(340deg 100% 32%) 8%, hsl(340deg 100% 32%) 92%, hsl(340deg 100% 16%) 100%);
+}
+
+.btn-3d:disabled {
+  cursor: default;
+  pointer-events: none;
+  filter: grayscale(0.8) opacity(0.7);
+}
+
+
+/* --------------------------
+   Typing Indicator Animation
+   From Uiverse.io by aaronross1
+--------------------------- */
+.typing-indicator {
+  width: 60px;
+  height: 30px;
+  position: relative;
+  z-index: 4;
+}
+
+.typing-circle {
+  width: 8px;
+  height: 8px;
+  position: absolute;
+  border-radius: 50%;
+  background-color: #fff;
+  /* Changed to white for button contrast */
+  left: 15%;
+  transform-origin: 50%;
+  animation: typing-circle7124 0.5s alternate infinite ease;
+}
+
+@keyframes typing-circle7124 {
+  0% {
+    top: 20px;
+    height: 5px;
+    border-radius: 50px 50px 25px 25px;
+    transform: scaleX(1.7);
+  }
+
+  40% {
+    height: 8px;
+    border-radius: 50%;
+    transform: scaleX(1);
+  }
+
+  100% {
+    top: 0%;
+  }
+}
+
+.typing-circle:nth-child(2) {
+  left: 45%;
+  animation-delay: 0.2s;
+}
+
+.typing-circle:nth-child(3) {
+  left: auto;
+  right: 15%;
+  animation-delay: 0.3s;
+}
+
+.typing-shadow {
+  width: 5px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.2);
+  position: absolute;
+  top: 30px;
+  transform-origin: 50%;
+  z-index: 3;
+  left: 15%;
+  filter: blur(1px);
+  animation: typing-shadow046 0.5s alternate infinite ease;
+}
+
+@keyframes typing-shadow046 {
+  0% {
+    transform: scaleX(1.5);
+  }
+
+  40% {
+    transform: scaleX(1);
+    opacity: 0.7;
+  }
+
+  100% {
+    transform: scaleX(0.2);
+    opacity: 0.4;
+  }
+}
+
+.typing-shadow:nth-child(4) {
+  left: 45%;
+  animation-delay: 0.2s;
+}
+
+.typing-shadow:nth-child(5) {
+  left: auto;
+  right: 15%;
+  animation-delay: 0.3s;
+}
