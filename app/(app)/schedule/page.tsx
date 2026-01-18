@@ -175,7 +175,7 @@ export default function SchedulePage() {
                         <span className="btn-3d-shadow"></span>
                         <span className="btn-3d-edge"></span>
                         <span className="btn-3d-front gap-2 px-5 py-2">
-                            <Plus className="h-4 w-4" />
+                            <Plus className="h-4 w-2" />
                             <span className="text-sm font-bold">Create Task</span>
                         </span>
                     </button>
