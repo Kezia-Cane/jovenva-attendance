@@ -54,10 +54,10 @@ export async function WeeklyAttendanceTable({ date }: { date?: string }) {
             <CardHeader className="pt-6 px-6 pb-4 flex flex-row items-center justify-between">
                 <CardTitle className="text-lg font-bold text-gray-800">Weekly Attendance</CardTitle>
                 <div className="flex items-center gap-2">
-                    <Link href={`?date=${prevWeek}`} scroll={false} className="p-1 hover:bg-gray-100 rounded-lg transition-colors text-gray-500">
+                    <Link href={`?date=${prevWeek}`} scroll={false} className="p-2 hover:bg-gray-100 rounded-xl transition-all duration-200 active:scale-90 text-gray-500 hover:text-teal-500">
                         <ChevronLeft size={20} />
                     </Link>
-                    <Link href={`?date=${nextWeek}`} scroll={false} className="p-1 hover:bg-gray-100 rounded-lg transition-colors text-gray-500">
+                    <Link href={`?date=${nextWeek}`} scroll={false} className="p-2 hover:bg-gray-100 rounded-xl transition-all duration-200 active:scale-90 text-gray-500 hover:text-teal-500">
                         <ChevronRight size={20} />
                     </Link>
                 </div>
