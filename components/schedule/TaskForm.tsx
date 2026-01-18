@@ -62,7 +62,7 @@ export function TaskForm({ initialData, selectedDate, userId, onSave, onCancel, 
                         type="text"
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
-                        className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                        className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-teal-400 focus:outline-none focus:ring-1 focus:ring-teal-400"
                         placeholder="Task title"
                         required
                     />
@@ -76,7 +76,7 @@ export function TaskForm({ initialData, selectedDate, userId, onSave, onCancel, 
                             value={startTime}
                             onChange={(e) => setStartTime(e.target.value)} // inputs produce HH:MM
                             step="900" // 15 min steps
-                            className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                            className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-teal-400 focus:outline-none focus:ring-1 focus:ring-teal-400"
                             required
                         />
                     </div>
@@ -87,7 +87,7 @@ export function TaskForm({ initialData, selectedDate, userId, onSave, onCancel, 
                             value={endTime}
                             onChange={(e) => setEndTime(e.target.value)}
                             step="900"
-                            className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                            className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-teal-400 focus:outline-none focus:ring-1 focus:ring-teal-400"
                             required
                         />
                     </div>
@@ -99,7 +99,7 @@ export function TaskForm({ initialData, selectedDate, userId, onSave, onCancel, 
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
                         rows={3}
-                        className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                        className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-teal-400 focus:outline-none focus:ring-1 focus:ring-teal-400"
                         placeholder="Optional description"
                     />
                 </div>
@@ -110,7 +110,7 @@ export function TaskForm({ initialData, selectedDate, userId, onSave, onCancel, 
                         <select
                             value={status}
                             onChange={(e) => setStatus(e.target.value as any)}
-                            className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                            className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-teal-400 focus:outline-none focus:ring-1 focus:ring-teal-400"
                         >
                             <option value="PENDING">Pending</option>
                             <option value="IN_PROGRESS">In Progress</option>
@@ -123,7 +123,7 @@ export function TaskForm({ initialData, selectedDate, userId, onSave, onCancel, 
                         <select
                             value={priority}
                             onChange={(e) => setPriority(e.target.value as any)}
-                            className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                            className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-teal-400 focus:outline-none focus:ring-1 focus:ring-teal-400"
                         >
                             <option value="LOW">Low</option>
                             <option value="MEDIUM">Medium</option>
@@ -147,7 +147,7 @@ export function TaskForm({ initialData, selectedDate, userId, onSave, onCancel, 
                 <button
                     type="button"
                     onClick={handleSubmit}
-                    className="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50"
+                    className="rounded-md bg-teal-400 px-4 py-2 text-sm font-bold text-white hover:bg-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-400 focus:ring-offset-2 disabled:opacity-50"
                     disabled={isLoading}
                 >
                     {isLoading ? "Saving..." : "Save Task"}
