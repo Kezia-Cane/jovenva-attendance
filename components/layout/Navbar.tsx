@@ -2,7 +2,6 @@
 
 import { Search, Bell, Settings, User } from "lucide-react"
 import { usePathname } from "next/navigation"
-import { signOutAction } from "@/app/actions/auth"
 
 export function Navbar() {
     const pathname = usePathname()
@@ -30,11 +29,7 @@ export function Navbar() {
                 </div>
 
                 <div className="flex items-center gap-3 text-gray-500">
-                    <form action={signOutAction}>
-                        <button type="submit" className="px-4 py-2 text-xs font-bold text-red-500 bg-white border border-red-500 rounded-xl hover:bg-red-50 transition-colors shadow-sm">
-                            Logout
-                        </button>
-                    </form>
+
                     <button className="hover:text-teal-300 transition-colors">
                         <Settings size={18} />
                     </button>
