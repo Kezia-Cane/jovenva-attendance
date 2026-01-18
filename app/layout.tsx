@@ -6,6 +6,8 @@ export const metadata: Metadata = {
   description: "Attendance Management System",
 };
 
+import { MobileBlocker } from "@/components/layout/MobileBlocker";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -14,6 +16,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="antialiased">
+        <MobileBlocker />
         {children}
       </body>
     </html>
