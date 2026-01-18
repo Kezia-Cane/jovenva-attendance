@@ -31,7 +31,7 @@ export function TaskCard({ task, onEdit, onDelete, onToggleStatus, isCurrentUser
     const isActive = task.status === 'IN_PROGRESS';
 
     return (
-        <Card className={`mb-4 transition-all hover:shadow-md ${isActive ? 'border-l-4 border-l-blue-500' : ''}`}>
+        <Card className={`mb-4 transition-all hover:shadow-md ${isActive ? 'border-l-4 border-l-teal-400' : ''}`}>
             <CardContent className="p-4 flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center">
 
                 {/* Time and Status Section */}
@@ -53,25 +53,20 @@ export function TaskCard({ task, onEdit, onDelete, onToggleStatus, isCurrentUser
                             {task.description}
                         </p>
                     )}
-                    {/* Assignee - Placeholder if we don't have user details joined yet. 
-             Ideally we'd have joined user data. For now, we might just show an icon or ID if no name available.
-             Let's assume we might need to fetch or props pass assignee name. 
-             If sticking to MVP, maybe just "Assigned" label or ignore if only viewing own.
-          */}
                 </div>
 
                 {/* Actions Section */}
                 <div className="flex items-center space-x-2 mt-3 sm:mt-0">
                     <button
                         onClick={() => onToggleStatus(task)}
-                        className={`p-2 rounded-full transition-colors ${task.status === 'COMPLETED' ? 'bg-green-100 text-green-600' : 'bg-gray-100 text-gray-400 hover:text-green-600 hover:bg-green-50'}`}
+                        className={`p-2 rounded-full transition-colors ${task.status === 'COMPLETED' ? 'bg-green-100 text-green-600' : 'bg-gray-100 text-gray-400 hover:text-teal-600 hover:bg-teal-50'}`}
                         title="Toggle Completion"
                     >
                         <CheckCircle className="w-5 h-5" />
                     </button>
                     <button
                         onClick={() => onEdit(task)}
-                        className="p-2 rounded-full bg-gray-100 text-gray-500 hover:bg-blue-50 hover:text-blue-600 transition-colors"
+                        className="p-2 rounded-full bg-gray-100 text-gray-500 hover:bg-teal-50 hover:text-teal-600 transition-colors"
                         title="Edit Task"
                     >
                         <Pencil className="w-4 h-4" />
@@ -84,7 +79,6 @@ export function TaskCard({ task, onEdit, onDelete, onToggleStatus, isCurrentUser
                         <Trash2 className="w-4 h-4" />
                     </button>
                 </div>
-
             </CardContent>
         </Card>
     );

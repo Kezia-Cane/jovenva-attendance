@@ -160,20 +160,24 @@ export default function SchedulePage() {
     };
 
     return (
-        <div className="min-h-screen bg-gray-50/50 p-6 space-y-8">
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div className="space-y-8 max-w-7xl mx-auto">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6">
                 <div>
                     <h1 className="text-2xl font-bold tracking-tight text-gray-900">Daily Schedule</h1>
-                    <p className="text-sm text-gray-500">Manage your daily tasks and time blocks.</p>
+                    <p className="text-sm text-gray-500 mt-1">Manage your daily tasks and time blocks.</p>
                 </div>
-                <div className="flex items-center space-x-2">
+                <div className="flex flex-wrap items-center gap-4">
                     <DateSelector selectedDate={selectedDate} onDateChange={setSelectedDate} />
                     <button
                         onClick={handleCreateTask}
-                        className="inline-flex items-center justify-center rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors"
+                        className="btn-3d btn-3d-teal w-auto min-w-[150px]"
                     >
-                        <Plus className="mr-2 h-4 w-4" />
-                        Create Task
+                        <span className="btn-3d-shadow"></span>
+                        <span className="btn-3d-edge"></span>
+                        <span className="btn-3d-front gap-2 px-4 py-3">
+                            <Plus className="h-4 w-4" />
+                            <span className="text-sm font-bold">Create Task</span>
+                        </span>
                     </button>
                 </div>
             </div>
@@ -183,17 +187,17 @@ export default function SchedulePage() {
                 {isLoading ? (
                     <div className="space-y-4">
                         {[1, 2, 3].map(i => (
-                            <div key={i} className="h-24 bg-white rounded-lg animate-pulse w-full"></div>
+                            <div key={i} className="h-24 bg-white rounded-2xl shadow-sm animate-pulse w-full"></div>
                         ))}
                     </div>
                 ) : tasks.length > 0 ? (
                     <div className="space-y-6 relative border-l-2 border-gray-200 ml-4 md:ml-6 pl-6 md:pl-8 py-2">
-                        {/* Render Tasks - Simple list for now, grouped by implicit time order from API */}
+                        {/* Render Tasks */}
                         {tasks.map((task) => (
                             <div key={task.id} className="relative">
                                 {/* Timeline dot */}
                                 <div className={`absolute -left-[41px] md:-left-[49px] top-6 h-4 w-4 rounded-full border-2 border-white 
-                                ${task.status === 'IN_PROGRESS' ? 'bg-blue-500 ring-4 ring-blue-100' : 'bg-gray-300'}
+                                ${task.status === 'IN_PROGRESS' ? 'bg-teal-400 ring-4 ring-teal-100' : 'bg-gray-300'}
                             `} />
                                 <TaskCard
                                     task={task}

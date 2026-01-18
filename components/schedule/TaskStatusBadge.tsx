@@ -57,7 +57,7 @@ export function TaskStatusBadge({ status }: TaskStatusBadgeProps) {
     // IN_PROGRESS
     if (status === 'IN_PROGRESS') {
         return (
-            <span className="inline-flex items-center rounded-full bg-blue-100 px-2.5 py-0.5 text-xs font-semibold text-blue-800">
+            <span className="inline-flex items-center rounded-full bg-teal-100 px-2.5 py-0.5 text-xs font-semibold text-teal-800">
                 IN_PROGRESS
             </span>
         )

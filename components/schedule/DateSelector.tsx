@@ -44,7 +44,7 @@ export function DateSelector({ selectedDate, onDateChange }: DateSelectorProps) 
             <div className="hidden sm:flex space-x-2">
                 <button
                     onClick={handleToday}
-                    className="text-sm font-medium text-gray-600 hover:text-gray-900 px-3 py-1 rounded-md hover:bg-gray-100 transition-colors"
+                    className="text-sm font-medium text-gray-600 hover:text-teal-600 px-3 py-1 rounded-md hover:bg-teal-50 transition-colors"
                 >
                     Today
                 </button>
