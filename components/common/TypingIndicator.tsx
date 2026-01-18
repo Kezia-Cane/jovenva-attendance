@@ -1,7 +1,11 @@
-export function TypingIndicator() {
+interface TypingIndicatorProps {
+    className?: string
+}
+
+export function TypingIndicator({ className = "scale-50" }: TypingIndicatorProps) {
     return (
-        <div className="typing-indicator scale-50">
-            {/* scale-50 because original 60px height is too big for a button text line */}
+        <div className={`typing-indicator ${className}`}>
+            {/* Default scale-50 for buttons, override for other uses */}
             <div className="typing-circle"></div>
             <div className="typing-circle"></div>
             <div className="typing-circle"></div>

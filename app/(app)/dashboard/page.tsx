@@ -7,6 +7,8 @@ import { StatCard } from "@/components/dashboard/StatCard"
 import { SystemStatus } from "@/components/dashboard/SystemStatus"
 import { TeamHours } from "@/components/dashboard/TeamHours"
 import { Calendar, CheckCircle, Clock } from "lucide-react"
+import { Suspense } from "react"
+import { LoadingCard } from "@/components/dashboard/LoadingCard"
 
 export default async function DashboardPage() {
     const cookieStore = await cookies()
@@ -45,16 +47,22 @@ export default async function DashboardPage() {
                 </div>
 
                 {/* Main Table */}
-                <WeeklyAttendanceTable />
+                <Suspense fallback={<LoadingCard height="min-h-[400px]" />}>
+                    <WeeklyAttendanceTable />
+                </Suspense>
 
                 {/* Team Hours Component */}
-                <TeamHours />
+                <Suspense fallback={<LoadingCard height="min-h-[300px]" />}>
+                    <TeamHours />
+                </Suspense>
             </div>
 
             {/* Right Column - Actions & Status (1/3 width) */}
             <div className="flex flex-col gap-6">
                 <AttendanceActions user_id={user.id} />
-                <SystemStatus />
+                <Suspense fallback={<LoadingCard height="min-h-[400px]" />}>
+                    <SystemStatus />
+                </Suspense>
             </div>
         </div>
     )
