@@ -44,7 +44,7 @@ export async function POST() {
     // The user effectively missed the Sunday shift (which is blocked anyway) or is waiting for Monday shift.
     // Display the requested message.
     if (now.getHours() < 12) {
-      return NextResponse.json({ error: "early check in at 8pm" }, { status: 400 })
+      return NextResponse.json({ error: "Early check-in is available from 8:00 PM. You can chill and enjoy some jologs." }, { status: 400 })
     }
     return NextResponse.json({ error: "you cant check in on weekends, please take a deep rest" }, { status: 400 })
   }
