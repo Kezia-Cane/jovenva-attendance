@@ -19,8 +19,9 @@ export async function WeeklyAttendanceTable({ date }: { date?: string }) {
     const supabase = createClient(cookieStore)
 
     // Get start/end of current week (Monday start)
-    const now = date ? new Date(date) : getManilaTime()
-    const startOfCurrentWeek = startOfWeek(now, { weekStartsOn: 1 })
+    const currentTimestamp = getManilaTime()
+    const viewDate = date ? new Date(date) : currentTimestamp
+    const startOfCurrentWeek = startOfWeek(viewDate, { weekStartsOn: 1 })
 
     const prevWeek = format(addDays(startOfCurrentWeek, -7), 'yyyy-MM-dd')
     const nextWeek = format(addDays(startOfCurrentWeek, 7), 'yyyy-MM-dd')
@@ -79,7 +80,8 @@ export async function WeeklyAttendanceTable({ date }: { date?: string }) {
                             {weekDays.map((day) => {
                                 const dateStr = format(day, "yyyy-MM-dd")
                                 const record = records.find(r => r.date === dateStr)
-                                const isToday = isSameDay(day, now)
+                                const isToday = isSameDay(day, currentTimestamp)
+                                const isFuture = day > currentTimestamp
 
                                 let duration = "—"
                                 if (record?.check_in_time && record?.check_out_time) {
@@ -105,8 +107,11 @@ export async function WeeklyAttendanceTable({ date }: { date?: string }) {
                                                     Present
                                                 </span>
                                             ) : (
-                                                <span className={`px-3 py-1 rounded-full text-xs font-bold border ${isToday ? "bg-yellow-50 text-yellow-600 border-yellow-100" : "bg-red-50 text-red-500 border-red-100"}`}>
-                                                    {isToday ? "Pending" : "Absent"}
+                                                <span className={`px-3 py-1 rounded-full text-xs font-bold border ${(isToday || isFuture)
+                                                        ? "bg-yellow-50 text-yellow-600 border-yellow-100"
+                                                        : "bg-red-50 text-red-500 border-red-100"
+                                                    }`}>
+                                                    {(isToday || isFuture) ? "Pending" : "Absent"}
                                                 </span>
                                             )}
                                         </td>
