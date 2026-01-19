@@ -8,6 +8,7 @@ import { TeamHours } from "@/components/dashboard/TeamHours"
 import { DashboardStats } from "@/components/dashboard/DashboardStats"
 import { Suspense } from "react"
 import { LoadingCard } from "@/components/dashboard/LoadingCard"
+import { AnnouncementModal } from "@/components/dashboard/AnnouncementModal"
 
 export default async function DashboardPage({ searchParams }: { searchParams: { date?: string } }) {
     const cookieStore = await cookies()
@@ -24,45 +25,48 @@ export default async function DashboardPage({ searchParams }: { searchParams: { 
     }
 
     return (
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* Left Column - Main Content (2/3 width) */}
-            <div className="lg:col-span-2 flex flex-col gap-6">
-                {/* Top Row - Stat Cards */}
-                <Suspense fallback={
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        {[1, 2, 3].map(i => (
-                            <div key={i} className="h-[120px] bg-white rounded-2xl shadow-md animate-pulse" />
-                        ))}
-                    </div>
-                }>
-                    <DashboardStats />
-                </Suspense>
-
-                {/* Main Content: Table & Hours */}
-                <Suspense key={`content-${date || 'now'}`} fallback={
-                    <div className="flex flex-col gap-6">
-                        <LoadingCard height="h-[400px]" />
-                        <LoadingCard height="h-[300px]" />
-                    </div>
-                }>
-                    <div className="flex flex-col gap-6">
-                        <div className="w-full">
-                            <WeeklyAttendanceTable date={date} />
+        <>
+            <AnnouncementModal />
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                {/* Left Column - Main Content (2/3 width) */}
+                <div className="lg:col-span-2 flex flex-col gap-6">
+                    {/* Top Row - Stat Cards */}
+                    <Suspense fallback={
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            {[1, 2, 3].map(i => (
+                                <div key={i} className="h-[120px] bg-white rounded-2xl shadow-md animate-pulse" />
+                            ))}
                         </div>
-                        <div className="w-full">
-                            <TeamHours date={date} />
-                        </div>
-                    </div>
-                </Suspense>
-            </div>
+                    }>
+                        <DashboardStats />
+                    </Suspense>
 
-            {/* Right Column - Actions & Status (1/3 width) */}
-            <div className="flex flex-col gap-6">
-                <AttendanceActions user_id={user.id} />
-                <Suspense fallback={<LoadingCard height="min-h-[400px]" />}>
-                    <SystemStatus />
-                </Suspense>
+                    {/* Main Content: Table & Hours */}
+                    <Suspense key={`content-${date || 'now'}`} fallback={
+                        <div className="flex flex-col gap-6">
+                            <LoadingCard height="h-[400px]" />
+                            <LoadingCard height="h-[300px]" />
+                        </div>
+                    }>
+                        <div className="flex flex-col gap-6">
+                            <div className="w-full">
+                                <WeeklyAttendanceTable date={date} />
+                            </div>
+                            <div className="w-full">
+                                <TeamHours date={date} />
+                            </div>
+                        </div>
+                    </Suspense>
+                </div>
+
+                {/* Right Column - Actions & Status (1/3 width) */}
+                <div className="flex flex-col gap-6">
+                    <AttendanceActions user_id={user.id} />
+                    <Suspense fallback={<LoadingCard height="min-h-[400px]" />}>
+                        <SystemStatus />
+                    </Suspense>
+                </div>
             </div>
-        </div>
+        </>
     )
 }
