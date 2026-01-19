@@ -17,7 +17,7 @@ const config: Config = {
                 "purity-700": "var(--purity-gray-dark)",
             },
             fontFamily: {
-                sans: ["Poppins", "sans-serif"],
+                sans: ["Avenir", "sans-serif"],
             },
         },
     },

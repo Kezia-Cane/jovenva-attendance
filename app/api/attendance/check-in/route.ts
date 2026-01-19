@@ -1,7 +1,7 @@
 import { createClient } from '@/lib/supabase-server'
 import { cookies } from 'next/headers'
 import { NextResponse } from 'next/server'
-import { getShiftDate } from '@/lib/date-utils'
+import { getShiftDate, getManilaTime } from '@/lib/date-utils'
 
 export async function POST() {
   const cookieStore = await cookies()
@@ -39,6 +39,13 @@ export async function POST() {
   const shiftDateObj = new Date(today)
   const dayOfWeek = shiftDateObj.getUTCDay() // "YYYY-MM-DD" parses to UTC midnight
   if (dayOfWeek === 0 || dayOfWeek === 6) {
+    const now = getManilaTime()
+    // If it's before noon, we are essentially on the morning of the next day (e.g. Monday morning).
+    // The user effectively missed the Sunday shift (which is blocked anyway) or is waiting for Monday shift.
+    // Display the requested message.
+    if (now.getHours() < 12) {
+      return NextResponse.json({ error: "early check in at 8pm" }, { status: 400 })
+    }
     return NextResponse.json({ error: "you cant check in on weekends, please take a deep rest" }, { status: 400 })
   }
 
