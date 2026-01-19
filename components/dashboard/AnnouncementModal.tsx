@@ -27,47 +27,53 @@ export function AnnouncementModal() {
                 isOpen={isOpen}
                 onClose={handleClose}
                 title="📢 Announcement"
-                className="max-w-lg z-[70] relative" // Ensure above confetti if needed, but Modal has fixed z-50. Confetti is z-60. 
-            // Actually Modal overlay is z-50.
-            // If Confetti is z-60, it will be ON TOP of the modal overlay but maybe behind modal content if modal content is z-??
-            // Confetti should probably be BEHIND the modal content?
-            // User said "modal announcement with blur in the back ground".
-            // My Modal component handles blur.
-            // If Confetti is "fixed inset-0 pointer-events-none", it covers everything.
-            // I want Confetti to fall "around" or "over" the screen.
-            // Let's let it fall over everything like a celebration.
+                className="max-w-4xl z-[70] relative"
             >
-                <div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    {/* Left Column: Content */}
+                    <div className="flex flex-col justify-between h-full">
+                        <div className="space-y-4 text-gray-700 leading-relaxed">
+                            <p className="font-semibold text-lg text-gray-900">
+                                Today marks the pre-launch of the JovenVA Internal System.
+                            </p>
 
-                    <div className="space-y-4 text-gray-700 leading-relaxed">
-                        <p className="font-semibold text-lg text-gray-900">
-                            Today marks the pre-launch of the JovenVA Internal System.
-                        </p>
+                            <p>The following modules are now available for testing:</p>
 
-                        <p>The following modules are now available for testing:</p>
+                            <ul className="list-disc pl-5 space-y-1 mb-4">
+                                <li><strong>Attendance Module</strong> (Check-in and Check-out)</li>
+                                <li><strong>Task Management Module</strong> for daily scheduling</li>
+                            </ul>
 
-                        <ul className="list-disc pl-5 space-y-1 mb-4">
-                            <li><strong>Attendance Module</strong> (Check-in and Check-out)</li>
-                            <li><strong>Task Management Module</strong> for daily scheduling</li>
-                        </ul>
+                            <p className="text-sm italic text-gray-600 bg-gray-50 p-3 rounded-lg border border-gray-100">
+                                This is an early release, and your feedback is highly appreciated to help us improve and refine the system.
+                            </p>
 
-                        <p className="text-sm italic text-gray-600 bg-gray-50 p-3 rounded-lg border border-gray-100">
-                            This is an early release, and your feedback is highly appreciated to help us improve and refine the system.
-                        </p>
+                            <div className="pt-2">
+                                <p>Thank you for your support as we continue to enhance JovenVA’s internal tools.</p>
+                                <p className="font-bold mt-2 text-teal-600">— JovenVA Dev Team</p>
+                            </div>
+                        </div>
 
-                        <div className="pt-2">
-                            <p>Thank you for your support as we continue to enhance JovenVA’s internal tools.</p>
-                            <p className="font-bold mt-2 text-teal-600">— JovenVA Dev Team</p>
+                        <div className="mt-8 flex md:justify-start justify-center">
+                            <button
+                                onClick={handleClose}
+                                className="bg-teal-400 hover:bg-teal-500 text-white font-bold py-2 px-8 rounded-lg shadow-md transition-colors w-full md:w-auto shadow-teal-300/30"
+                            >
+                                Start Testing
+                            </button>
                         </div>
                     </div>
 
-                    <div className="mt-8 flex justify-end">
-                        <button
-                            onClick={handleClose}
-                            className="bg-teal-400 hover:bg-teal-500 text-white font-bold py-2 px-6 rounded-lg shadow-md transition-colors"
-                        >
-                            Start Testing
-                        </button>
+                    {/* Right Column: GIF */}
+                    <div className="hidden md:flex items-center justify-center bg-gray-50 rounded-2xl p-4 border border-gray-100 h-full min-h-[350px]">
+                        <img
+                            src="/meldance.gif"
+                            alt="JovenVA Celebration"
+                            className="w-full h-full object-contain rounded-xl mix-blend-multiply"
+                        />
+                        {/* mix-blend-multiply helps if gif has white bg and container is gray-50, but usually safe to omit if gif is transparent or full rect. 
+                             I'll stick to object-contain. 
+                          */}
                     </div>
                 </div>
             </Modal>
