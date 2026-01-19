@@ -5,6 +5,8 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { signOutAction } from "@/app/actions/auth"
 
+import { FeedbackButton } from "@/components/common/FeedbackButton"
+
 export function Sidebar() {
     const pathname = usePathname()
 
@@ -52,7 +54,8 @@ export function Sidebar() {
             </div>
 
             {/* Logout Button */}
-            <div className="mt-auto mb-4">
+            <div className="mt-auto mb-4 flex flex-col gap-2">
+                <FeedbackButton />
                 <form action={signOutAction}>
                     <button type="submit" className="w-full flex items-center gap-4 rounded-xl px-4 py-3 text-sm font-bold text-gray-500 hover:text-red-500 transition-all ease-in-out duration-300 group">
                         <div className="flex h-[30px] w-[30px] items-center justify-center rounded-lg bg-white text-teal-300 shadow-sm group-hover:text-red-500 group-hover:shadow-red-sm transition-colors">
