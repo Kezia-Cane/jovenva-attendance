@@ -46,7 +46,7 @@ export async function POST() {
     if (now.getHours() < 12) {
       return NextResponse.json({ error: "Early check-in is available from 8:00 PM. You can chill and enjoy some jologs." }, { status: 400 })
     }
-    return NextResponse.json({ error: "you cant check in on weekends, please take a deep rest" }, { status: 400 })
+    return NextResponse.json({ error: "Check-in is not available on weekends. Please take a rest." }, { status: 400 })
   }
 
   const { data: existingAttendance } = await supabase
