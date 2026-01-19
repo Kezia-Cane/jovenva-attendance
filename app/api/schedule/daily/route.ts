@@ -26,30 +26,40 @@ export async function GET(request: Request) {
 
         let query = supabase
             .from('schedule_tasks')
-            .select('*, assignee:users(name, avatar_url)')
+            .select('*')
             .eq('date', date)
             .order('start_time', { ascending: true });
-
-        // If userId is provided, filter by assigned_to_user_id
-        // If not, maybe showing all? The prompt implied "View other team members' daily schedules" is a future feature (v2)
-        // but also said "Team Member: Views their assigned tasks".
-        // Let's default to showing tasks for the qualified user if userId is not specified, 
-        // OR if we want to allow viewing others, we just filter by the requested userId.
-        // The RLS policy "Users can view their own tasks" (auth.uid() = user_id OR auth.uid() = assigned_to_user_id) 
-        // might block viewing others unless we relax it or the user is viewing themselves.
-        // For v1, let's assume we filter by the requested userId or the current user.
 
         const targetUserId = userId || user.id;
         query = query.eq('assigned_to_user_id', targetUserId);
 
-        const { data, error } = await query;
+        const { data: tasks, error } = await query;
 
         if (error) {
             console.error('Error fetching tasks:', error);
             return NextResponse.json({ error: 'Failed to fetch tasks' }, { status: 500 });
         }
 
-        return NextResponse.json(data);
+        // Manually fetch assignee details to avoid ambiguous foreign key issues with joins
+        const userIds = Array.from(new Set(tasks.map((t: any) => t.assigned_to_user_id)));
+
+        if (userIds.length > 0) {
+            const { data: users } = await supabase
+                .from('users')
+                .select('id, name, avatar_url')
+                .in('id', userIds);
+
+            const userMap = new Map(users?.map((u: any) => [u.id, u]) || []);
+
+            const tasksWithAssignee = tasks.map((t: any) => ({
+                ...t,
+                assignee: userMap.get(t.assigned_to_user_id) || { name: 'Unknown', avatar_url: null }
+            }));
+
+            return NextResponse.json(tasksWithAssignee);
+        }
+
+        return NextResponse.json(tasks);
     } catch (error) {
         console.error('Internal server error:', error);
         return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
