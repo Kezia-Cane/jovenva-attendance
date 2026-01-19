@@ -4,7 +4,7 @@ import { Card, CardContent } from "@/components/common/UIComponents";
 import { TaskStatusBadge } from "./TaskStatusBadge";
 import { ScheduleTask } from "@/lib/types";
 import { format, parse } from "date-fns"; // parse for handling time string if needed, but time from DB is HH:MM:SS
-import { Clock, User, Pencil, Trash2, CheckCircle } from "lucide-react";
+import { Clock, User, Pencil, Trash2, CheckCircle, Circle, Timer } from "lucide-react";
 
 interface TaskCardProps {
     task: ScheduleTask;
@@ -74,21 +74,30 @@ export function TaskCard({ task, onEdit, onDelete, onToggleStatus, isCurrentUser
                 <div className="flex items-center space-x-2 mt-3 sm:mt-0">
                     <button
                         onClick={() => onToggleStatus(task)}
-                        className={`p-2 rounded-full transition-colors ${task.status === 'COMPLETED' ? 'bg-green-100 text-green-600' : 'bg-gray-100 text-gray-400 hover:text-teal-600 hover:bg-teal-50'}`}
-                        title="Toggle Completion"
+                        className={`p-2 rounded-full transition-all duration-300 transform hover:scale-110 active:scale-95 ${task.status === 'COMPLETED' ? 'bg-green-100 text-green-600 ring-2 ring-green-200' :
+                            task.status === 'IN_PROGRESS' ? 'bg-teal-100 text-teal-600 ring-2 ring-teal-200' :
+                                'bg-gray-100 text-gray-400 hover:bg-gray-200'
+                            }`}
+                        title="Toggle Status"
                     >
-                        <CheckCircle className="w-5 h-5" />
+                        {task.status === 'COMPLETED' ? (
+                            <CheckCircle className="w-5 h-5" />
+                        ) : task.status === 'IN_PROGRESS' ? (
+                            <Timer className="w-5 h-5" />
+                        ) : (
+                            <Circle className="w-5 h-5" />
+                        )}
                     </button>
                     <button
                         onClick={() => onEdit(task)}
-                        className="p-2 rounded-full bg-gray-100 text-gray-500 hover:bg-teal-50 hover:text-teal-600 transition-colors"
+                        className="p-2 rounded-full bg-gray-100 text-gray-500 hover:bg-teal-50 hover:text-teal-600 transition-colors hover:scale-105"
                         title="Edit Task"
                     >
                         <Pencil className="w-4 h-4" />
                     </button>
                     <button
                         onClick={() => onDelete(task.id)}
-                        className="p-2 rounded-full bg-gray-100 text-gray-500 hover:bg-red-50 hover:text-red-600 transition-colors"
+                        className="p-2 rounded-full bg-gray-100 text-gray-500 hover:bg-red-50 hover:text-red-600 transition-colors hover:scale-105"
                         title="Delete Task"
                     >
                         <Trash2 className="w-4 h-4" />
