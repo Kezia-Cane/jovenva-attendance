@@ -53,15 +53,18 @@ export function Sidebar() {
                 })}
             </div>
 
-            {/* Logout Button */}
-            <div className="mt-auto mb-4 flex flex-col gap-2">
-                <FeedbackButton />
-                <form action={signOutAction}>
-                    <button type="submit" className="w-full flex items-center gap-4 rounded-xl px-4 py-3 text-sm font-bold text-gray-500 hover:text-red-500 transition-all ease-in-out duration-300 group">
-                        <div className="flex h-[30px] w-[30px] items-center justify-center rounded-lg bg-white text-teal-300 shadow-sm group-hover:text-red-500 group-hover:shadow-red-sm transition-colors">
-                            <LogOut size={16} />
-                        </div>
-                        Logout
+            {/* Action Buttons Row */}
+            <div className="mt-auto mb-4 flex items-center gap-3">
+                <div className="flex-1 min-w-0">
+                    <FeedbackButton />
+                </div>
+                <form action={signOutAction} className="flex-none">
+                    <button
+                        type="submit"
+                        title="Logout"
+                        className="flex h-[48px] w-[48px] items-center justify-center rounded-xl bg-white text-gray-400 shadow-sm border-2 border-teal-100/50 hover:border-red-100 hover:text-red-500 hover:shadow-red-sm hover:bg-red-50 transition-all duration-300"
+                    >
+                        <LogOut size={20} />
                     </button>
                 </form>
             </div>

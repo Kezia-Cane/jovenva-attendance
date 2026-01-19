@@ -32,22 +32,20 @@ export function FeedbackButton() {
 
   return (
     <>
-      <div className="w-full flex justify-center py-2">
-        <button
-          onClick={handleOpen}
-          className="clean-feedback-btn group relative flex items-center gap-3 px-6 py-3 bg-white text-teal-600 border-2 border-teal-100 rounded-2xl font-bold text-sm shadow-sm hover:shadow-md hover:border-teal-200 hover:bg-teal-50 transition-all"
-        >
-          <span className="icon-wrapper">
-            <MessageSquarePlus size={18} className="text-teal-500" />
-          </span>
-          <span>Feedback</span>
+      <button
+        onClick={handleOpen}
+        className="w-full clean-feedback-btn group relative flex items-center justify-center gap-2 px-3 py-3 bg-white text-teal-600 border-2 border-teal-100 rounded-xl font-bold text-sm shadow-sm hover:shadow-md hover:border-teal-200 hover:bg-teal-50 transition-all"
+      >
+        <span className="icon-wrapper">
+          <MessageSquarePlus size={18} className="text-teal-500" />
+        </span>
+        <span>Feedback</span>
 
-          {/* Shine effect container */}
-          <div className="absolute inset-0 rounded-2xl overflow-hidden pointer-events-none">
-            <div className="absolute top-0 -left-[100%] w-full h-full bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-[-20deg] animate-shine" />
-          </div>
-        </button>
-      </div>
+        {/* Shine effect container */}
+        <div className="absolute inset-0 rounded-xl overflow-hidden pointer-events-none">
+          <div className="absolute top-0 -left-[100%] w-full h-full bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-[-20deg] animate-shine" />
+        </div>
+      </button>
 
       <Modal
         isOpen={isOpen}
