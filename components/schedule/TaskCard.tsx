@@ -44,15 +44,30 @@ export function TaskCard({ task, onEdit, onDelete, onToggleStatus, isCurrentUser
                 </div>
 
                 {/* content Section */}
-                <div className="flex-grow">
-                    <h4 className={`text-base font-semibold ${task.status === 'COMPLETED' ? 'text-gray-500 line-through' : 'text-gray-900'}`}>
-                        {task.title}
-                    </h4>
-                    {task.description && (
-                        <p className="text-sm text-gray-500 mt-1 line-clamp-2">
-                            {task.description}
-                        </p>
-                    )}
+                <div className="flex-grow flex items-start gap-3">
+                    {/* User Avatar */}
+                    <div className="flex-shrink-0 mt-0.5">
+                        <div className="w-9 h-9 rounded-full bg-gray-100 border-2 border-white shadow-sm overflow-hidden flex items-center justify-center">
+                            {task.assignee?.avatar_url ? (
+                                <img src={task.assignee.avatar_url} alt={task.assignee.name} className="w-full h-full object-cover" />
+                            ) : (
+                                <div className="w-full h-full bg-gradient-to-br from-teal-50 to-teal-100 flex items-center justify-center text-teal-600 font-bold text-xs">
+                                    {(task.assignee?.name?.charAt(0) || "U").toUpperCase()}
+                                </div>
+                            )}
+                        </div>
+                    </div>
+
+                    <div className="flex-grow">
+                        <h4 className={`text-base font-semibold ${task.status === 'COMPLETED' ? 'text-gray-500 line-through' : 'text-gray-900'}`}>
+                            {task.title}
+                        </h4>
+                        {task.description && (
+                            <p className="text-sm text-gray-500 mt-1 line-clamp-2">
+                                {task.description}
+                            </p>
+                        )}
+                    </div>
                 </div>
 
                 {/* Actions Section */}

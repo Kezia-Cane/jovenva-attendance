@@ -26,7 +26,7 @@ export async function GET(request: Request) {
 
         let query = supabase
             .from('schedule_tasks')
-            .select('*')
+            .select('*, assignee:users(name, avatar_url)')
             .eq('date', date)
             .order('start_time', { ascending: true });
 

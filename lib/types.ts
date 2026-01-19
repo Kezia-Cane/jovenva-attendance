@@ -12,6 +12,10 @@ export interface ScheduleTask {
     tags?: string[];
     created_at: string;
     updated_at: string;
+    assignee?: {
+        name: string;
+        avatar_url: string | null;
+    };
 }
 
 export interface CreateTaskDTO {
