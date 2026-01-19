@@ -7,27 +7,34 @@ import { Modal } from "@/components/common/Modal";
 export function FeedbackButton() {
   const [isOpen, setIsOpen] = useState(false);
   const [message, setMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleOpen = () => {
     setIsOpen(true);
   };
 
-  const handleSend = () => {
+  const handleSend = async () => {
     if (!message.trim()) return;
 
-    // Construct mailto link
-    // Subject: JovenVA System Feedback
-    // Body: User's message
-    const subject = encodeURIComponent("JovenVA System Feedback");
-    const body = encodeURIComponent(message);
-    const mailtoLink = `mailto:kc.jovenva@gmail.com?subject=${subject}&body=${body}`;
+    setIsLoading(true);
+    try {
+      const res = await fetch("/api/feedback", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message }),
+      });
 
-    // Open email client
-    window.location.href = mailtoLink;
+      if (!res.ok) throw new Error("Failed to submit feedback");
 
-    // Close modal and reset
-    setIsOpen(false);
-    setMessage("");
+      setIsOpen(false);
+      setMessage("");
+      alert("Thank you! Your feedback has been submitted.");
+    } catch (error) {
+      console.error(error);
+      alert("Something went wrong. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -75,10 +82,10 @@ export function FeedbackButton() {
             </button>
             <button
               onClick={handleSend}
-              disabled={!message.trim()}
+              disabled={!message.trim() || isLoading}
               className="px-6 py-2 text-sm font-bold text-white bg-teal-400 hover:bg-teal-500 rounded-lg shadow-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Send Feedback
+              {isLoading ? "Sending..." : "Send Feedback"}
             </button>
           </div>
         </div>
