@@ -174,8 +174,8 @@ export default function SchedulePage() {
                     >
                         <span className="btn-3d-shadow"></span>
                         <span className="btn-3d-edge"></span>
-                        <span className="btn-3d-front gap-2 px-5 py-2">
-                            <Plus className="h-4 w-2" />
+                        <span className="btn-3d-front gap-2 px-4 py-2">
+                            <Plus className="h-4 w-4" />
                             <span className="text-sm font-bold">Create Task</span>
                         </span>
                     </button>
@@ -183,7 +183,7 @@ export default function SchedulePage() {
             </div>
 
             {/* Task List */}
-            <div className="max-w-4xl mx-auto sm:mx-0">
+            <div className="w-full">
                 {isLoading ? (
                     <div className="space-y-4">
                         {[1, 2, 3].map(i => (
