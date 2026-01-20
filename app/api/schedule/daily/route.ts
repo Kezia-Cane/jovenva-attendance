@@ -30,8 +30,9 @@ export async function GET(request: Request) {
             .eq('date', date)
             .order('start_time', { ascending: true });
 
-        const targetUserId = userId || user.id;
-        query = query.eq('assigned_to_user_id', targetUserId);
+        // Show all tasks for the date, regardless of assignee
+        // const targetUserId = userId || user.id; 
+        // query = query.eq('assigned_to_user_id', targetUserId);
 
         const { data: tasks, error } = await query;
 
