@@ -25,9 +25,10 @@ interface AttendanceTrackerProps {
     userProfile: UserProfile
     initialRecord: AttendanceRecord | null
     isTimeWindowOpen: boolean
+    serverTime: string
 }
 
-export function AttendanceTracker({ userProfile, initialRecord, isTimeWindowOpen }: AttendanceTrackerProps) {
+export function AttendanceTracker({ userProfile, initialRecord, isTimeWindowOpen, serverTime }: AttendanceTrackerProps) {
     const [record, setRecord] = useState<AttendanceRecord | null>(initialRecord)
     const [loading, setLoading] = useState(false)
     const router = useRouter()
@@ -132,6 +133,7 @@ export function AttendanceTracker({ userProfile, initialRecord, isTimeWindowOpen
                         <SessionTimer
                             startTime={record?.check_in_time}
                             endTime={record?.check_out_time}
+                            serverTime={serverTime}
                             className="text-4xl font-bold text-gray-800 tabular-nums"
                         />
                     </div>

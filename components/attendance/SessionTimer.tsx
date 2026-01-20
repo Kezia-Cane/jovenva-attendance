@@ -7,11 +7,19 @@ export interface SessionTimerProps {
     startTime?: string | null
     endTime?: string | null
     className?: string
+    serverTime?: string
 }
 
-export function SessionTimer({ startTime, endTime, className }: SessionTimerProps) {
+export function SessionTimer({ startTime, endTime, className, serverTime }: SessionTimerProps) {
     const [elapsed, setElapsed] = useState("00:00:00")
     const [status, setStatus] = useState<"READY" | "RUNNING" | "COMPLETED">("READY")
+
+    const [offset] = useState(() => {
+        if (serverTime) {
+            return new Date(serverTime).getTime() - Date.now()
+        }
+        return 0
+    })
 
     useEffect(() => {
         if (!startTime) {
@@ -28,7 +36,7 @@ export function SessionTimer({ startTime, endTime, className }: SessionTimerProp
         }
 
         const updateTimer = () => {
-            const now = endTime ? new Date(endTime) : new Date()
+            const now = endTime ? new Date(endTime) : new Date(Date.now() + offset)
             const totalSeconds = differenceInSeconds(now, start)
 
             // Clamp to 0 to avoid negative numbers if client clock is behind server
