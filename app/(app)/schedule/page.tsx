@@ -164,7 +164,7 @@ export default function SchedulePage() {
     };
 
     return (
-        <div className="space-y-8 max-w-7xl mx-auto">
+        <div className="mx-4 px-4 mt-4 space-y-8">
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6">
                 <div>
                     <h1 className="text-2xl font-bold tracking-tight text-gray-900">Daily Schedule</h1>
