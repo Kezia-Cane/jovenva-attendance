@@ -25,7 +25,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: { 
     }
 
     return (
-        <>
+        <div className="p-4 md:p-8">
             <AnnouncementModal />
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 {/* Left Column - Main Content (2/3 width) */}
@@ -67,6 +67,6 @@ export default async function DashboardPage({ searchParams }: { searchParams: { 
                     </Suspense>
                 </div>
             </div>
-        </>
+        </div>
     )
 }
