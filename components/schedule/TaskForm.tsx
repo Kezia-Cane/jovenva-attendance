@@ -1,9 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-// Assuming we might not have a UI Library dialog, I will build a simple modal overlay here or rely on the parent to wrap it in a Modal.
-// Ideally, the "TaskForm" is just the form content, and the Page handles the Modal wrapper.
 import { CreateTaskDTO, ScheduleTask } from "@/lib/types";
+import { TypingIndicator } from "@/components/common/TypingIndicator";
 
 interface TaskFormProps {
     initialData?: ScheduleTask; // If editing
@@ -147,10 +146,10 @@ export function TaskForm({ initialData, selectedDate, userId, onSave, onCancel, 
                 <button
                     type="button"
                     onClick={handleSubmit}
-                    className="rounded-md bg-teal-400 px-4 py-2 text-sm font-bold text-white hover:bg-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-400 focus:ring-offset-2 disabled:opacity-50"
+                    className="rounded-md bg-teal-400 px-4 py-2 text-sm font-bold text-white hover:bg-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-400 focus:ring-offset-2 disabled:opacity-50 flex items-center gap-2 min-w-[100px] justify-center"
                     disabled={isLoading}
                 >
-                    {isLoading ? "Saving..." : "Save Task"}
+                    {isLoading ? <TypingIndicator /> : "Save Task"}
                 </button>
             </div>
         </div>

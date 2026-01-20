@@ -32,6 +32,7 @@ export default function SchedulePage() {
     const [selectedDate, setSelectedDate] = useState<Date>(new Date());
     const [tasks, setTasks] = useState<ScheduleTask[]>([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [isSaving, setIsSaving] = useState(false);
     const [user, setUser] = useState<any>(null);
 
     // Modal States
@@ -88,6 +89,7 @@ export default function SchedulePage() {
     };
 
     const saveTask = async (data: CreateTaskDTO | UpdateTaskDTO) => {
+        setIsSaving(true);
         try {
             let res;
             if (editingTask) {
@@ -116,6 +118,8 @@ export default function SchedulePage() {
         } catch (err) {
             console.error(err);
             alert("Failed to save task");
+        } finally {
+            setIsSaving(false);
         }
     };
 
@@ -227,6 +231,7 @@ export default function SchedulePage() {
                         userId={user.id}
                         onSave={saveTask}
                         onCancel={() => setIsTaskModalOpen(false)}
+                        isLoading={isSaving}
                     />
                 )}
             </Modal>
