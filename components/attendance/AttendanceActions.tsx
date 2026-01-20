@@ -16,12 +16,14 @@ export async function AttendanceActions({ user_id }: { user_id: string }) {
     const userProfile = userReq.data || { name: 'User', avatar_url: null }
     const record = recordReq.data
     const { available: isTimeWindowOpen } = isCheckInAvailable()
+    const serverTime = new Date().toISOString()
 
     return (
         <AttendanceTracker
             userProfile={userProfile}
             initialRecord={record}
             isTimeWindowOpen={isTimeWindowOpen}
+            serverTime={serverTime}
         />
     )
 }
