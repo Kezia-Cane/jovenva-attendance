@@ -62,8 +62,7 @@ export function FeedbackButton() {
       >
         <div className="space-y-4">
           <p className="text-sm text-gray-500">
-            We value your feedback! Let us know what you think or report any issues.
-            This will open your email client to send the message.
+            We value your feedback! Let us know what you think or report any issues. This will be sent to dev team and admin.
           </p>
 
           <textarea
