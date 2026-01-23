@@ -4,7 +4,8 @@ import { Home, Clock, Settings, HelpCircle, FileText, Calendar, LogOut } from "l
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { signOutAction } from "@/app/actions/auth"
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { createClient } from "@/lib/supabase"
 
 import { FeedbackButton } from "@/components/common/FeedbackButton"
 import { ConfirmModal } from "@/components/common/Modal"
@@ -13,6 +14,21 @@ export function Sidebar() {
     const pathname = usePathname()
     const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false)
     const [isLoggingOut, setIsLoggingOut] = useState(false)
+    const [isAdmin, setIsAdmin] = useState(false)
+    const supabase = createClient()
+
+    useEffect(() => {
+        const checkRole = async () => {
+            const { data: { user } } = await supabase.auth.getUser()
+            if (user) {
+                const { data } = await supabase.from('users').select('role').eq('id', user.id).single()
+                if (data?.role === 'ADMIN') {
+                    setIsAdmin(true)
+                }
+            }
+        }
+        checkRole()
+    }, [])
 
     const handleLogoutClick = (e: React.FormEvent) => {
         e.preventDefault()
@@ -33,6 +49,7 @@ export function Sidebar() {
         { name: "Dashboard", href: "/dashboard", icon: Home },
         { name: "Daily Schedule", href: "/schedule", icon: Calendar },
         { name: "Settings", href: "/settings", icon: Settings },
+        ...(isAdmin ? [{ name: "Admin", href: "/admin", icon: FileText }] : []),
     ]
 
     const isActive = (path: string) => pathname === path

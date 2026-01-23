@@ -16,7 +16,17 @@ export interface ScheduleTask {
     assignee?: {
         name: string;
         avatar_url: string | null;
+        role?: 'ADMIN' | 'EMPLOYEE';
     };
+}
+
+export interface User {
+    id: string;
+    email: string;
+    name: string;
+    avatar_url: string | null;
+    role: 'ADMIN' | 'EMPLOYEE';
+    created_at: string;
 }
 
 export interface CreateTaskDTO {
