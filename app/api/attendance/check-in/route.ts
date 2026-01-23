@@ -31,9 +31,26 @@ export async function POST() {
   }
 
   // 2. Check if already checked in today (Shift Date)
-  const today = getShiftDate()
+  let today = getShiftDate()
+  const manilaTime = getManilaTime()
+  const day = manilaTime.getDay()
+  const hour = manilaTime.getHours()
 
-  // Determine if this is a weekend check-in
+  // STRICTLY FOR WEEKENDS (Saturday/Sunday)
+  // Logic: 
+  // - If it's Saturday or Sunday AND time is between 6:00 AM and 11:59 AM.
+  // - Normally getShiftDate() considers 00:00-11:59 as "Yesterday's Shift".
+  // - BUT for weekends, we want 6 AM onwards to be "Today's Extra Workout".
+  // - So we override 'today' to be the current actual date.
+
+  const isWeekendMorning = (day === 0 || day === 6) && (hour >= 6 && hour < 12)
+
+  if (isWeekendMorning) {
+    // Override to current date string "YYYY-MM-DD"
+    today = manilaTime.toLocaleDateString("en-CA", { timeZone: "Asia/Manila" }) // en-CA gives YYYY-MM-DD
+  }
+
+  // Determine if this is a weekend check-in based on the FINAL 'today' date
   const shiftDateObj = new Date(today)
   const dayOfWeek = shiftDateObj.getUTCDay() // "YYYY-MM-DD" parses to UTC midnight
   const isWeekendCheckIn = dayOfWeek === 0 || dayOfWeek === 6

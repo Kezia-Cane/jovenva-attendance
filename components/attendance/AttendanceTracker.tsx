@@ -55,8 +55,8 @@ export function AttendanceTracker({ userProfile, initialRecord, isTimeWindowOpen
             setRecord(newRecord)
             router.refresh()
 
-            // Show appreciation modal for weekend check-ins
-            if (isWeekendNow) {
+            // Show appreciation modal for weekend check-ins based on status
+            if (newRecord.status === "EXTRA_WORKOUT") {
                 setShowWeekendModal(true)
             }
         } catch (error) {
