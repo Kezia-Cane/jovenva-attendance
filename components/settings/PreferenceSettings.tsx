@@ -1,9 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Settings, Globe, Moon, Sun, Monitor } from "lucide-react";
+import { Settings, Globe, Moon, Sun } from "lucide-react";
 
-type ThemeMode = "light" | "dark" | "system";
+type ThemeMode = "light" | "dark";
 
 const TIMEZONES = [
     { value: "Asia/Manila", label: "Manila (GMT+8)" },
@@ -98,7 +98,7 @@ export function PreferenceSettings() {
                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
                         Appearance
                     </label>
-                    <div className="grid grid-cols-3 gap-3">
+                    <div className="grid grid-cols-2 gap-3">
                         <button
                             onClick={() => handleThemeChange("light")}
                             className={`flex flex-col items-center gap-2 p-4 rounded-xl border-2 transition-all ${theme === "light"
@@ -124,8 +124,6 @@ export function PreferenceSettings() {
                                 Dark
                             </span>
                         </button>
-
-
                     </div>
                 </div>
 
