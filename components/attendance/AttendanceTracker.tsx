@@ -74,17 +74,13 @@ export function AttendanceTracker({ userProfile, initialRecord, isTimeWindowOpen
     }
 
     return (
-        <Card className="border-none shadow-md rounded-2xl bg-card relative">
-            <div className="absolute top-0 left-0 w-full h-[120px] bg-gradient-to-r from-teal-300 to-teal-400 z-0 rounded-t-2xl" />
+        <Card className="border-none shadow-xl rounded-[2.5rem] bg-card overflow-hidden">
+            <CardContent className="p-8 flex flex-col items-center text-center">
 
-            <CardContent className="relative z-10 pt-8 pb-10 flex flex-col items-center text-center">
-
-                {/* Main Action Button Container */}
-                <div className="bg-card rounded-2xl shadow-lg p-6 w-full -mt-4 mb-4 flex flex-col items-center gap-4">
-
-                    {/* Profile Section */}
-                    <div className="flex flex-col items-center -mt-12 mb-2">
-                        <div className="h-28 w-28 rounded-2xl bg-gray-100 border-4 border-white shadow-sm overflow-hidden mb-3 flex items-center justify-center">
+                {/* Profile Section */}
+                <div className="flex flex-col items-center mb-6">
+                    <div className="h-24 w-24 rounded-full p-1 bg-white dark:bg-gray-800 shadow-sm mb-4">
+                        <div className="h-full w-full rounded-full overflow-hidden relative">
                             {userProfile?.avatar_url ? (
                                 <img
                                     src={userProfile.avatar_url}
@@ -92,55 +88,60 @@ export function AttendanceTracker({ userProfile, initialRecord, isTimeWindowOpen
                                     className="h-full w-full object-cover"
                                 />
                             ) : (
-                                <span className="text-2xl font-bold text-gray-400">
-                                    {(userProfile?.name?.charAt(0) || "U").toUpperCase()}
-                                </span>
+                                <div className="h-full w-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center">
+                                    <span className="text-2xl font-bold text-gray-400">
+                                        {(userProfile?.name?.charAt(0) || "U").toUpperCase()}
+                                    </span>
+                                </div>
                             )}
                         </div>
-                        <h3 className="text-foreground font-bold text-sm">{userProfile?.name || "Team Member"}</h3>
                     </div>
+                    <h3 className="text-foreground font-bold text-xl">{userProfile?.name || "Team Member"}</h3>
+                </div>
 
-                    <div className="w-full">
-                        {!isCheckedIn ? (
-                            <button
-                                onClick={handleCheckIn}
-                                disabled={!canCheckIn || loading}
-                                className={`btn-3d btn-3d-teal w-full h-12 text-sm font-bold bg-teal-300 hover:bg-teal-400 text-white rounded-xl shadow-teal-md transition-all uppercase ${(!canCheckIn || loading) ? 'opacity-50 cursor-not-allowed' : ''}`}
-                            >
-                                <span className="btn-3d-shadow"></span>
-                                <span className="btn-3d-edge"></span>
-                                <span className="btn-3d-front flex items-center justify-center">
-                                    {loading ? <TypingIndicator /> : "Check In"}
-                                </span>
-                            </button>
-                        ) : (
-                            <button
-                                onClick={handleCheckOut}
-                                disabled={isCheckedOut || loading}
-                                className={`btn-3d btn-3d-red w-full h-14 text-sm font-bold bg-white border border-red-500 text-red-500 hover:bg-red-50 rounded-xl shadow-sm transition-all uppercase ${(isCheckedOut || loading) ? 'opacity-50 cursor-not-allowed' : ''}`}
-                            >
-                                <span className="btn-3d-shadow"></span>
-                                <span className="btn-3d-edge"></span>
-                                <span className="btn-3d-front flex items-center justify-center">
-                                    {loading ? <TypingIndicator /> : (isCheckedOut ? "Checked Out" : "Check Out")}
-                                </span>
-                            </button>
-                        )}
-                    </div>
+                {/* Action Button */}
+                <div className="w-full mb-8">
+                    {!isCheckedIn ? (
+                        <button
+                            onClick={handleCheckIn}
+                            disabled={!canCheckIn || loading}
+                            className={`btn-3d btn-3d-teal w-full h-14 text-base font-bold bg-teal-400 hover:bg-teal-500 text-white rounded-full shadow-lg transition-all uppercase tracking-wide ${(!canCheckIn || loading) ? 'opacity-50 cursor-not-allowed' : ''}`}
+                        >
+                            <span className="btn-3d-shadow rounded-full"></span>
+                            <span className="btn-3d-edge rounded-full"></span>
+                            <span className="btn-3d-front rounded-full flex items-center justify-center">
+                                {loading ? <TypingIndicator /> : "Check In"}
+                            </span>
+                        </button>
+                    ) : (
+                        <button
+                            onClick={handleCheckOut}
+                            disabled={isCheckedOut || loading}
+                            className={`btn-3d btn-3d-red w-full h-14 text-base font-bold bg-red-500 hover:bg-red-600 text-white rounded-full shadow-lg transition-all uppercase tracking-wide ${(isCheckedOut || loading) ? 'opacity-50 cursor-not-allowed' : ''}`}
+                        >
+                            <span className="btn-3d-shadow rounded-full"></span>
+                            <span className="btn-3d-edge rounded-full"></span>
+                            <span className="btn-3d-front rounded-full flex items-center justify-center">
+                                {loading ? <TypingIndicator /> : (isCheckedOut ? "Checked Out" : "Check Out")}
+                            </span>
+                        </button>
+                    )}
+                </div>
 
-                    <div className="flex flex-col items-center w-full">
-                        <p className="text-gray-400 text-[10px] font-bold uppercase mb-2">Shift Duration</p>
-                        <SessionTimer
-                            startTime={record?.check_in_time}
-                            endTime={record?.check_out_time}
-                            serverTime={serverTime}
-                            className="text-4xl font-bold text-foreground tabular-nums"
-                        />
-                    </div>
+                {/* Shift Duration / Timer Section */}
+                <div className="flex flex-col items-center w-full">
+                    <p className="text-gray-400 text-[10px] font-bold uppercase mb-3 tracking-wider">Shift Duration</p>
+
+                    <SessionTimer
+                        startTime={record?.check_in_time}
+                        endTime={record?.check_out_time}
+                        serverTime={serverTime}
+                        className="text-4xl font-bold text-teal-400 tracking-wider tabular-nums font-mono"
+                    />
                 </div>
 
                 {!isTimeWindowOpen && !isCheckedIn && (
-                    <div className="bg-orange-50 text-orange-600 px-4 py-2 rounded-xl text-xs font-bold border border-orange-100 flex items-center gap-2">
+                    <div className="mt-6 bg-orange-50 dark:bg-orange-900/20 text-orange-600 dark:text-orange-400 px-4 py-2 rounded-xl text-xs font-bold border border-orange-100 dark:border-orange-800 flex items-center gap-2">
                         <span>⚠️</span> Check-in starts at 8:00 PM
                     </div>
                 )}
@@ -149,3 +150,4 @@ export function AttendanceTracker({ userProfile, initialRecord, isTimeWindowOpen
         </Card>
     )
 }
+
