@@ -40,7 +40,23 @@ export function TaskCard({ task, onEdit, onDelete, onToggleStatus, isCurrentUser
                         <Clock className="w-4 h-4 mr-1.5 text-gray-500" />
                         {formatTime(task.start_time)} – {formatTime(task.end_time)}
                     </div>
-                    <TaskStatusBadge status={task.status} />
+                    <div className="flex items-center gap-1.5 flex-wrap">
+                        <TaskStatusBadge status={task.status} />
+                        {/* Priority Badge */}
+                        {task.priority && (
+                            <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${task.priority === 'HIGH'
+                                    ? 'bg-red-100 text-red-700 ring-1 ring-red-200'
+                                    : task.priority === 'MEDIUM'
+                                        ? 'bg-yellow-100 text-yellow-700 ring-1 ring-yellow-200'
+                                        : 'bg-gray-100 text-gray-600 ring-1 ring-gray-200'
+                                }`}>
+                                {task.priority === 'HIGH' && '🔥 '}
+                                {task.priority === 'MEDIUM' && '⚡ '}
+                                {task.priority === 'LOW' && '📌 '}
+                                {task.priority}
+                            </span>
+                        )}
+                    </div>
                 </div>
 
                 {/* content Section */}
