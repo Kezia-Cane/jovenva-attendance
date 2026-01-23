@@ -109,8 +109,24 @@ export async function WeeklyAttendanceTable({ date }: { date?: string }) {
                                         isLate = checkInHour > 21 || (checkInHour === 21 && checkInMinute > 5)
                                     }
 
-                                    // Check for missed check-out (has check-in but no check-out, and it's not today)
-                                    const missedCheckOut = record.check_in_time && !record.check_out_time && !isToday
+                                    // Check for missed check-out: has check-in but no check-out, AND the shift has ended
+                                    // Shift typically ends around 6 AM Manila time the next day
+                                    let missedCheckOut = false
+                                    if (record.check_in_time && !record.check_out_time) {
+                                        const checkInDate = new Date(record.check_in_time)
+                                        const manilaCheckIn = new Date(checkInDate.toLocaleString("en-US", { timeZone: "Asia/Manila" }))
+
+                                        // Calculate when this shift should have ended (6 AM the next day in Manila time)
+                                        const shiftEndTime = new Date(manilaCheckIn)
+                                        shiftEndTime.setDate(shiftEndTime.getDate() + 1)
+                                        shiftEndTime.setHours(6, 0, 0, 0)
+
+                                        // Get current time in Manila
+                                        const nowManila = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Manila" }))
+
+                                        // Only show "Missed Out" if current time is past the shift end time
+                                        missedCheckOut = nowManila > shiftEndTime
+                                    }
 
                                     if (missedCheckOut) {
                                         statusDisplay = (
