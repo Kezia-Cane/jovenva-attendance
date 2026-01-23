@@ -1,7 +1,8 @@
 "use client"
 
-import { Search, Bell, Settings, User } from "lucide-react"
+import { Search, Bell } from "lucide-react"
 import { usePathname } from "next/navigation"
+import { ThemeSwitch } from "@/components/common/ThemeSwitch"
 
 export function Navbar() {
     const pathname = usePathname()
@@ -10,7 +11,7 @@ export function Navbar() {
     const formattedName = pageName ? pageName.charAt(0).toUpperCase() + pageName.slice(1) : "Dashboard"
 
     return (
-        <nav className="sticky top-4 z-40 mx-4 mt-4 flex flex-col gap-4 rounded-2xl border-none backdrop-blur-xl bg-white/30 p-2 md:flex-row md:items-center md:justify-between px-4 py-3 shadow-none transition-all">
+        <nav className="sticky top-4 z-40 mx-4 mt-4 flex flex-col gap-4 rounded-2xl border-none backdrop-blur-xl bg-white/30 dark:bg-gray-800/30 p-2 md:flex-row md:items-center md:justify-between px-4 py-3 shadow-none transition-all">
             <div className="flex flex-col gap-1">
                 {/* Breadcrumbs removed as requested */}
                 <h6 className="text-base font-bold text-foreground capitalize">
@@ -29,10 +30,7 @@ export function Navbar() {
                 </div>
 
                 <div className="flex items-center gap-3 text-gray-500 dark:text-gray-400">
-
-                    <button className="hover:text-teal-300 transition-colors">
-                        <Settings size={18} />
-                    </button>
+                    <ThemeSwitch />
                     <button className="hover:text-teal-300 transition-colors relative">
                         <Bell size={18} />
                     </button>
@@ -41,3 +39,4 @@ export function Navbar() {
         </nav>
     )
 }
+
