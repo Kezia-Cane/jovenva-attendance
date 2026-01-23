@@ -84,7 +84,7 @@ export function AttendanceTracker({ userProfile, initialRecord, isTimeWindowOpen
 
                     {/* Profile Section */}
                     <div className="flex flex-col items-center -mt-12 mb-2">
-                        <div className="h-20 w-20 rounded-2xl bg-gray-100 border-4 border-white shadow-sm overflow-hidden mb-3 flex items-center justify-center">
+                        <div className="h-28 w-28 rounded-2xl bg-gray-100 border-4 border-white shadow-sm overflow-hidden mb-3 flex items-center justify-center">
                             {userProfile?.avatar_url ? (
                                 <img
                                     src={userProfile.avatar_url}
