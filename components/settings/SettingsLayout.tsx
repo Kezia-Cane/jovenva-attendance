@@ -12,8 +12,8 @@ export function SettingsLayout({ userId }: SettingsLayoutProps) {
         <div className="mx-4 px-4 mt-4 space-y-8">
             {/* Header */}
             <div>
-                <h1 className="text-2xl font-bold tracking-tight text-gray-900">Settings</h1>
-                <p className="text-sm text-gray-500 mt-1">
+                <h1 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Settings</h1>
+                <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
                     Manage your account settings and preferences.
                 </p>
             </div>
