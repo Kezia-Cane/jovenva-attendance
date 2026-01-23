@@ -93,6 +93,55 @@ export async function WeeklyAttendanceTable({ date }: { date?: string }) {
                                     duration = `${hours}h ${minutes}m`
                                 }
 
+                                // Determine attendance status
+                                let statusDisplay = null
+                                if (record) {
+                                    const checkInTime = record.check_in_time ? new Date(record.check_in_time) : null
+
+                                    // Check if late: shift starts at 9pm (21:00)
+                                    // Convert check-in to Manila time and check if after 21:00
+                                    let isLate = false
+                                    if (checkInTime) {
+                                        const manilaCheckIn = new Date(checkInTime.toLocaleString("en-US", { timeZone: "Asia/Manila" }))
+                                        const checkInHour = manilaCheckIn.getHours()
+                                        const checkInMinute = manilaCheckIn.getMinutes()
+                                        // Late if after 21:00 (9:00 PM) - allowing a few minutes grace
+                                        isLate = checkInHour > 21 || (checkInHour === 21 && checkInMinute > 5)
+                                    }
+
+                                    // Check for missed check-out (has check-in but no check-out, and it's not today)
+                                    const missedCheckOut = record.check_in_time && !record.check_out_time && !isToday
+
+                                    if (missedCheckOut) {
+                                        statusDisplay = (
+                                            <span className="bg-orange-50 text-orange-600 px-3 py-1 rounded-full text-xs font-bold border border-orange-100">
+                                                Missed Out
+                                            </span>
+                                        )
+                                    } else if (isLate) {
+                                        statusDisplay = (
+                                            <span className="bg-yellow-50 text-yellow-600 px-3 py-1 rounded-full text-xs font-bold border border-yellow-100">
+                                                Late
+                                            </span>
+                                        )
+                                    } else {
+                                        statusDisplay = (
+                                            <span className="bg-green-50 text-green-600 px-3 py-1 rounded-full text-xs font-bold border border-green-100">
+                                                Present
+                                            </span>
+                                        )
+                                    }
+                                } else {
+                                    statusDisplay = (
+                                        <span className={`px-3 py-1 rounded-full text-xs font-bold border ${(isToday || isFuture)
+                                            ? "bg-yellow-50 text-yellow-600 border-yellow-100"
+                                            : "bg-red-50 text-red-500 border-red-100"
+                                            }`}>
+                                            {(isToday || isFuture) ? "Pending" : "Absent"}
+                                        </span>
+                                    )
+                                }
+
                                 return (
                                     <tr key={dateStr} className={`hover:bg-gray-50 transition-colors ${isToday ? "bg-green-50/30" : ""}`}>
                                         <td className="px-2 py-3 font-bold text-gray-700 text-sm">
@@ -102,18 +151,7 @@ export async function WeeklyAttendanceTable({ date }: { date?: string }) {
                                             {format(day, "MMM, d yyyy")}
                                         </td>
                                         <td className="px-2 py-3">
-                                            {record ? (
-                                                <span className="bg-green-50 text-green-600 px-3 py-1 rounded-full text-xs font-bold border border-green-100">
-                                                    Present
-                                                </span>
-                                            ) : (
-                                                <span className={`px-3 py-1 rounded-full text-xs font-bold border ${(isToday || isFuture)
-                                                        ? "bg-yellow-50 text-yellow-600 border-yellow-100"
-                                                        : "bg-red-50 text-red-500 border-red-100"
-                                                    }`}>
-                                                    {(isToday || isFuture) ? "Pending" : "Absent"}
-                                                </span>
-                                            )}
+                                            {statusDisplay}
                                         </td>
                                         <td className="px-2 py-3 text-gray-600 font-bold text-xs">
                                             {record?.check_in_time
