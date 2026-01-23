@@ -19,7 +19,7 @@ export function Modal({ isOpen, onClose, title, children, className }: ModalProp
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4 animate-in fade-in duration-200">
             <div
                 className={cn(
-                    "relative w-full max-w-lg rounded-lg bg-white shadow-lg animate-in zoom-in-95 duration-200",
+                    "relative w-full max-w-lg rounded-lg bg-card shadow-lg animate-in zoom-in-95 duration-200",
                     className
                 )}
                 role="dialog"

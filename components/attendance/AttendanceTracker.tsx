@@ -74,13 +74,13 @@ export function AttendanceTracker({ userProfile, initialRecord, isTimeWindowOpen
     }
 
     return (
-        <Card className="border-none shadow-md rounded-2xl bg-white relative">
+        <Card className="border-none shadow-md rounded-2xl bg-card relative">
             <div className="absolute top-0 left-0 w-full h-[120px] bg-gradient-to-r from-teal-300 to-teal-400 z-0 rounded-t-2xl" />
 
             <CardContent className="relative z-10 pt-8 pb-10 flex flex-col items-center text-center">
 
                 {/* Main Action Button Container */}
-                <div className="bg-white rounded-2xl shadow-lg p-6 w-full max-w-[90%] -mt-4 mb-4 flex flex-col items-center gap-4">
+                <div className="bg-card rounded-2xl shadow-lg p-6 w-full max-w-[90%] -mt-4 mb-4 flex flex-col items-center gap-4">
 
                     {/* Profile Section */}
                     <div className="flex flex-col items-center -mt-12 mb-2">
@@ -97,7 +97,7 @@ export function AttendanceTracker({ userProfile, initialRecord, isTimeWindowOpen
                                 </span>
                             )}
                         </div>
-                        <h3 className="text-gray-800 font-bold text-sm">{userProfile?.name || "Team Member"}</h3>
+                        <h3 className="text-foreground font-bold text-sm">{userProfile?.name || "Team Member"}</h3>
                     </div>
 
                     <div className="w-full">
@@ -134,7 +134,7 @@ export function AttendanceTracker({ userProfile, initialRecord, isTimeWindowOpen
                             startTime={record?.check_in_time}
                             endTime={record?.check_out_time}
                             serverTime={serverTime}
-                            className="text-4xl font-bold text-gray-800 tabular-nums"
+                            className="text-4xl font-bold text-foreground tabular-nums"
                         />
                     </div>
                 </div>

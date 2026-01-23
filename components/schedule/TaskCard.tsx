@@ -36,7 +36,7 @@ export function TaskCard({ task, onEdit, onDelete, onToggleStatus, isCurrentUser
 
                 {/* Time and Status Section */}
                 <div className="flex-shrink-0 min-w-[140px]">
-                    <div className="flex items-center text-sm font-medium text-gray-900 mb-1">
+                    <div className="flex items-center text-sm font-medium text-foreground mb-1">
                         <Clock className="w-4 h-4 mr-1.5 text-gray-500" />
                         {formatTime(task.start_time)} – {formatTime(task.end_time)}
                     </div>
@@ -45,10 +45,10 @@ export function TaskCard({ task, onEdit, onDelete, onToggleStatus, isCurrentUser
                         {/* Priority Badge */}
                         {task.priority && (
                             <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${task.priority === 'HIGH'
-                                    ? 'bg-red-100 text-red-700 ring-1 ring-red-200'
-                                    : task.priority === 'MEDIUM'
-                                        ? 'bg-yellow-100 text-yellow-700 ring-1 ring-yellow-200'
-                                        : 'bg-gray-100 text-gray-600 ring-1 ring-gray-200'
+                                ? 'bg-red-100 text-red-700 ring-1 ring-red-200'
+                                : task.priority === 'MEDIUM'
+                                    ? 'bg-yellow-100 text-yellow-700 ring-1 ring-yellow-200'
+                                    : 'bg-gray-100 text-gray-600 ring-1 ring-gray-200'
                                 }`}>
                                 {task.priority === 'HIGH' && '🔥 '}
                                 {task.priority === 'MEDIUM' && '⚡ '}
@@ -75,7 +75,7 @@ export function TaskCard({ task, onEdit, onDelete, onToggleStatus, isCurrentUser
                     </div>
 
                     <div className="flex-grow">
-                        <h4 className={`text-base font-semibold ${task.status === 'COMPLETED' ? 'text-gray-500 line-through' : 'text-gray-900'}`}>
+                        <h4 className={`text-base font-semibold ${task.status === 'COMPLETED' ? 'text-gray-500 line-through' : 'text-foreground'}`}>
                             {task.title}
                         </h4>
                         {task.description && (

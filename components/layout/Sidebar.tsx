@@ -57,13 +57,13 @@ export function Sidebar() {
                                 key={link.name}
                                 href={link.href}
                                 className={`flex items-center gap-4 rounded-xl px-4 py-3 text-sm font-bold transition-all ease-in-out duration-300 ${active
-                                    ? "bg-white text-gray-900 shadow-lg"
+                                    ? "bg-card text-foreground shadow-lg"
                                     : "text-gray-500 hover:text-gray-900"
                                     }`}
                             >
                                 <div className={`flex h-[30px] w-[30px] items-center justify-center rounded-lg ${active
                                     ? "bg-teal-300 text-white shadow-teal-md"
-                                    : "bg-white text-teal-300 shadow-sm"
+                                    : "bg-card text-teal-300 shadow-sm"
                                     }`}>
                                     <link.icon size={16} />
                                 </div>
@@ -81,7 +81,7 @@ export function Sidebar() {
                         <button
                             type="submit"
                             title="Logout"
-                            className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-white text-gray-500 border-2 border-transparent font-bold text-sm shadow-sm hover:border-red-100 hover:text-red-500 hover:shadow-red-sm hover:bg-red-50 transition-all duration-300"
+                            className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-card text-gray-500 dark:text-gray-400 border-2 border-transparent font-bold text-sm shadow-sm hover:border-red-100 hover:text-red-500 hover:shadow-red-sm hover:bg-red-50 dark:hover:bg-red-900/30 transition-all duration-300"
                         >
                             <LogOut size={18} />
                             <span>Logout</span>

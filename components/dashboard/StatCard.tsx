@@ -16,7 +16,7 @@ export function StatCard({ title, value, icon: Icon, subtext, status = "neutral"
                 <div>
                     <p className="text-xs font-bold text-gray-400 uppercase mb-1">{title}</p>
                     <div className="flex items-baseline gap-2">
-                        <h3 className="text-lg font-bold text-gray-800">{value}</h3>
+                        <h3 className="text-lg font-bold text-foreground">{value}</h3>
                         {subtext && (
                             <span className={`text-xs font-bold ${status === "success" ? "text-green-500" :
                                 status === "warning" ? "text-orange-500" :

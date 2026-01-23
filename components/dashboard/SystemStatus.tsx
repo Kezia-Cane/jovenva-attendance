@@ -29,10 +29,10 @@ export async function SystemStatus() {
         .in('date', queryDates)
 
     return (
-        <Card className="border-none shadow-md rounded-2xl h-full bg-white">
+        <Card className="border-none shadow-md rounded-2xl h-full bg-card">
             <CardContent className="p-6">
                 <div className="flex items-center justify-between mb-6">
-                    <h3 className="font-bold text-lg text-gray-800">Today's Attendance</h3>
+                    <h3 className="font-bold text-lg text-foreground">Today's Attendance</h3>
                 </div>
 
                 <SystemStatusList

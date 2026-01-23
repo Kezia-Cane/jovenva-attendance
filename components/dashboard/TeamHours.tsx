@@ -51,10 +51,10 @@ export async function TeamHours({ date }: { date?: string }) {
     }).sort((a, b) => b.totalHours - a.totalHours)
 
     return (
-        <Card className="border-none shadow-md rounded-2xl h-fit bg-white">
+        <Card className="border-none shadow-md rounded-2xl h-fit bg-card">
             <CardContent className="p-6">
                 <div className="flex items-center justify-between mb-6">
-                    <h3 className="font-bold text-lg text-gray-800">Weekly Total Hours</h3>
+                    <h3 className="font-bold text-lg text-foreground">Weekly Total Hours</h3>
 
                 </div>
 
@@ -73,7 +73,7 @@ export async function TeamHours({ date }: { date?: string }) {
 
                             {/* Bar Section */}
                             <div className="col-span-8 flex items-center gap-3">
-                                <span className="text-sm font-bold text-gray-800 w-8 text-right shrink-0">
+                                <span className="text-sm font-bold text-foreground w-8 text-right shrink-0">
                                     {user.totalHours}h
                                 </span>
                                 <div className="h-2 w-full bg-gray-100 rounded-full overflow-hidden">
