@@ -11,7 +11,7 @@ interface AttendanceRecord {
     date: string
     check_in_time: string | null
     check_out_time: string | null
-    status: 'PRESENT' | 'ABSENT'
+    status: 'PRESENT' | 'ABSENT' | 'EXTRA_WORKOUT'
 }
 
 export async function WeeklyAttendanceTable({ date }: { date?: string }) {
@@ -42,13 +42,9 @@ export async function WeeklyAttendanceTable({ date }: { date?: string }) {
         if (data) records = data as AttendanceRecord[]
     }
 
-    // Generate days for the current week (Mon-Fri)
+    // Generate days for the current week (Mon-Sun, including weekends)
     const weekDays = Array.from({ length: 7 })
         .map((_, i) => addDays(startOfCurrentWeek, i))
-        .filter(day => {
-            const d = day.getDay()
-            return d !== 0 && d !== 6 // Exclude Sunday(0) and Saturday(6)
-        })
 
     return (
         <Card className="border-none shadow-md rounded-2xl h-fit bg-card">
@@ -95,67 +91,89 @@ export async function WeeklyAttendanceTable({ date }: { date?: string }) {
 
                                 // Determine attendance status
                                 let statusDisplay = null
+                                const dayOfWeek = day.getDay()
+                                const isWeekendDay = dayOfWeek === 0 || dayOfWeek === 6
+
                                 if (record) {
-                                    const checkInTime = record.check_in_time ? new Date(record.check_in_time) : null
-
-                                    // Check if late: shift starts at 9pm (21:00)
-                                    // Convert check-in to Manila time and check if after 21:00
-                                    let isLate = false
-                                    if (checkInTime) {
-                                        const manilaCheckIn = new Date(checkInTime.toLocaleString("en-US", { timeZone: "Asia/Manila" }))
-                                        const checkInHour = manilaCheckIn.getHours()
-                                        const checkInMinute = manilaCheckIn.getMinutes()
-                                        // Late if after 21:00 (9:00 PM) - allowing a few minutes grace
-                                        isLate = checkInHour > 21 || (checkInHour === 21 && checkInMinute > 5)
-                                    }
-
-                                    // Check for missed check-out: has check-in but no check-out, AND the shift has ended
-                                    // Shift typically ends around 6 AM Manila time the next day
-                                    let missedCheckOut = false
-                                    if (record.check_in_time && !record.check_out_time) {
-                                        const checkInDate = new Date(record.check_in_time)
-                                        const manilaCheckIn = new Date(checkInDate.toLocaleString("en-US", { timeZone: "Asia/Manila" }))
-
-                                        // Calculate when this shift should have ended (6 AM the next day in Manila time)
-                                        const shiftEndTime = new Date(manilaCheckIn)
-                                        shiftEndTime.setDate(shiftEndTime.getDate() + 1)
-                                        shiftEndTime.setHours(6, 0, 0, 0)
-
-                                        // Get current time in Manila
-                                        const nowManila = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Manila" }))
-
-                                        // Only show "Missed Out" if current time is past the shift end time
-                                        missedCheckOut = nowManila > shiftEndTime
-                                    }
-
-                                    if (missedCheckOut) {
+                                    // Check for Extra Workout (weekend check-in)
+                                    if (record.status === 'EXTRA_WORKOUT') {
                                         statusDisplay = (
-                                            <span className="bg-orange-50 text-orange-600 px-3 py-1 rounded-full text-xs font-bold border border-orange-100">
-                                                Missed Out
+                                            <span className="bg-purple-50 text-purple-600 px-3 py-1 rounded-full text-xs font-bold border border-purple-100">
+                                                Extra Workout
                                             </span>
                                         )
-                                    } else if (isLate) {
+                                    } else {
+                                        const checkInTime = record.check_in_time ? new Date(record.check_in_time) : null
+
+                                        // Check if late: shift starts at 9pm (21:00)
+                                        // Convert check-in to Manila time and check if after 21:00
+                                        let isLate = false
+                                        if (checkInTime) {
+                                            const manilaCheckIn = new Date(checkInTime.toLocaleString("en-US", { timeZone: "Asia/Manila" }))
+                                            const checkInHour = manilaCheckIn.getHours()
+                                            const checkInMinute = manilaCheckIn.getMinutes()
+                                            // Late if after 21:00 (9:00 PM) - allowing a few minutes grace
+                                            isLate = checkInHour > 21 || (checkInHour === 21 && checkInMinute > 5)
+                                        }
+
+                                        // Check for missed check-out: has check-in but no check-out, AND the shift has ended
+                                        // Shift typically ends around 6 AM Manila time the next day
+                                        let missedCheckOut = false
+                                        if (record.check_in_time && !record.check_out_time) {
+                                            const checkInDate = new Date(record.check_in_time)
+                                            const manilaCheckIn = new Date(checkInDate.toLocaleString("en-US", { timeZone: "Asia/Manila" }))
+
+                                            // Calculate when this shift should have ended (6 AM the next day in Manila time)
+                                            const shiftEndTime = new Date(manilaCheckIn)
+                                            shiftEndTime.setDate(shiftEndTime.getDate() + 1)
+                                            shiftEndTime.setHours(6, 0, 0, 0)
+
+                                            // Get current time in Manila
+                                            const nowManila = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Manila" }))
+
+                                            // Only show "Missed Out" if current time is past the shift end time
+                                            missedCheckOut = nowManila > shiftEndTime
+                                        }
+
+                                        if (missedCheckOut) {
+                                            statusDisplay = (
+                                                <span className="bg-orange-50 text-orange-600 px-3 py-1 rounded-full text-xs font-bold border border-orange-100">
+                                                    Missed Out
+                                                </span>
+                                            )
+                                        } else if (isLate) {
+                                            statusDisplay = (
+                                                <span className="bg-yellow-50 text-yellow-600 px-3 py-1 rounded-full text-xs font-bold border border-yellow-100">
+                                                    Late
+                                                </span>
+                                            )
+                                        } else {
+                                            statusDisplay = (
+                                                <span className="bg-green-50 text-green-600 px-3 py-1 rounded-full text-xs font-bold border border-green-100">
+                                                    Present
+                                                </span>
+                                            )
+                                        }
+                                    }
+                                } else {
+                                    // No record for this day
+                                    if (isWeekendDay) {
+                                        // Weekends without record show as optional
                                         statusDisplay = (
-                                            <span className="bg-yellow-50 text-yellow-600 px-3 py-1 rounded-full text-xs font-bold border border-yellow-100">
-                                                Late
+                                            <span className="px-3 py-1 rounded-full text-xs font-bold border bg-gray-50 text-gray-400 border-gray-100">
+                                                {(isToday || isFuture) ? "Optional" : "Rest Day"}
                                             </span>
                                         )
                                     } else {
                                         statusDisplay = (
-                                            <span className="bg-green-50 text-green-600 px-3 py-1 rounded-full text-xs font-bold border border-green-100">
-                                                Present
+                                            <span className={`px-3 py-1 rounded-full text-xs font-bold border ${(isToday || isFuture)
+                                                ? "bg-yellow-50 text-yellow-600 border-yellow-100"
+                                                : "bg-red-50 text-red-500 border-red-100"
+                                                }`}>
+                                                {(isToday || isFuture) ? "Pending" : "Absent"}
                                             </span>
                                         )
                                     }
-                                } else {
-                                    statusDisplay = (
-                                        <span className={`px-3 py-1 rounded-full text-xs font-bold border ${(isToday || isFuture)
-                                            ? "bg-yellow-50 text-yellow-600 border-yellow-100"
-                                            : "bg-red-50 text-red-500 border-red-100"
-                                            }`}>
-                                            {(isToday || isFuture) ? "Pending" : "Absent"}
-                                        </span>
-                                    )
                                 }
 
                                 return (

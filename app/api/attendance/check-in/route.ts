@@ -33,21 +33,10 @@ export async function POST() {
   // 2. Check if already checked in today (Shift Date)
   const today = getShiftDate()
 
-  // STRICTLY FORBID WEEKENDS
-  // We check the day of the Shift Date.
-  // If Shift Date is Saturday or Sunday, block it.
+  // Determine if this is a weekend check-in
   const shiftDateObj = new Date(today)
   const dayOfWeek = shiftDateObj.getUTCDay() // "YYYY-MM-DD" parses to UTC midnight
-  if (dayOfWeek === 0 || dayOfWeek === 6) {
-    const now = getManilaTime()
-    // If it's before noon, we are essentially on the morning of the next day (e.g. Monday morning).
-    // The user effectively missed the Sunday shift (which is blocked anyway) or is waiting for Monday shift.
-    // Display the requested message.
-    if (now.getHours() < 12) {
-      return NextResponse.json({ error: "Early check-in is available from 8:00 PM. You can chill and enjoy some jologs." }, { status: 400 })
-    }
-    return NextResponse.json({ error: "Check-in is not available on weekends. Please take a rest." }, { status: 400 })
-  }
+  const isWeekendCheckIn = dayOfWeek === 0 || dayOfWeek === 6
 
   const { data: existingAttendance } = await supabase
     .from('attendance')
@@ -67,7 +56,7 @@ export async function POST() {
       user_id: user.id,
       date: today,
       check_in_time: new Date().toISOString(),
-      status: 'PRESENT'
+      status: isWeekendCheckIn ? 'EXTRA_WORKOUT' : 'PRESENT'
     })
     .select()
     .single()

@@ -39,3 +39,9 @@ export function formatInManila(date: string | Date, fmt: string): string {
     const manilaDate = new Date(manilaString)
     return format(manilaDate, fmt)
 }
+
+export function isWeekend(): boolean {
+    const manilaTime = getManilaTime()
+    const day = manilaTime.getDay()
+    return day === 0 || day === 6 // Sunday = 0, Saturday = 6
+}

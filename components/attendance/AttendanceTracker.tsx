@@ -4,10 +4,10 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { format, differenceInHours } from "date-fns"
 import { Card, CardContent } from "../common/UIComponents"
-import { ConfirmModal } from "../common/Modal"
+import { ConfirmModal, Modal } from "../common/Modal"
 import { SessionTimer } from "./SessionTimer"
 import { TypingIndicator } from "@/components/common/TypingIndicator"
-import { isCheckInAvailable } from "@/lib/date-utils"
+import { isCheckInAvailable, isWeekend } from "@/lib/date-utils"
 
 interface AttendanceRecord {
     id: string
@@ -33,11 +33,15 @@ export function AttendanceTracker({ userProfile, initialRecord, isTimeWindowOpen
     const [record, setRecord] = useState<AttendanceRecord | null>(initialRecord)
     const [loading, setLoading] = useState(false)
     const [showConfirm, setShowConfirm] = useState(false)
+    const [showWeekendModal, setShowWeekendModal] = useState(false)
     const router = useRouter()
 
     const isCheckedIn = !!record
     const isCheckedOut = !!record?.check_out_time
-    const canCheckIn = !isCheckedIn && isTimeWindowOpen
+
+    // Weekend check-ins bypass time window restriction
+    const isWeekendNow = isWeekend()
+    const canCheckIn = !isCheckedIn && (isTimeWindowOpen || isWeekendNow)
 
     const handleCheckIn = async () => {
         setLoading(true)
@@ -50,6 +54,11 @@ export function AttendanceTracker({ userProfile, initialRecord, isTimeWindowOpen
             const newRecord = await res.json()
             setRecord(newRecord)
             router.refresh()
+
+            // Show appreciation modal for weekend check-ins
+            if (isWeekendNow) {
+                setShowWeekendModal(true)
+            }
         } catch (error) {
             console.error(error)
             alert(error instanceof Error ? error.message : "Error checking in")
@@ -154,6 +163,26 @@ export function AttendanceTracker({ userProfile, initialRecord, isTimeWindowOpen
                         isLoading={loading}
                     />
 
+                    {/* Weekend Appreciation Modal */}
+                    <Modal
+                        isOpen={showWeekendModal}
+                        onClose={() => setShowWeekendModal(false)}
+                        title="🌟 Extra Workout!"
+                    >
+                        <div className="text-center">
+                            <div className="text-5xl mb-4">💪</div>
+                            <p className="text-gray-600 dark:text-gray-300 mb-6">
+                                You are checking in on the weekend, and the team appreciates your extra effort in taking time to work outside regular hours.
+                            </p>
+                            <button
+                                onClick={() => setShowWeekendModal(false)}
+                                className="px-6 py-2 bg-purple-500 hover:bg-purple-600 text-white font-bold rounded-xl transition-colors"
+                            >
+                                Let's Go!
+                            </button>
+                        </div>
+                    </Modal>
+
                     <div className="w-full">
                         <SessionTimer
                             startTime={record?.check_in_time}
@@ -163,7 +192,7 @@ export function AttendanceTracker({ userProfile, initialRecord, isTimeWindowOpen
                     </div>
                 </div>
 
-                {!isTimeWindowOpen && !isCheckedIn && (
+                {!isTimeWindowOpen && !isCheckedIn && !isWeekendNow && (
                     <div className="bg-orange-50 text-orange-600 px-4 py-2 rounded-xl text-xs font-bold border border-orange-100 flex items-center gap-2">
                         <span>⚠️</span> Check-in starts at 8:00 PM
                     </div>
