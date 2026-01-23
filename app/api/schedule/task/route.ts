@@ -6,16 +6,16 @@ import { CreateTaskDTO } from '@/lib/types';
 export async function POST(request: Request) {
     try {
         const body = await request.json();
-        const { date, start_time, end_time, title, description, priority, status, assigned_to_user_id } = body as CreateTaskDTO;
+        const { date, end_date, start_time, end_time, title, description, priority, status, assigned_to_user_id } = body as CreateTaskDTO;
 
         // Basic Validation
         if (!date || !start_time || !end_time || !title) {
             return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
         }
 
-        if (start_time >= end_time) {
-            return NextResponse.json({ error: 'Start time must be before end time' }, { status: 400 });
-        }
+        // For overnight tasks, end_date will be the next day
+        // No longer block when end_time < start_time (overnight shifts like 9pm-1am)
+        const finalEndDate = end_date || date; // Default to same day if not provided
 
         const cookieStore = await cookies();
         const supabase = createClient(cookieStore);
@@ -34,6 +34,7 @@ export async function POST(request: Request) {
             user_id: user.id, // Creator
             assigned_to_user_id: assigned_to_user_id || user.id, // Assignee (default to creator)
             date,
+            end_date: finalEndDate, // Support overnight tasks
             start_time,
             end_time,
             title,

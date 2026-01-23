@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { addDays, format } from "date-fns";
 import { CreateTaskDTO, ScheduleTask } from "@/lib/types";
 import { TypingIndicator } from "@/components/common/TypingIndicator";
 
@@ -13,14 +14,32 @@ interface TaskFormProps {
     isLoading?: boolean;
 }
 
+// Helper to detect if the task spans overnight (end time is earlier than start time)
+function isOvernightShift(startTime: string, endTime: string): boolean {
+    // Compare HH:MM format - if endTime is less than startTime, it's overnight
+    return endTime < startTime;
+}
+
+// Helper to get the end date (next day if overnight)
+function getEndDate(selectedDate: string, startTime: string, endTime: string): string {
+    if (isOvernightShift(startTime, endTime)) {
+        const nextDay = addDays(new Date(selectedDate), 1);
+        return format(nextDay, 'yyyy-MM-dd');
+    }
+    return selectedDate;
+}
+
 export function TaskForm({ initialData, selectedDate, userId, onSave, onCancel, isLoading }: TaskFormProps) {
     const [title, setTitle] = useState(initialData?.title || "");
     const [description, setDescription] = useState(initialData?.description || "");
-    const [startTime, setStartTime] = useState(initialData?.start_time || "09:00:00");
-    const [endTime, setEndTime] = useState(initialData?.end_time || "10:00:00");
+    const [startTime, setStartTime] = useState(initialData?.start_time?.slice(0, 5) || "21:00");
+    const [endTime, setEndTime] = useState(initialData?.end_time?.slice(0, 5) || "22:00");
     const [status, setStatus] = useState<ScheduleTask['status']>(initialData?.status || "PENDING");
     const [priority, setPriority] = useState<ScheduleTask['priority']>(initialData?.priority || "MEDIUM");
     const [error, setError] = useState("");
+
+    // Detect overnight shift for UI feedback
+    const isOvernight = isOvernightShift(startTime, endTime);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -30,16 +49,16 @@ export function TaskForm({ initialData, selectedDate, userId, onSave, onCancel, 
             setError("Title is required");
             return;
         }
-        if (startTime >= endTime) {
-            setError("Start time must be before end time");
-            return;
-        }
+
+        // Calculate the correct end date for overnight tasks
+        const endDate = getEndDate(selectedDate, startTime, endTime);
 
         try {
             await onSave({
                 date: selectedDate,
-                start_time: startTime, // potentially need to format or ensure HH:MM:SS
-                end_time: endTime,
+                end_date: endDate, // New field for overnight support
+                start_time: startTime + ":00", // Ensure HH:MM:SS format
+                end_time: endTime + ":00",
                 title,
                 description,
                 status,
@@ -91,6 +110,18 @@ export function TaskForm({ initialData, selectedDate, userId, onSave, onCancel, 
                         />
                     </div>
                 </div>
+
+                {/* Overnight shift indicator */}
+                {isOvernight && (
+                    <div className="flex items-center gap-2 px-3 py-2 bg-blue-50 border border-blue-200 rounded-lg">
+                        <svg className="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                        </svg>
+                        <span className="text-sm text-blue-700">
+                            <strong>Overnight shift:</strong> This task ends the next day ({getEndDate(selectedDate, startTime, endTime)})
+                        </span>
+                    </div>
+                )}
 
                 <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
