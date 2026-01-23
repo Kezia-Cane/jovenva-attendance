@@ -25,11 +25,11 @@ export function Modal({ isOpen, onClose, title, children, className }: ModalProp
                 role="dialog"
                 aria-modal="true"
             >
-                <div className="flex items-center justify-between border-b px-6 py-4">
-                    <h2 className="text-lg font-semibold text-gray-900">{title}</h2>
+                <div className="flex items-center justify-between border-b border-gray-200 dark:border-gray-700 px-6 py-4">
+                    <h2 className="text-lg font-semibold text-foreground">{title}</h2>
                     <button
                         onClick={onClose}
-                        className="rounded-full p-1 text-gray-400 hover:bg-gray-100 hover:text-gray-500 transition-colors"
+                        className="rounded-full p-1 text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-500 dark:hover:text-gray-300 transition-colors"
                         aria-label="Close"
                     >
                         <X className="h-5 w-5" />
@@ -75,7 +75,7 @@ export function ConfirmModal({
             <div className="flex justify-end space-x-3">
                 <button
                     onClick={onClose}
-                    className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+                    className="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
                     disabled={isLoading}
                 >
                     {cancelLabel}

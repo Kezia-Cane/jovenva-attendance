@@ -41,7 +41,7 @@ export function FeedbackButton() {
     <>
       <button
         onClick={handleOpen}
-        className="w-full clean-feedback-btn group relative flex items-center justify-center gap-2 px-3 py-3 bg-white text-teal-600 border-2 border-teal-100 rounded-xl font-bold text-sm shadow-sm hover:shadow-md hover:border-teal-200 hover:bg-teal-50 transition-all"
+        className="w-full clean-feedback-btn group relative flex items-center justify-center gap-2 px-3 py-3 bg-card text-teal-600 border-2 border-teal-100 dark:border-teal-900 rounded-xl font-bold text-sm shadow-sm hover:shadow-md hover:border-teal-200 dark:hover:border-teal-700 hover:bg-teal-50 dark:hover:bg-teal-900/30 transition-all"
       >
         <span className="icon-wrapper">
           <MessageSquarePlus size={18} className="text-teal-500" />
@@ -69,13 +69,13 @@ export function FeedbackButton() {
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             placeholder="Type your feedback here..."
-            className="w-full h-32 p-3 rounded-lg border border-gray-200 focus:border-teal-400 focus:ring-2 focus:ring-teal-100 outline-none resize-none text-gray-700 placeholder:text-gray-400"
+            className="w-full h-32 p-3 rounded-lg border border-gray-200 dark:border-gray-600 bg-transparent focus:border-teal-400 focus:ring-2 focus:ring-teal-100 outline-none resize-none text-foreground placeholder:text-gray-400"
           />
 
           <div className="flex justify-end gap-3 pt-2">
             <button
               onClick={() => setIsOpen(false)}
-              className="px-4 py-2 text-sm font-bold text-gray-500 hover:bg-gray-100 rounded-lg transition-colors"
+              className="px-4 py-2 text-sm font-bold text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
             >
               Cancel
             </button>

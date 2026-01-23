@@ -32,8 +32,8 @@ export function AnnouncementModal() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     {/* Left Column: Content */}
                     <div className="flex flex-col justify-between h-full">
-                        <div className="space-y-4 text-gray-700 leading-relaxed">
-                            <p className="font-semibold text-lg text-gray-900">
+                        <div className="space-y-4 text-gray-700 dark:text-gray-300 leading-relaxed">
+                            <p className="font-semibold text-lg text-foreground">
                                 Today marks the pre-launch of the JovenVA Internal System.
                             </p>
 
@@ -44,7 +44,7 @@ export function AnnouncementModal() {
                                 <li><strong>Task Management Module</strong> for daily scheduling</li>
                             </ul>
 
-                            <p className="text-sm italic text-gray-600 bg-gray-50 p-3 rounded-lg border border-gray-100">
+                            <p className="text-sm italic text-gray-600 dark:text-gray-400 bg-gray-50 dark:bg-gray-700/50 p-3 rounded-lg border border-gray-100 dark:border-gray-600">
                                 This is an early release, and your feedback is highly appreciated to help us improve and refine the system.
                             </p>
 
@@ -65,7 +65,7 @@ export function AnnouncementModal() {
                     </div>
 
                     {/* Right Column: GIF */}
-                    <div className="hidden md:flex items-center justify-center bg-gray-50 rounded-2xl p-4 border border-gray-100 h-full min-h-[350px]">
+                    <div className="hidden md:flex items-center justify-center bg-gray-50 dark:bg-gray-700/50 rounded-2xl p-4 border border-gray-100 dark:border-gray-600 h-full min-h-[350px]">
                         <img
                             src="/meldance.gif"
                             alt="JovenVA Celebration"
