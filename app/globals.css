@@ -3,22 +3,36 @@
 
 :root {
   --background: #F8F9FA;
-  /* Purity UI Light Background */
   --foreground: #2D3748;
-  /* gray-700 */
+  --card-bg: #FFFFFF;
+  --card-border: #E2E8F0;
   --purity-teal: #4FD1C5;
-  /* teal-300 */
   --purity-teal-hover: #38B2AC;
-  /* teal-400 */
   --purity-gray-dark: #1f2733;
 }
 
-/* Removed Dark Mode Preferences for Forced Light Mode */
+.dark {
+  --background: #1A202C;
+  /* gray-800 */
+  --foreground: #EDF2F7;
+  /* gray-100 */
+  --card-bg: #2D3748;
+  /* gray-700 */
+  --card-border: #4A5568;
+  /* gray-600 */
+}
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: 'Avenir', sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Force dark mode background and text on key containers */
+.dark body {
+  background-color: var(--background);
+  color: var(--foreground);
 }
 
 /* --------------------------

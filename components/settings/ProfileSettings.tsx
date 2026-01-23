@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { createClient } from "@/lib/supabase";
-import { User, Camera, Loader2, Check, Upload } from "lucide-react";
+import { User, Camera, Check, Upload } from "lucide-react";
 
 interface ProfileSettingsProps {
     userId: string;
@@ -151,12 +151,12 @@ export function ProfileSettings({ userId }: ProfileSettingsProps) {
     }
 
     return (
-        <div className="bg-white rounded-2xl shadow-lg p-6">
+        <div className="bg-card rounded-2xl shadow-lg p-6">
             <div className="flex items-center gap-3 mb-6">
                 <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-teal-300 text-white shadow-teal-md">
                     <User size={20} />
                 </div>
-                <h2 className="text-lg font-bold text-gray-900">Profile Information</h2>
+                <h2 className="text-lg font-bold text-foreground">Profile Information</h2>
             </div>
 
             <div className="space-y-5">
@@ -176,7 +176,11 @@ export function ProfileSettings({ userId }: ProfileSettingsProps) {
                         )}
                         <label className="absolute -bottom-1 -right-1 h-6 w-6 bg-teal-300 rounded-full flex items-center justify-center border-2 border-white cursor-pointer hover:bg-teal-400 transition-colors">
                             {isUploading ? (
-                                <Loader2 className="h-3 w-3 text-white animate-spin" />
+                                <div className="typing-indicator !w-4 !h-2 scale-50">
+                                    <div className="typing-circle"></div>
+                                    <div className="typing-circle"></div>
+                                    <div className="typing-circle"></div>
+                                </div>
                             ) : (
                                 <Camera className="h-3 w-3 text-white" />
                             )}
@@ -190,7 +194,7 @@ export function ProfileSettings({ userId }: ProfileSettingsProps) {
                         </label>
                     </div>
                     <div className="flex-1">
-                        <p className="text-sm font-medium text-gray-700">Profile Photo</p>
+                        <p className="text-sm font-medium text-foreground">Profile Photo</p>
                         <p className="text-xs text-gray-400 mt-0.5">Click the camera icon to upload a new photo</p>
                         <p className="text-xs text-gray-400">JPG, PNG, GIF up to 2MB</p>
                     </div>
@@ -198,7 +202,7 @@ export function ProfileSettings({ userId }: ProfileSettingsProps) {
 
                 {/* Name */}
                 <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-medium text-foreground mb-1">
                         Display Name
                     </label>
                     <input
@@ -206,20 +210,20 @@ export function ProfileSettings({ userId }: ProfileSettingsProps) {
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         placeholder="Your name"
-                        className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-teal-300 focus:ring-2 focus:ring-teal-100 outline-none transition-all"
+                        className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-600 bg-transparent text-foreground focus:border-teal-300 focus:ring-2 focus:ring-teal-100 outline-none transition-all"
                     />
                 </div>
 
                 {/* Email (Read-only) */}
                 <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-medium text-foreground mb-1">
                         Email Address
                     </label>
                     <input
                         type="email"
                         value={email}
                         disabled
-                        className="w-full px-4 py-3 rounded-xl border border-gray-100 bg-gray-50 text-gray-500 cursor-not-allowed"
+                        className="w-full px-4 py-3 rounded-xl border border-gray-100 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-500 cursor-not-allowed"
                     />
                     <p className="text-xs text-gray-400 mt-1">Email cannot be changed</p>
                 </div>
@@ -241,7 +245,14 @@ export function ProfileSettings({ userId }: ProfileSettingsProps) {
                     <span className="btn-3d-edge"></span>
                     <span className="btn-3d-front gap-2 px-4 py-3 justify-center">
                         {isSaving ? (
-                            <Loader2 className="h-5 w-5 animate-spin" />
+                            <div className="typing-indicator !w-12 !h-6">
+                                <div className="typing-circle"></div>
+                                <div className="typing-circle"></div>
+                                <div className="typing-circle"></div>
+                                <div className="typing-shadow"></div>
+                                <div className="typing-shadow"></div>
+                                <div className="typing-shadow"></div>
+                            </div>
                         ) : saveSuccess ? (
                             <>
                                 <Check className="h-5 w-5" />

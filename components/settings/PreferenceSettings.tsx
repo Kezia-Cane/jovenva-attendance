@@ -39,24 +39,8 @@ export function PreferenceSettings() {
 
         if (newTheme === "dark") {
             root.classList.add("dark");
-            root.style.setProperty("--background", "#1a1a2e");
-            root.style.setProperty("--foreground", "#e4e4e7");
-        } else if (newTheme === "light") {
-            root.classList.remove("dark");
-            root.style.setProperty("--background", "#F8F9FA");
-            root.style.setProperty("--foreground", "#2D3748");
         } else {
-            // System preference
-            const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-            if (prefersDark) {
-                root.classList.add("dark");
-                root.style.setProperty("--background", "#1a1a2e");
-                root.style.setProperty("--foreground", "#e4e4e7");
-            } else {
-                root.classList.remove("dark");
-                root.style.setProperty("--background", "#F8F9FA");
-                root.style.setProperty("--foreground", "#2D3748");
-            }
+            root.classList.remove("dark");
         }
     };
 
@@ -84,18 +68,18 @@ export function PreferenceSettings() {
     }
 
     return (
-        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 transition-colors">
+        <div className="bg-card rounded-2xl shadow-lg p-6 transition-colors">
             <div className="flex items-center gap-3 mb-6">
                 <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-teal-300 text-white shadow-teal-md">
                     <Settings size={20} />
                 </div>
-                <h2 className="text-lg font-bold text-gray-900 dark:text-white">Preferences</h2>
+                <h2 className="text-lg font-bold text-foreground">Preferences</h2>
             </div>
 
             <div className="space-y-6">
                 {/* Theme Selection */}
                 <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+                    <label className="block text-sm font-medium text-foreground mb-3">
                         Appearance
                     </label>
                     <div className="grid grid-cols-2 gap-3">
@@ -129,7 +113,7 @@ export function PreferenceSettings() {
 
                 {/* Timezone Selection */}
                 <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                    <label className="block text-sm font-medium text-foreground mb-1">
                         <div className="flex items-center gap-2 mb-2">
                             <Globe className="h-4 w-4 text-gray-400" />
                             <span>Timezone</span>

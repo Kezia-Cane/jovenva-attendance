@@ -1,6 +1,7 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
+    darkMode: "class",
     content: [
         "./pages/**/*.{js,ts,jsx,tsx,mdx}",
         "./components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -11,6 +12,8 @@ const config: Config = {
             colors: {
                 background: "var(--background)",
                 foreground: "var(--foreground)",
+                card: "var(--card-bg)",
+                border: "var(--card-border)",
                 "teal-300": "var(--purity-teal)",
                 "teal-400": "var(--purity-teal-hover)",
                 "gray-700": "#2D3748",
