@@ -75,12 +75,12 @@ export function SessionTimer({ startTime, endTime, className, serverTime }: Sess
     }
 
     return (
-        <div className="flex flex-col items-center justify-center p-4 w-full rounded-xl bg-gray-50 border border-gray-100">
-            <span className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-1">
-                {status === "READY" ? "Ready to Start" : (status === "RUNNING" ? "Running" : "Completed")}
+        <div className="flex flex-col items-center justify-center py-8 w-full rounded-2xl bg-card border border-gray-100 dark:border-gray-800 shadow-sm">
+            <span className="text-xs font-bold uppercase tracking-[0.2em] text-gray-400 mb-2">
+                {status === "READY" ? "READY" : (status === "RUNNING" ? "RUNNING" : "COMPLETED")}
             </span>
             {/* Timer Display */}
-            <div className={`font-mono text-3xl font-bold tracking-wider ${status === "RUNNING" ? "text-teal-400" : "text-gray-700"
+            <div className={`font-mono text-6xl font-bold tracking-wider ${status === "RUNNING" ? "text-teal-400" : "text-gray-700 dark:text-gray-300"
                 } ${className}`}>
                 {elapsed}
             </div>

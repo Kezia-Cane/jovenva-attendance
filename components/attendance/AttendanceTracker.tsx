@@ -2,11 +2,12 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import { format } from "date-fns"
+import { format, differenceInHours } from "date-fns"
 import { Card, CardContent } from "../common/UIComponents"
+import { ConfirmModal } from "../common/Modal"
 import { SessionTimer } from "./SessionTimer"
 import { TypingIndicator } from "@/components/common/TypingIndicator"
-import { isCheckInAvailable } from "@/lib/date-utils" // We might need to handle this client-side or pass prop
+import { isCheckInAvailable } from "@/lib/date-utils"
 
 interface AttendanceRecord {
     id: string
@@ -31,6 +32,7 @@ interface AttendanceTrackerProps {
 export function AttendanceTracker({ userProfile, initialRecord, isTimeWindowOpen, serverTime }: AttendanceTrackerProps) {
     const [record, setRecord] = useState<AttendanceRecord | null>(initialRecord)
     const [loading, setLoading] = useState(false)
+    const [showConfirm, setShowConfirm] = useState(false)
     const router = useRouter()
 
     const isCheckedIn = !!record
@@ -47,7 +49,7 @@ export function AttendanceTracker({ userProfile, initialRecord, isTimeWindowOpen
             }
             const newRecord = await res.json()
             setRecord(newRecord)
-            router.refresh() // Sync server components too (like Weekly Table)
+            router.refresh()
         } catch (error) {
             console.error(error)
             alert(error instanceof Error ? error.message : "Error checking in")
@@ -56,8 +58,9 @@ export function AttendanceTracker({ userProfile, initialRecord, isTimeWindowOpen
         }
     }
 
-    const handleCheckOut = async () => {
+    const performCheckOut = async () => {
         setLoading(true)
+        setShowConfirm(false)
         try {
             const res = await fetch("/api/attendance/check-out", { method: "POST" })
             if (!res.ok) throw new Error("Check-out failed")
@@ -70,6 +73,18 @@ export function AttendanceTracker({ userProfile, initialRecord, isTimeWindowOpen
             alert("Failed to check out")
         } finally {
             setLoading(false)
+        }
+    }
+
+    const handleCheckOutClick = () => {
+        if (!record?.check_in_time) return
+
+        const hoursWorked = differenceInHours(new Date(), new Date(record.check_in_time))
+
+        if (hoursWorked < 8) {
+            setShowConfirm(true)
+        } else {
+            performCheckOut()
         }
     }
 
@@ -115,7 +130,7 @@ export function AttendanceTracker({ userProfile, initialRecord, isTimeWindowOpen
                             </button>
                         ) : (
                             <button
-                                onClick={handleCheckOut}
+                                onClick={handleCheckOutClick}
                                 disabled={isCheckedOut || loading}
                                 className={`btn-3d btn-3d-red w-full h-14 text-sm font-bold bg-white border border-red-500 text-red-500 hover:bg-red-50 rounded-xl shadow-sm transition-all uppercase ${(isCheckedOut || loading) ? 'opacity-50 cursor-not-allowed' : ''}`}
                             >
@@ -128,13 +143,22 @@ export function AttendanceTracker({ userProfile, initialRecord, isTimeWindowOpen
                         )}
                     </div>
 
-                    <div className="flex flex-col items-center w-full">
-                        <p className="text-gray-400 text-[10px] font-bold uppercase mb-2">Shift Duration</p>
+                    <ConfirmModal
+                        isOpen={showConfirm}
+                        onClose={() => setShowConfirm(false)}
+                        onConfirm={performCheckOut}
+                        title="Early Checkout"
+                        message="Are you sure you want to check out? This shift is less than the required 8-hour minimum."
+                        confirmLabel="Check Out Anyway"
+                        variant="warning"
+                        isLoading={loading}
+                    />
+
+                    <div className="w-full">
                         <SessionTimer
                             startTime={record?.check_in_time}
                             endTime={record?.check_out_time}
                             serverTime={serverTime}
-                            className="text-4xl font-bold text-foreground tabular-nums"
                         />
                     </div>
                 </div>
