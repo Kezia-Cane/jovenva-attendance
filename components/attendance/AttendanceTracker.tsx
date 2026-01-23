@@ -80,7 +80,7 @@ export function AttendanceTracker({ userProfile, initialRecord, isTimeWindowOpen
             <CardContent className="relative z-10 pt-8 pb-10 flex flex-col items-center text-center">
 
                 {/* Main Action Button Container */}
-                <div className="bg-card rounded-2xl shadow-lg p-6 w-full max-w-[90%] -mt-4 mb-4 flex flex-col items-center gap-4">
+                <div className="bg-card rounded-2xl shadow-lg p-6 w-full -mt-4 mb-4 flex flex-col items-center gap-4">
 
                     {/* Profile Section */}
                     <div className="flex flex-col items-center -mt-12 mb-2">
