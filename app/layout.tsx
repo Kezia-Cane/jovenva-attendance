@@ -16,6 +16,7 @@ export const metadata: Metadata = {
 };
 
 import { MobileBlocker } from "@/components/layout/MobileBlocker";
+import { MaintenanceBlocker } from "@/components/layout/MaintenanceBlocker";
 
 export default function RootLayout({
   children,
@@ -25,6 +26,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="antialiased">
+        <MaintenanceBlocker />
         <MobileBlocker />
         {children}
       </body>
