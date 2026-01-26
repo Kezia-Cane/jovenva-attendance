@@ -30,14 +30,14 @@ export function MaintenanceBlocker() {
                                 </p>
                                 <div className="bg-gray-50 p-4 rounded-xl border border-gray-100">
                                     <p className="text-base text-gray-700 font-medium">
-                                        👉 Please use the <span className="text-teal-600 font-bold">manual process</span> in the Lilo group chat on WhatsApp.
+                                        Please use the <span className="text-teal-600 font-bold">manual process</span> in the Lilo group chat on WhatsApp.
                                     </p>
                                 </div>
                             </div>
                         </div>
 
                         <div className="pt-8 mt-auto md:mt-8 border-t border-gray-100">
-                            <p className="text-xs font-bold text-gray-400 uppercase tracking-[0.2em]">
+                            <p className="text-xs font-bold text-teal-500 uppercase tracking-[0.2em]">
                                 - jovenVA dev team
                             </p>
                         </div>
