@@ -7,16 +7,11 @@ export function MaintenanceBlocker() {
                 <div className="grid md:grid-cols-2 gap-8 items-center">
                     {/* Left Column: Video */}
                     <div className="relative aspect-video md:aspect-square w-full rounded-2xl overflow-hidden shadow-inner bg-black/5 order-last md:order-first">
-                        <video
-                            autoPlay
-                            loop
-                            muted
-                            playsInline
+                        <img
+                            src="/media (3).gif"
+                            alt="Maintenance Mode"
                             className="absolute inset-0 w-full h-full object-cover"
-                            src="/media (3).mp4"
-                        >
-                            Your browser does not support the video tag.
-                        </video>
+                        />
                     </div>
 
                     {/* Right Column: Content */}
