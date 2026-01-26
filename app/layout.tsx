@@ -15,6 +15,9 @@ export const metadata: Metadata = {
   manifest: "/favicon/site.webmanifest",
 };
 
+
+
+import { ThemeProvider } from "@/components/theme-provider";
 import { MobileBlocker } from "@/components/layout/MobileBlocker";
 import { MaintenanceBlocker } from "@/components/layout/MaintenanceBlocker";
 
@@ -24,11 +27,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className="antialiased">
-        <MaintenanceBlocker />
-        <MobileBlocker />
-        {children}
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <MaintenanceBlocker />
+          <MobileBlocker />
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );
