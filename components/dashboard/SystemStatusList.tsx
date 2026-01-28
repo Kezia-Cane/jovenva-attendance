@@ -159,7 +159,7 @@ export function SystemStatusList({ users, initialAttendance, queryDates }: Syste
                         </div>
 
                         {user.record?.status === 'SYSTEM_MAINTENANCE' ? (
-                            <div className="flex items-center gap-1 bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-xs font-bold border border-gray-200">
+                            <div className="flex items-center gap-1 bg-orange-100 text-orange-700 px-3 py-1 rounded-full text-xs font-bold border border-orange-200">
                                 Maintenance
                             </div>
                         ) : hasRecord ? (
