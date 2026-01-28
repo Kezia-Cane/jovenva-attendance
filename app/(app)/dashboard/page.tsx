@@ -24,6 +24,15 @@ export default async function DashboardPage({ searchParams }: { searchParams: { 
         redirect("/login")
     }
 
+    // Ensure user exists in users table (self-healing fix)
+    await supabase.from('users').upsert({
+        id: user.id,
+        email: user.email,
+        name: user.user_metadata?.full_name || user.email?.split('@')[0] || 'User',
+        avatar_url: user.user_metadata?.avatar_url || '',
+        updated_at: new Date().toISOString(),
+    }, { onConflict: 'id' })
+
     return (
         <div className="p-4 md:p-8">
             <AnnouncementModal />
