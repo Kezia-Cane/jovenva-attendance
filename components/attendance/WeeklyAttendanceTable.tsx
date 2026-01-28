@@ -97,120 +97,118 @@ export async function WeeklyAttendanceTable({ date }: { date?: string }) {
                                 if (record) {
                                     // Check for Extra Workout (weekend check-in)
                                     if (record.status === 'SYSTEM_MAINTENANCE') {
-                                        if (record.status === 'SYSTEM_MAINTENANCE') {
-                                            statusDisplay = (
-                                                <span className="bg-orange-100 text-orange-700 px-3 py-1 rounded-full text-xs font-bold border border-orange-200">
-                                                    Maintenance
-                                                </span>
-                                            )
-                                        } else if (record.status === 'EXTRA_WORKOUT') {
-                                        } else if (record.status === 'EXTRA_WORKOUT') {
-                                            statusDisplay = (
-                                                <span className="bg-purple-50 text-purple-600 px-3 py-1 rounded-full text-xs font-bold border border-purple-100">
-                                                    Extra Workout
-                                                </span>
-                                            )
-                                        } else {
-                                            const checkInTime = record.check_in_time ? new Date(record.check_in_time) : null
-
-                                            // Check if late: shift starts at 9pm (21:00)
-                                            // Convert check-in to Manila time and check if after 21:00
-                                            let isLate = false
-                                            if (checkInTime) {
-                                                const manilaCheckIn = new Date(checkInTime.toLocaleString("en-US", { timeZone: "Asia/Manila" }))
-                                                const checkInHour = manilaCheckIn.getHours()
-                                                const checkInMinute = manilaCheckIn.getMinutes()
-                                                // Late if after 21:00 (9:00 PM) - allowing a few minutes grace
-                                                isLate = checkInHour > 21 || (checkInHour === 21 && checkInMinute > 5)
-                                            }
-
-                                            // Check for missed check-out: has check-in but no check-out, AND the shift has ended
-                                            // Shift typically ends around 6 AM Manila time the next day
-                                            let missedCheckOut = false
-                                            if (record.check_in_time && !record.check_out_time) {
-                                                const checkInDate = new Date(record.check_in_time)
-                                                const manilaCheckIn = new Date(checkInDate.toLocaleString("en-US", { timeZone: "Asia/Manila" }))
-
-                                                // Calculate when this shift should have ended (6 AM the next day in Manila time)
-                                                const shiftEndTime = new Date(manilaCheckIn)
-                                                shiftEndTime.setDate(shiftEndTime.getDate() + 1)
-                                                shiftEndTime.setHours(6, 0, 0, 0)
-
-                                                // Get current time in Manila
-                                                const nowManila = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Manila" }))
-
-                                                // Only show "Missed Out" if current time is past the shift end time
-                                                missedCheckOut = nowManila > shiftEndTime
-                                            }
-
-                                            if (missedCheckOut) {
-                                                statusDisplay = (
-                                                    <span className="bg-orange-50 text-orange-600 px-3 py-1 rounded-full text-xs font-bold border border-orange-100">
-                                                        Missed Out
-                                                    </span>
-                                                )
-                                            } else if (isLate) {
-                                                statusDisplay = (
-                                                    <span className="bg-rose-100 text-rose-600 px-3 py-1 rounded-full text-xs font-bold border border-rose-200">
-                                                        Late
-                                                    </span>
-                                                )
-                                            } else {
-                                                statusDisplay = (
-                                                    <span className="bg-green-50 text-green-600 px-3 py-1 rounded-full text-xs font-bold border border-green-100">
-                                                        Present
-                                                    </span>
-                                                )
-                                            }
-                                        }
+                                        statusDisplay = (
+                                            <span className="bg-orange-100 text-orange-700 px-3 py-1 rounded-full text-xs font-bold border border-orange-200">
+                                                Maintenance
+                                            </span>
+                                        )
+                                    } else if (record.status === 'EXTRA_WORKOUT') {
+                                        statusDisplay = (
+                                            <span className="bg-purple-50 text-purple-600 px-3 py-1 rounded-full text-xs font-bold border border-purple-100">
+                                                Extra Workout
+                                            </span>
+                                        )
                                     } else {
-                                        // No record for this day
-                                        if (isWeekendDay) {
-                                            // Weekends without record show as optional
+                                        const checkInTime = record.check_in_time ? new Date(record.check_in_time) : null
+
+                                        // Check if late: shift starts at 9pm (21:00)
+                                        // Convert check-in to Manila time and check if after 21:00
+                                        let isLate = false
+                                        if (checkInTime) {
+                                            const manilaCheckIn = new Date(checkInTime.toLocaleString("en-US", { timeZone: "Asia/Manila" }))
+                                            const checkInHour = manilaCheckIn.getHours()
+                                            const checkInMinute = manilaCheckIn.getMinutes()
+                                            // Late if after 21:00 (9:00 PM) - allowing a few minutes grace
+                                            isLate = checkInHour > 21 || (checkInHour === 21 && checkInMinute > 5)
+                                        }
+
+                                        // Check for missed check-out: has check-in but no check-out, AND the shift has ended
+                                        // Shift typically ends around 6 AM Manila time the next day
+                                        let missedCheckOut = false
+                                        if (record.check_in_time && !record.check_out_time) {
+                                            const checkInDate = new Date(record.check_in_time)
+                                            const manilaCheckIn = new Date(checkInDate.toLocaleString("en-US", { timeZone: "Asia/Manila" }))
+
+                                            // Calculate when this shift should have ended (6 AM the next day in Manila time)
+                                            const shiftEndTime = new Date(manilaCheckIn)
+                                            shiftEndTime.setDate(shiftEndTime.getDate() + 1)
+                                            shiftEndTime.setHours(6, 0, 0, 0)
+
+                                            // Get current time in Manila
+                                            const nowManila = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Manila" }))
+
+                                            // Only show "Missed Out" if current time is past the shift end time
+                                            missedCheckOut = nowManila > shiftEndTime
+                                        }
+
+                                        if (missedCheckOut) {
                                             statusDisplay = (
-                                                <span className="px-3 py-1 rounded-full text-xs font-bold border bg-gray-50 text-gray-400 border-gray-100">
-                                                    {(isToday || isFuture) ? "Optional" : "Rest Day"}
+                                                <span className="bg-orange-50 text-orange-600 px-3 py-1 rounded-full text-xs font-bold border border-orange-100">
+                                                    Missed Out
+                                                </span>
+                                            )
+                                        } else if (isLate) {
+                                            statusDisplay = (
+                                                <span className="bg-rose-100 text-rose-600 px-3 py-1 rounded-full text-xs font-bold border border-rose-200">
+                                                    Late
                                                 </span>
                                             )
                                         } else {
                                             statusDisplay = (
-                                                <span className={`px-3 py-1 rounded-full text-xs font-bold border ${(isToday || isFuture)
-                                                    ? "bg-yellow-50 text-yellow-600 border-yellow-100"
-                                                    : "bg-red-50 text-red-500 border-red-100"
-                                                    }`}>
-                                                    {(isToday || isFuture) ? "Pending" : "Absent"}
+                                                <span className="bg-green-50 text-green-600 px-3 py-1 rounded-full text-xs font-bold border border-green-100">
+                                                    Present
                                                 </span>
                                             )
                                         }
                                     }
+                                } else {
+                                    // No record for this day
+                                    if (isWeekendDay) {
+                                        // Weekends without record show as optional
+                                        statusDisplay = (
+                                            <span className="px-3 py-1 rounded-full text-xs font-bold border bg-gray-50 text-gray-400 border-gray-100">
+                                                {(isToday || isFuture) ? "Optional" : "Rest Day"}
+                                            </span>
+                                        )
+                                    } else {
+                                        statusDisplay = (
+                                            <span className={`px-3 py-1 rounded-full text-xs font-bold border ${(isToday || isFuture)
+                                                ? "bg-yellow-50 text-yellow-600 border-yellow-100"
+                                                : "bg-red-50 text-red-500 border-red-100"
+                                                }`}>
+                                                {(isToday || isFuture) ? "Pending" : "Absent"}
+                                            </span>
+                                        )
+                                    }
+                                }
 
-                                    return (
-                                        <tr key={dateStr} className={`hover:bg-gray-50 transition-colors ${isToday ? "bg-green-50/30" : ""}`}>
-                                            <td className="px-2 py-3 font-bold text-gray-700 text-sm">
-                                                {format(day, "EEE")}
-                                            </td>
-                                            <td className="px-2 py-3 font-bold text-gray-700 text-sm">
-                                                {format(day, "MMM, d yyyy")}
-                                            </td>
-                                            <td className="px-2 py-3">
-                                                {statusDisplay}
-                                            </td>
-                                            <td className="px-2 py-3 text-gray-600 font-bold text-xs">
-                                                {record?.check_in_time
-                                                    ? formatInManila(record.check_in_time, "hh:mm a")
-                                                    : "—"}
-                                            </td>
-                                            <td className="px-2 py-3 text-gray-600 font-bold text-xs">
-                                                {record?.check_out_time
-                                                    ? formatInManila(record.check_out_time, "hh:mm a")
-                                                    : "—"}
-                                            </td>
-                                            <td className="px-2 py-3 text-teal-600 font-bold text-xs">
-                                                {duration}
-                                            </td>
-                                        </tr>
-                                    )
-                                })}
+                                return (
+                                    <tr key={dateStr} className={`hover:bg-gray-50 transition-colors ${isToday ? "bg-green-50/30" : ""}`}>
+                                        <td className="px-2 py-3 font-bold text-gray-700 text-sm">
+                                            {format(day, "EEE")}
+                                        </td>
+                                        <td className="px-2 py-3 font-bold text-gray-700 text-sm">
+                                            {format(day, "MMM, d yyyy")}
+                                        </td>
+                                        <td className="px-2 py-3">
+                                            {statusDisplay}
+                                        </td>
+                                        <td className="px-2 py-3 text-gray-600 font-bold text-xs">
+                                            {record?.check_in_time
+                                                ? formatInManila(record.check_in_time, "hh:mm a")
+                                                : "—"}
+                                        </td>
+                                        <td className="px-2 py-3 text-gray-600 font-bold text-xs">
+                                            {record?.check_out_time
+                                                ? formatInManila(record.check_out_time, "hh:mm a")
+                                                : "—"}
+                                        </td>
+                                        <td className="px-2 py-3 text-teal-600 font-bold text-xs">
+                                            {duration}
+                                        </td>
+                                    </tr>
+                                )
+                            })}
                         </tbody>
                     </table>
                 </div>
