@@ -158,7 +158,11 @@ export function SystemStatusList({ users, initialAttendance, queryDates }: Syste
                             </span>
                         </div>
 
-                        {hasRecord ? (
+                        {user.record?.status === 'SYSTEM_MAINTENANCE' ? (
+                            <div className="flex items-center gap-1 bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-xs font-bold border border-gray-200">
+                                Maintenance
+                            </div>
+                        ) : hasRecord ? (
                             isCheckedOut ? (
                                 <div className="flex items-center gap-1 bg-red-50 text-red-500 px-3 py-1 rounded-full text-xs font-bold border border-red-100">
                                     Out

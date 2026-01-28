@@ -11,7 +11,7 @@ interface AttendanceRecord {
     date: string
     check_in_time: string | null
     check_out_time: string | null
-    status: 'PRESENT' | 'ABSENT' | 'EXTRA_WORKOUT'
+    status: 'PRESENT' | 'ABSENT' | 'EXTRA_WORKOUT' | 'SYSTEM_MAINTENANCE'
 }
 
 export async function WeeklyAttendanceTable({ date }: { date?: string }) {
@@ -96,7 +96,13 @@ export async function WeeklyAttendanceTable({ date }: { date?: string }) {
 
                                 if (record) {
                                     // Check for Extra Workout (weekend check-in)
-                                    if (record.status === 'EXTRA_WORKOUT') {
+                                    if (record.status === 'SYSTEM_MAINTENANCE') {
+                                        statusDisplay = (
+                                            <span className="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-xs font-bold border border-gray-200">
+                                                Maintenance
+                                            </span>
+                                        )
+                                    } else if (record.status === 'EXTRA_WORKOUT') {
                                         statusDisplay = (
                                             <span className="bg-purple-50 text-purple-600 px-3 py-1 rounded-full text-xs font-bold border border-purple-100">
                                                 Extra Workout
