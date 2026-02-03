@@ -80,27 +80,31 @@ export default function AdminDashboardPage() {
                     </CardContent>
                 </Card>
 
-                <Card className="hover:shadow-lg transition-all duration-300 border-l-4 border-l-orange-400">
-                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                        <CardTitle className="text-sm font-medium text-gray-500">Missing Checkouts</CardTitle>
-                        <AlertTriangle className="h-4 w-4 text-orange-500" />
-                    </CardHeader>
-                    <CardContent>
-                        <div className="text-2xl font-bold">{loading ? "..." : stats?.missingCheckouts}</div>
-                        <p className="text-xs text-gray-400 mt-1">Requires attention</p>
-                    </CardContent>
-                </Card>
+                <Link href="/admin/attendance">
+                    <Card className="hover:shadow-lg transition-all duration-300 border-l-4 border-l-orange-400 cursor-pointer h-full">
+                        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                            <CardTitle className="text-sm font-medium text-gray-500">Missing Checkouts</CardTitle>
+                            <AlertTriangle className="h-4 w-4 text-orange-500" />
+                        </CardHeader>
+                        <CardContent>
+                            <div className="text-2xl font-bold">{loading ? "..." : stats?.missingCheckouts}</div>
+                            <p className="text-xs text-gray-400 mt-1">Requires attention</p>
+                        </CardContent>
+                    </Card>
+                </Link>
 
-                <Card className="hover:shadow-lg transition-all duration-300 border-l-4 border-l-purple-400">
-                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                        <CardTitle className="text-sm font-medium text-gray-500">Feedback</CardTitle>
-                        <MessageSquare className="h-4 w-4 text-purple-500" />
-                    </CardHeader>
-                    <CardContent>
-                        <div className="text-2xl font-bold">{loading ? "..." : "0"}</div>
-                        <p className="text-xs text-gray-400 mt-1">New items</p>
-                    </CardContent>
-                </Card>
+                <Link href="/admin/feedback">
+                    <Card className="hover:shadow-lg transition-all duration-300 border-l-4 border-l-purple-400 cursor-pointer h-full">
+                        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                            <CardTitle className="text-sm font-medium text-gray-500">Feedback</CardTitle>
+                            <MessageSquare className="h-4 w-4 text-purple-500" />
+                        </CardHeader>
+                        <CardContent>
+                            <div className="text-2xl font-bold">{loading ? "..." : stats?.feedbackCount}</div>
+                            <p className="text-xs text-gray-400 mt-1">New items</p>
+                        </CardContent>
+                    </Card>
+                </Link>
             </div>
 
             {/* Charts Section */}

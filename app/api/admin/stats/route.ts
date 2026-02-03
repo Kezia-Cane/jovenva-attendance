@@ -30,6 +30,20 @@ export async function GET() {
         .not('check_in_time', 'is', null)
         .is('check_out_time', null)
 
+    // 3. Missing Checkouts (Checked in BEFORE today but never checked out)
+    const { count: missingCheckouts } = await supabase
+        .from('attendance')
+        .select('*', { count: 'exact', head: true })
+        .lt('date', today)
+        .not('check_in_time', 'is', null)
+        .is('check_out_time', null)
+
+    // 4. Feedback (Pending)
+    const { count: feedbackCount } = await supabase
+        .from('feedbacks')
+        .select('*', { count: 'exact', head: true })
+        .eq('status', 'PENDING')
+
     // 3. Late Today
     // We need to fetch records to check lateness logic manually or use a simple query if we store status
     // Assuming status is updated correctly or we calculate it. 
@@ -41,8 +55,8 @@ export async function GET() {
     const stats = {
         totalEmployees: totalEmployees || 0,
         activeNow: activeNow || 0,
-        lateToday: 0, // Placeholder, would need complex logic or a stored field
-        missingCheckouts: 0 // Placeholder
+        missingCheckouts: missingCheckouts || 0,
+        feedbackCount: feedbackCount || 0
     }
 
     // Chart Data: Attendance over last 30 days

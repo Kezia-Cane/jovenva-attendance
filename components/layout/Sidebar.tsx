@@ -45,12 +45,16 @@ export function Sidebar() {
         }
     }
 
-    const links = [
-        { name: "Dashboard", href: "/dashboard", icon: Home },
-        { name: "Daily Schedule", href: "/schedule", icon: Calendar },
-        { name: "Settings", href: "/settings", icon: Settings },
-        ...(isAdmin ? [{ name: "Admin", href: "/admin", icon: FileText }] : []),
-    ]
+    const links = isAdmin
+        ? [
+            { name: "Admin", href: "/admin", icon: FileText },
+            { name: "Settings", href: "/settings", icon: Settings },
+        ]
+        : [
+            { name: "Dashboard", href: "/dashboard", icon: Home },
+            { name: "Daily Schedule", href: "/schedule", icon: Calendar },
+            { name: "Settings", href: "/settings", icon: Settings },
+        ]
 
     const isActive = (path: string) => pathname === path
 
