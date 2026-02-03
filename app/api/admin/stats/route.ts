@@ -21,29 +21,33 @@ export async function GET() {
     const today = getShiftDate()
 
     // 1. Total Employees
-    const { count: totalEmployees } = await getSupabaseAdmin().from('users').select('*', { count: 'exact', head: true })
+    const { count: totalEmployees, error: employeesError } = await getSupabaseAdmin().from('users').select('*', { count: 'exact', head: true })
+    if (employeesError) console.error("Stats Error (Employees):", employeesError)
 
     // 2. Active Now (Checked in today but not checked out)
-    const { count: activeNow } = await getSupabaseAdmin()
+    const { count: activeNow, error: activeError } = await getSupabaseAdmin()
         .from('attendance')
         .select('*', { count: 'exact', head: true })
         .eq('date', today)
         .not('check_in_time', 'is', null)
         .is('check_out_time', null)
+    if (activeError) console.error("Stats Error (Active):", activeError)
 
     // 3. Missing Checkouts (Checked in BEFORE today but never checked out)
-    const { count: missingCheckouts } = await getSupabaseAdmin()
+    const { count: missingCheckouts, error: missingError } = await getSupabaseAdmin()
         .from('attendance')
         .select('*', { count: 'exact', head: true })
         .lt('date', today)
         .not('check_in_time', 'is', null)
         .is('check_out_time', null)
+    if (missingError) console.error("Stats Error (Missing):", missingError)
 
     // 4. Feedback (Pending)
-    const { count: feedbackCount } = await getSupabaseAdmin()
+    const { count: feedbackCount, error: feedbackError } = await getSupabaseAdmin()
         .from('feedbacks')
         .select('*', { count: 'exact', head: true })
         .eq('status', 'PENDING')
+    if (feedbackError) console.error("Stats Error (Feedback):", feedbackError)
 
     // 3. Late Today
     // We need to fetch records to check lateness logic manually or use a simple query if we store status
