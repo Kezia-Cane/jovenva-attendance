@@ -1,5 +1,6 @@
 
 import { createClient } from "@/lib/supabase-server"
+import { supabaseAdmin } from "@/lib/supabase-admin"
 import { cookies } from "next/headers"
 import { NextResponse } from "next/server"
 
@@ -18,7 +19,7 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url)
     const date = searchParams.get('date')
 
-    let query = supabase
+    let query = supabaseAdmin
         .from('attendance')
         .select('*, users(name, avatar_url, email)')
         .order('date', { ascending: false })

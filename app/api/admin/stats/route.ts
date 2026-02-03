@@ -1,5 +1,6 @@
 
 import { createClient } from "@/lib/supabase-server"
+import { supabaseAdmin } from "@/lib/supabase-admin"
 import { cookies } from "next/headers"
 import { NextResponse } from "next/server"
 import { startOfMonth, format, subDays } from "date-fns"
@@ -20,10 +21,10 @@ export async function GET() {
     const today = getShiftDate()
 
     // 1. Total Employees
-    const { count: totalEmployees } = await supabase.from('users').select('*', { count: 'exact', head: true })
+    const { count: totalEmployees } = await supabaseAdmin.from('users').select('*', { count: 'exact', head: true })
 
     // 2. Active Now (Checked in today but not checked out)
-    const { count: activeNow } = await supabase
+    const { count: activeNow } = await supabaseAdmin
         .from('attendance')
         .select('*', { count: 'exact', head: true })
         .eq('date', today)
@@ -31,7 +32,7 @@ export async function GET() {
         .is('check_out_time', null)
 
     // 3. Missing Checkouts (Checked in BEFORE today but never checked out)
-    const { count: missingCheckouts } = await supabase
+    const { count: missingCheckouts } = await supabaseAdmin
         .from('attendance')
         .select('*', { count: 'exact', head: true })
         .lt('date', today)
@@ -39,7 +40,7 @@ export async function GET() {
         .is('check_out_time', null)
 
     // 4. Feedback (Pending)
-    const { count: feedbackCount } = await supabase
+    const { count: feedbackCount } = await supabaseAdmin
         .from('feedbacks')
         .select('*', { count: 'exact', head: true })
         .eq('status', 'PENDING')
