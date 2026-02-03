@@ -8,7 +8,7 @@ import { Calendar, Search } from "lucide-react"
 
 export default function AdminAttendancePage() {
     const [records, setRecords] = useState<any[]>([])
-    const [date, setDate] = useState(format(new Date(), 'yyyy-MM-dd'))
+    const [date, setDate] = useState("")
     const [loading, setLoading] = useState(true)
 
     const fetchAttendance = async () => {
@@ -45,7 +45,16 @@ export default function AdminAttendancePage() {
                             className="pl-10 pr-4 py-2 rounded-xl border border-gray-200 dark:border-gray-700 bg-card focus:outline-none focus:ring-2 focus:ring-teal-500 font-medium text-gray-600"
                             value={date}
                             onChange={(e) => setDate(e.target.value)}
+                            placeholder="All Dates"
                         />
+                        {date && (
+                            <button
+                                onClick={() => setDate("")}
+                                className="px-3 py-2 text-sm text-red-500 hover:bg-red-50 rounded-lg transition-colors border border-red-200 bg-white"
+                            >
+                                Clear
+                            </button>
+                        )}
                     </div>
                 </div>
             </div>
