@@ -1,6 +1,6 @@
 
 import { createClient } from "@/lib/supabase-server"
-import { supabaseAdmin } from "@/lib/supabase-admin"
+import { getSupabaseAdmin } from "@/lib/supabase-admin"
 import { cookies } from "next/headers"
 import { NextResponse } from "next/server"
 
@@ -17,7 +17,7 @@ export async function GET() {
     if (userData?.role !== 'ADMIN') return NextResponse.json({ error: "Forbidden" }, { status: 403 })
 
     // Use Admin client to bypass RLS
-    const { data, error } = await supabaseAdmin
+    const { data, error } = await getSupabaseAdmin()
         .from('feedbacks')
         .select('*, users(name, email, avatar_url)')
         .order('created_at', { ascending: false })
